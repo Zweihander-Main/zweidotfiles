@@ -1,0 +1,3 @@
+alias yt='youtube-dl'
+alias ytmp4='youtube-dl -i -f mp4'
+alias start='cmd.exe /c start ""'
