@@ -97,4 +97,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Aliases
 source $HOME/.aliases
+
+# Envvars
+source $HOME/.envvars
