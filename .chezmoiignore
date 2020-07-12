@@ -41,3 +41,6 @@ synergy.sgc
 
 {{- end }}
 
+
+# Archived files -- no longer used
+synergy.sgc
