@@ -31,6 +31,7 @@ known_hosts
 
 # Ignore files inside *nix from Win
 {{- if ne .chezmoi.os "windows" }}
+.workspacer
 
 # Ignore files inside WSL
 {{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}
