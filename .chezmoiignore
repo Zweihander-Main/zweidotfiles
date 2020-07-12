@@ -22,6 +22,7 @@ known_hosts
 .aliases
 .bash_profile
 .bashrc
+.doom.d
 .envvars
 .profile
 .zprofile
@@ -32,6 +33,7 @@ known_hosts
 # Ignore files inside *nix from Win
 {{- if ne .chezmoi.os "windows" }}
 .workspacer
+synergy.sgc
 
 # Ignore files inside WSL
 {{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}

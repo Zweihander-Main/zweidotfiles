@@ -1,0 +1,38 @@
+section: screens
+	Anubis:
+		halfDuplexCapsLock = false
+		halfDuplexNumLock = false
+		halfDuplexScrollLock = false
+		xtestIsXineramaUnaware = false
+		switchCorners = none
+		switchCornerSize = 0
+	Aethelweard:
+		halfDuplexCapsLock = false
+		halfDuplexNumLock = false
+		halfDuplexScrollLock = false
+		xtestIsXineramaUnaware = false
+		switchCorners = top-right
+		switchCornerSize = 100
+end
+
+section: aliases
+end
+
+section: links
+	Anubis:
+		down = Aethelweard
+	Aethelweard:
+		up = Anubis
+end
+
+section: options
+	relativeMouseMoves = false
+	screenSaverSync = true
+	win32KeepForeground = false
+	disableLockToScreen = false
+	clipboardSharing = true
+	clipboardSharingSize = 3072
+	switchCorners = none
+	switchCornerSize = 0
+end
+
