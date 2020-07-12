@@ -1,3 +1,40 @@
-known_hosts
+# -*-mode:gitignore-*- vim:ft=gitignore
+
+# General files
+*.gz
+LICENSE
+README.md
+README.org
+
+# git related files
+.git/
+/.gitattributes
+/.gitignore
+/.gitmodules
+
+# .ssh related files
 environment
-oh-my-zsh-master.tar.gz
+known_hosts
+
+# Ignore files inside Win from *nix
+{{- if eq .chezmoi.os "windows" }}
+.oh-my-zsh
+.aliases
+.bash_profile
+.bashrc
+.envvars
+.profile
+.zprofile
+.zshrc
+{{- end }}
+
+
+# Ignore files inside *nix from Win
+{{- if ne .chezmoi.os "windows" }}
+
+# Ignore files inside WSL
+{{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}
+{{- end }}
+
+{{- end }}
+
