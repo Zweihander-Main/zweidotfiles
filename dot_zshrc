@@ -98,6 +98,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Run the profile no matter what
+source $HOME/.zprofile
+
 # Aliases
 source $HOME/.aliases
 
