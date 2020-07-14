@@ -1,5 +1,9 @@
 # -*-mode:gitignore-*- vim:ft=gitignore
 
+# =================
+#      General
+# =================
+
 # General files
 *.gz
 LICENSE
@@ -15,6 +19,21 @@ README.org
 # .ssh related files
 environment
 known_hosts
+
+
+
+
+# =================
+#     Symlink
+# =================
+
+.gitconfig
+
+
+
+# =================
+#   OS Specific 
+# =================
 
 # Ignore files inside Win from *nix
 {{- if eq .chezmoi.os "windows" }}
@@ -41,6 +60,10 @@ synergy.sgc
 
 {{- end }}
 
+
+# ==========
+#    Old
+# ==========
 
 # Archived files -- no longer used
 synergy.sgc

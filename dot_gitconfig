@@ -1,0 +1,19 @@
+[user]
+	name = Zweihänder
+	email = zweidev@zweihander.me
+	signingkey = 978432F9C4407D27744A5C9E36BFA8D74A79DAD0
+[credential]
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+{{- if eq .chezmoi.os "windows" }}
+[core]
+	autocrlf = true
+[gpg]
+	program = C:/Program Files (x86)/GnuPG/bin/gpg.exe
+{{- end }}
+[alias]
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg = !"git lg1"
