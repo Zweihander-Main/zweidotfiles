@@ -27,9 +27,9 @@ known_hosts
 #     Symlink
 # =================
 
-.gitconfig
-
-
+/doom.d/init.el
+/doom.d/packages.el
+/doom.d/config.el
 
 # =================
 #   OS Specific 
