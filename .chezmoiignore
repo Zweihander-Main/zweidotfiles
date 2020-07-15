@@ -33,11 +33,11 @@ README.org
 
 # Ignore files inside Win from *nix
 {{- if eq .chezmoi.os "windows" }}
-.oh-my-zsh
+/.oh-my-zsh
 .aliases
 .bash_profile
 .bashrc
-.doom.d
+/.doom.d
 .envvars
 .profile
 .zprofile
@@ -47,9 +47,9 @@ README.org
 
 # Ignore files inside *nix from Win
 {{- if ne .chezmoi.os "windows" }}
-.workspacer
+/.workspacer
 synergy.sgc
-/Documents/*
+/Documents
 
 # Ignore files inside WSL
 {{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}
