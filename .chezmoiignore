@@ -17,11 +17,7 @@ README.org
 /.gitmodules
 
 # .ssh related files
-environment
-known_hosts
-
-
-
+/.ssh/environment
 
 # =================
 #     Symlink
@@ -53,6 +49,7 @@ known_hosts
 {{- if ne .chezmoi.os "windows" }}
 .workspacer
 synergy.sgc
+/Documents/*
 
 # Ignore files inside WSL
 {{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}
