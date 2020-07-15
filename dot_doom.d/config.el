@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "Zweihander"
-      user-mail-address "zwei@zweihander.me")
+(setq user-full-name "Zweihänder"
+      user-mail-address "zweidev@zweihander.me")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -19,7 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;; (setq doom-font (font-spec :family "monospace"i :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -30,6 +30,8 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "/mnt/c/Users/Zweihander/Documents/Org")
+(setq org-roam-directory org-directory)
+(setq default-directory org-directory)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -53,7 +55,16 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Setting default directory to org directory
-(setq default-directory org-directory)
+;; ispell configuration
 (setq ispell-list-command "--list")
 (setq ispell-extra-args '("--sug-mode=fast"))
+
+;; (use-package org-journal
+;;  :bind
+;;  ("C-c n j" . org-journal-new-entry)
+;;  :custom
+;;  (org-journal-dir org-roam-directory)
+;;  (org-journal-date-prefix "#+TITLE: ")
+;;  (org-journal-file-format "%Y-%m-%d.org")
+;;  (org-journal-date-format "%A, %d %B %Y"))
+;;  (setq org-journal-enable-agenda-integration t)
