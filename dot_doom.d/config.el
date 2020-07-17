@@ -32,7 +32,8 @@
 (setq org-directory "/mnt/c/Users/Zweihander/Documents/Org")
 (setq org-roam-directory org-directory)
 (setq default-directory org-directory)
-
+(setq deft-directory org-directory)
+(setq org-journal-dir (concat org-directory "/dailies"))
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
@@ -59,12 +60,11 @@
 (setq ispell-list-command "--list")
 (setq ispell-extra-args '("--sug-mode=fast"))
 
-;; (use-package org-journal
-;;  :bind
-;;  ("C-c n j" . org-journal-new-entry)
-;;  :custom
-;;  (org-journal-dir org-roam-directory)
-;;  (org-journal-date-prefix "#+TITLE: ")
-;;  (org-journal-file-format "%Y-%m-%d.org")
-;;  (org-journal-date-format "%A, %d %B %Y"))
-;;  (setq org-journal-enable-agenda-integration t)
+;; Org-roam customization
+(setq org-roam--extract-titles '(title alias))
+(setq org-roam-tag-sources '(prop all-directories))
+
+;; Org journal customization
+(setq org-journal-date-prefix "#+title: ")
+(setq org-journal-file-format "%Y-%m-%d.org")
+(setq org-journal-date-format "%A, %d %B %Y")
