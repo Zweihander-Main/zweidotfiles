@@ -63,8 +63,14 @@
 ;; Org-roam customization
 (setq org-roam--extract-titles '(title alias))
 (setq org-roam-tag-sources '(prop all-directories))
+(setq org-roam-capture-templates
+     '(("d" "default" plain (function org-roam--capture-get-point)
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+title: ${title}\n#+roam_alias: \n#+roam_tags\n- links :: \n\n*  "
+         :unnarrowed t)))
 
-;; Org journal customization
+;; Org-journal customization
 (setq org-journal-date-prefix "#+title: ")
 (setq org-journal-file-format "%Y-%m-%d.org")
 (setq org-journal-date-format "%A, %d %B %Y")
