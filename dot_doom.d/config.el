@@ -67,10 +67,15 @@
      '(("d" "default" plain (function org-roam--capture-get-point)
          "%?"
          :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "#+title: ${title}\n#+roam_alias: \n#+roam_tags\n- links :: \n\n*  "
+         :head "#+title: ${title}\n#+roam_alias: \n#+roam_tags: \n- links :: \n\n* "
          :unnarrowed t)))
 
 ;; Org-journal customization
 (setq org-journal-date-prefix "#+title: ")
 (setq org-journal-file-format "%Y-%m-%d.org")
 (setq org-journal-date-format "%A, %d %B %Y")
+(setq org-journal-enable-agenda-integration t)
+
+;; Deft customization
+(setq deft-use-filter-string-for-filename t)
+(setq deft-recursive t)
