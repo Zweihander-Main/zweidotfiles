@@ -73,6 +73,14 @@
          :unnarrowed t)))
 (custom-set-faces!
   `(org-roam-link :inherit org-link :foreground "dark orange"))
+(after! org-roam
+      (setq org-roam-capture-ref-templates
+            '(("r" "ref" plain (function org-roam-capture--get-point)
+               "%?"
+               :file-name "websites/${slug}"
+               :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n- source :: ${ref}\n- related :: \n\n* "
+               :unnarrowed t))))
+
 
 ;; Org-journal customization
 (setq org-journal-date-prefix "#+TITLE: "
