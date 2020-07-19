@@ -34,6 +34,7 @@
 (setq default-directory org-directory)
 (setq deft-directory org-directory)
 (setq org-journal-dir (concat org-directory "/dailies"))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
@@ -67,11 +68,15 @@
      '(("d" "default" plain (function org-roam--capture-get-point)
          "%?"
          :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "#+title: ${title}\n#+roam_alias: \n#+roam_tags: \n- links :: \n\n* "
+         :head "#+TITLE: ${title}\n#+ROAM_ALIAS: \n#+ROAM_TAGS: \n- related :: \n\n* "
          :unnarrowed t)))
+(custom-set-faces!
+  `(org-roam-link :inherit org-link :foreground "dark orange"))
+(setq org-roam-index-file "index.org")
+
 
 ;; Org-journal customization
-(setq org-journal-date-prefix "#+title: ")
+(setq org-journal-date-prefix "#+TITLE: ")
 (setq org-journal-file-format "%Y-%m-%d.org")
 (setq org-journal-date-format "%A, %d %B %Y")
 (setq org-journal-enable-agenda-integration t)
