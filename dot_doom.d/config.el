@@ -29,9 +29,11 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "/mnt/c/Users/Zweihander/Documents/Org")
-(setq org-roam-directory org-directory)
-(setq default-directory org-directory)
+(setq org-directory "/mnt/c/Users/Zweihander/Documents/Org"
+      org-roam-directory org-directory
+      default-directory org-directory
+      deft-directory org-directory
+      org-journal-dir (concat org-directory "/dailies"))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -56,15 +58,36 @@
 ;; they are implemented.
 
 ;; ispell configuration
-(setq ispell-list-command "--list")
-(setq ispell-extra-args '("--sug-mode=fast"))
+(setq ispell-list-command "--list"
+      ispell-extra-args '("--sug-mode=fast"))
 
-;; (use-package org-journal
-;;  :bind
-;;  ("C-c n j" . org-journal-new-entry)
-;;  :custom
-;;  (org-journal-dir org-roam-directory)
-;;  (org-journal-date-prefix "#+TITLE: ")
-;;  (org-journal-file-format "%Y-%m-%d.org")
-;;  (org-journal-date-format "%A, %d %B %Y"))
-;;  (setq org-journal-enable-agenda-integration t)
+;; Org-roam customization
+(setq org-roam--extract-titles '(title alias)
+      org-roam-tag-sources '(prop all-directories)
+      org-roam-index-file "index.org"
+      org-roam-capture-templates
+      '(("d" "default" plain (function org-roam--capture-get-point)
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+TITLE: ${title}\n#+ROAM_ALIAS: \n#+ROAM_TAGS: \n- related :: \n\n* "
+         :unnarrowed t)))
+(custom-set-faces!
+  `(org-roam-link :inherit org-link :foreground "dark orange"))
+(after! org-roam
+      (setq org-roam-capture-ref-templates
+            '(("r" "ref" plain (function org-roam-capture--get-point)
+               "%?"
+               :file-name "websites/${slug}"
+               :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n- source :: ${ref}\n- related :: \n\n* "
+               :unnarrowed t))))
+
+
+;; Org-journal customization
+(setq org-journal-date-prefix "#+TITLE: "
+      org-journal-file-format "%Y-%m-%d.org"
+      org-journal-date-format "%A, %d %B %Y"
+      org-journal-enable-agenda-integration t)
+
+;; Deft customization
+(setq deft-use-filter-string-for-filename t
+      deft-recursive t)
