@@ -1,0 +1,25 @@
+{
+    "emmet.triggerExpansionOnTab": true,
+    "editor.fontFamily": "Source Code Pro, Consolas, 'Courier New', monospace",
+    "editor.insertSpaces": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "editor.rulers": [
+    80
+    ],
+    "editor.overviewRulerBorder": false,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.scrollbar.horizontalScrollbarSize": 10,
+    "editor.scrollbar.verticalScrollbarSize": 0,
+    "files.trimTrailingWhitespace": true,
+    "window.zoomLevel": 0.2,
+    "editor.minimap.showSlider": "always",
+    "editor.minimap.maxColumn": 80,
+    "editor.minimap.enabled": true,
+    "editor.fontSize": 15,
+    "workbench.activityBar.visible": true,
+    "workbench.colorTheme": "Monokai",
+"workbench.fontAliasing": "antialiased",
+"git.autofetch": true,
+"update.enableWindowsBackgroundUpdates": false,
+"update.mode": "none"
+}

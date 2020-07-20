@@ -26,6 +26,7 @@ README.org
 /doom.d/init.el
 /doom.d/packages.el
 /doom.d/config.el
+Roaming/VSCodium/User/settings.json
 
 # =================
 #   OS Specific 
@@ -50,6 +51,7 @@ README.org
 /.workspacer
 synergy.sgc
 /Documents
+/AppData
 
 # Ignore files inside WSL
 {{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}
