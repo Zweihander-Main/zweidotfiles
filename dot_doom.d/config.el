@@ -81,7 +81,6 @@
                :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n- source :: ${ref}\n- related :: \n\n* "
                :unnarrowed t))))
 
-
 ;; Org-journal customization
 (setq org-journal-date-prefix "#+TITLE: "
       org-journal-file-format "%Y-%m-%d.org"
@@ -91,3 +90,11 @@
 ;; Deft customization
 (setq deft-use-filter-string-for-filename t
       deft-recursive t)
+
+;; Enable emacs to open links in Windows
+(let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
+      (cmd-args '("/c" "start")))
+    (when (file-exists-p cmd-exe)
+      (setq browse-url-generic-program  cmd-exe
+            browse-url-generic-args     cmd-args
+            browse-url-browser-function 'browse-url-generic)))
