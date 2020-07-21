@@ -1,0 +1,47 @@
+// SublimeLinter Settings - User
+{
+	"show_panel_on_save": "never",
+	"linters": {
+		"jshint": {
+			"excludes": "*/*.hbs",
+			"lint_mode": "manual"
+		},
+		"eslint": {
+			"lint_mode": "background",
+			"selector": "source.ts, source.js, source.tsx"
+		}
+	},
+	"syntax_map": {
+		"coffeescript (gulpfile)": "coffeescript",
+		"html (django)": "html",
+		"html (rails)": "html",
+		"html 5": "html",
+		"javascript (babel)": "javascript",
+		"javascriptnext": "javascript",
+		"javascript (eslint)": "javascript",
+		"javascript (gruntfile)": "javascript",
+		"javascript (gulpfile)": "javascript",
+		"javascript (postcss)": "javascript",
+		"javascript (puglint)": "javascript",
+		"javascript (stylelint)": "javascript",
+		"javascript (webpack)": "javascript",
+		"typescript": "javascript",
+		"json (babel)": "json",
+		"json (bower)": "json",
+		"json (composer)": "json",
+		"json (eslint)": "json",
+		"json (npm)": "json",
+		"json (postcss)": "json",
+		"json (puglint)": "json",
+		"json (settings)": "json",
+		"json (stylelint)": "json",
+		"json (sublime)": "json",
+		"json (tern js)": "json"
+	},
+	"paths": {
+	    "linux": [],
+	    "osx": [],
+	    "windows": ["C:\\Program Files (x86)\\Lua\\5.1"]
+	}
+
+}

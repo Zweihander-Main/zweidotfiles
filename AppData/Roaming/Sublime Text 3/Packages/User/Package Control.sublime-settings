@@ -1,0 +1,52 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+		"BracketHighlighter",
+		"GraphQL",
+		"JSCustom",
+		"JsPrettier"
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"Anaconda",
+		"ApacheConf",
+		"AutoFileName",
+		"AutoHotkey",
+		"BracketHighlighter",
+		"Color Highlight",
+		"Compare Side-By-Side",
+		"Dockerfile Syntax Highlighting",
+		"DotENV",
+		"DoxyDoxygen",
+		"EditorConfig",
+		"Emmet",
+		"Git",
+		"GraphQL",
+		"Handlebars",
+		"HTML-CSS-JS Prettify",
+		"JavaScript & NodeJS Snippets",
+		"JavaScript Completions",
+		"JavaScript Refactor",
+		"JSCustom",
+		"JsPrettier",
+		"MarkdownEditing",
+		"MarkdownPreview",
+		"Package Control",
+		"PowerShell",
+		"Quokka",
+		"SideBarEnhancements",
+		"SublimeCodeIntel",
+		"SublimeLinter",
+		"SublimeLinter-eslint",
+		"SublimeLinter-jshint",
+		"SublimeLinter-lua",
+		"SublimeLinter-stylelint",
+		"Sync View Scroll",
+		"Theme - Soda",
+		"TodoReview",
+		"TOML",
+		"TypeScript"
+	]
+}

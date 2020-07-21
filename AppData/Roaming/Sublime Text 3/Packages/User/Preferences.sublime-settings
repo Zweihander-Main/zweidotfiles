@@ -1,0 +1,84 @@
+{
+	"added_words":
+	[
+		"config",
+		"sanitization",
+		"autocomplete",
+		"param",
+		"ie",
+		"App",
+		"Preload",
+		"dropdown",
+		"ect",
+		"favorited",
+		"preload",
+		"debounce",
+		"Debounces",
+		"debounced",
+		"preloading",
+		"init",
+		"latin",
+		"app",
+		"mouseenter",
+		"mouseleave",
+		"plugin",
+		"inline",
+		"subcontainer",
+		"tooltips",
+		"tooltip",
+		"autoupdate",
+		"dropdowns",
+		"filesystem",
+		"netlify",
+		"javascript"
+	],
+	"always_show_minimap_viewport": true,
+	"binary_file_patterns":
+	[
+		"*.jpg",
+		"*.jpeg",
+		"*.png",
+		"*.gif",
+		"*.ttf",
+		"*.tga",
+		"*.dds",
+		"*.ico",
+		"*.eot",
+		"*.pdf",
+		"*.swf",
+		"*.jar",
+		"*.zip",
+		"node_modules/**",
+		"bower_components/**"
+	],
+	"caret_style": "blink",
+	"color_scheme": "Packages/Color Scheme - Quokka/Monokai (SL).tmTheme",
+	"draw_minimap_border": false,
+	"ensure_newline_at_eof_on_save": true,
+	"fade_fold_buttons": false,
+	"font_face": "Source Code Pro",
+	"font_options":
+	[
+		"subpixel_antialias"
+	],
+	"font_size": 13,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+		"Quokka",
+		"TypeScriptDev"
+	],
+	"ignored_words":
+	[
+	],
+	"overlay_scroll_bars": "enabled",
+	"rulers":
+	[
+		80
+	],
+	"spell_check": true,
+	"spelling_selector": "markup.raw, source string.quoted - punctuation - meta.preprocessor.include, source comment - source comment.block.preprocessor, -(source, constant, keyword, storage, support, variable, markup.underline.link, meta.tag)",
+	"theme": "Soda Dark 3.sublime-theme",
+	"trim_trailing_white_space_on_save": true
+}

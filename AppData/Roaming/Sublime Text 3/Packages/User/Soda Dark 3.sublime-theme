@@ -1,0 +1,29 @@
+[
+    {
+        "class": "minimap_control",
+        "settings": ["always_show_minimap_viewport"],
+        "viewport_color": [255, 255, 255, 35],
+        "viewport_opacity": 0.7,
+    },
+
+    {
+        "class": "minimap_control",
+        "attributes": ["hover"],
+        "settings": ["always_show_minimap_viewport"],
+        "viewport_opacity": { "target": 1, "speed": 20.0, "interpolation": "smoothstep" },
+    },
+
+    {
+        "class": "minimap_control",
+        "settings": ["!always_show_minimap_viewport"],
+        "viewport_color": [255, 255, 255, 35],
+        "viewport_opacity": { "target": 0.7, "speed": 4.0, "interpolation": "smoothstep" },
+    },
+
+    {
+        "class": "minimap_control",
+        "attributes": ["hover"],
+        "settings": ["!always_show_minimap_viewport"],
+        "viewport_opacity": { "target": 1, "speed": 20.0, "interpolation": "smoothstep" },
+    }
+]

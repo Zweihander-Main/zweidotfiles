@@ -1,0 +1,9 @@
+{
+	"prettier_options": {
+		// Fit code within this line limit
+		"printWidth": 80,
+
+		// If true, will use single instead of double quotes
+		"singleQuote": true
+	}
+}

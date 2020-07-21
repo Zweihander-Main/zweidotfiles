@@ -1,0 +1,7 @@
+{
+	"extensions":
+	[
+		"ini"
+	],
+	"ignored_packages": ["Color Highlight", "BracketHighlighter", "ColorHighlight", "Vintage"]
+}

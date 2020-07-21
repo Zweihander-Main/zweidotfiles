@@ -1,0 +1,11 @@
+{
+	"extensions":
+	[
+		"jsx",
+		"js"
+	],
+	"rulers":
+	[
+		80
+	]
+}

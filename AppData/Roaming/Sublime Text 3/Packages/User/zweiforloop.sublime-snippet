@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[
+for (let i = 0, len=${1:arr}.length; i<len; i++) {
+	$0
+}
+]]></content>
+<tabTrigger>for</tabTrigger>
+<scope> source.ts, source.js, source.tsx, source.jsx </scope>
+<description> zwei for loop </description>
+</snippet>
