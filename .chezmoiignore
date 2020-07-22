@@ -60,6 +60,16 @@ synergy.sgc
 
 {{- end }}
 
+# =================
+#   Comp Specific
+# =================
+
+# Ignore Sublime + VSCode for non-work computer
+{{- if eq .chezmoi.hostname "Aethelweard" }}
+AppData/Roaming/Sublime Text 3
+AppData/Roaming/VSCodium
+{{- end }}
+
 
 # ==========
 #    Old
