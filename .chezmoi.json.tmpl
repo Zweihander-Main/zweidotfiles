@@ -1,5 +1,9 @@
 {{- $gpgrecipient := promptString "gpg recipient" }}
+{{- $enablessh := promptString "true/false to enable ssh?" }}
 {
+    "data": {
+        "enablessh": "{{ $enablessh }}"
+    },
     "gpg": {
         "recipient": "{{ $gpgrecipient }}" 
     }

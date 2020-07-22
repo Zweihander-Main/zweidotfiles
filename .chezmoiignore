@@ -19,6 +19,11 @@ README.org
 # .ssh related files
 /.ssh/environment
 
+# import any ssh?
+{{- if ne .enablessh "true" }}
+/.ssh
+{{- end }} 
+
 # =================
 #     Symlink
 # =================
