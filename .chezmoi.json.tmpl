@@ -1,8 +1,10 @@
 {{- $gpgrecipient := promptString "gpg recipient" }}
 {{- $enablessh := promptString "true/false to enable ssh?" }}
+{{- $org_directory := promptString "directory for org files" }}
 {
     "data": {
-        "enablessh": "{{ $enablessh }}"
+        "enablessh": "{{ $enablessh }}",
+        "org_directory": "{{ $org_directory }}"
     },
     "gpg": {
         "recipient": "{{ $gpgrecipient }}" 

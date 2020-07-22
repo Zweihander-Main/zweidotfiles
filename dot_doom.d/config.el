@@ -27,10 +27,11 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "/mnt/c/Users/Zweihander/Documents/Org"
-      org-roam-directory org-directory
+;; Directories
+;; Load machine specific dirs
+(load! "~/.doom.d/machine_config")
+
+(setq org-roam-directory org-directory
       default-directory org-directory
       deft-directory org-directory
       org-journal-dir (concat org-directory "/dailies"))
