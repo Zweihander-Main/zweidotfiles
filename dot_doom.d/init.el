@@ -1,4 +1,5 @@
-;;; init.el --- lexical binding
+;;; init.el --- located at $DOOMDIR/init.el
+;;; Commentary:
 
 ;; This file controls what Doom modules are enabled and what order they load
 ;; in. Remember to run 'doom sync' after modifying it!
@@ -178,3 +179,5 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+;;; init.el ends here
