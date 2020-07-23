@@ -52,4 +52,5 @@
 
 ;;; Code:
 (package! org-roam-server)
+(package! anki-editor)
 ;;; packages.el ends here

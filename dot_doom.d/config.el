@@ -107,7 +107,6 @@
 ;; Org-roam-server
 (use-package! org-roam-server
   :after org-roam
-  :ensure t
   :config
   (setq org-roam-server-host "127.0.0.1"
         org-roam-server-port 38080
@@ -124,6 +123,21 @@
       org-journal-file-format "%Y-%m-%d.org"
       org-journal-date-format "%A, %d %B %Y"
       org-journal-enable-agenda-integration t)
+
+;; Anki-editor
+(use-package! anki-editor
+  :after org
+  :config
+  (setq anki-editor-anki-connect-listening-port 38040))
+
+;; Anki-editor, filter out <p> tags
+(defun filter-out-p (str _ _)
+  (replace-regexp-in-string "\n<p>\\|</p>\n\\|<p>\\|</p>" "" str))
+(setq anki-editor--ox-anki-html-backend
+  (org-export-create-backend
+    :parent 'html
+    :filters
+      '((:filter-paragraph . filter-out-p))))
 
 ;; Deft customization
 (setq deft-use-filter-string-for-filename t
