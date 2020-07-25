@@ -29,8 +29,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "Zweihänder"
-      user-mail-address "zweidev@zweihander.me")
+(setq user-full-name "Zweihänder" user-mail-address
+      "zweidev@zweihander.me")
 
 
 ;; ===========
@@ -55,6 +55,10 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+
 
 ;; ===============
 ;;   Directories
@@ -64,13 +68,12 @@
 (load! "~/.doom.d/machine_config.el")
 ;; Set all directories around org
 (setq org-roam-directory org-directory
-      default-directory org-directory
-      deft-directory org-directory
-      org-journal-dir (concat org-directory "/dailies"))
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+      default-directory
+      org-directory
+      deft-directory
+      org-directory
+      org-journal-dir
+      (concat org-directory "/dailies"))
 
 
 ;; ===============
@@ -79,77 +82,110 @@
 
 ;; ispell configuration
 (setq ispell-list-command "--list"
-      ispell-extra-args '("--sug-mode=fast"))
+      ispell-extra-args
+      '("--sug-mode=fast"))
 
 ;; General org configuration
 (setq org-hide-emphasis-markers t)
 
+;; Org-agenda
+(after! org
+  (require 'find-lisp)
+  (setq zwei/org-agenda-directory (concat org-roam-directory "/gtd/")
+        org-agenda-files
+        (find-lisp-find-files zwei/org-agenda-directory
+                              "\.org$")
+        +org-capture-todo-file
+        (concat zwei/org-agenda-directory "inbox.org")
+        org-capture-templates
+        `(("i" "inbox"
+           entry
+           (file ,+org-capture-todo-file)
+           "* TODO %?")
+          ("c" "org-protocol-capture"
+           entry
+           (file ,+org-capture-todo-file)
+           "* TODO [[%:link][%:description]]\n\n %i"
+           :immediate-finish t)
+          ("w" "Weekly Review"
+           entry
+           (file+olp+datetree ,(concat zwei/org-agenda-directory "reviews.org"))
+           (file ,(concat zwei/org-agenda-directory "templates/weekly_review.org"))))))
+
 ;; Org-roam customization
 (setq org-roam--extract-titles '(title alias)
-      org-roam-tag-sources '(prop all-directories)
-      org-roam-index-file "index.org"
+      org-roam-tag-sources
+      '(prop all-directories)
+      org-roam-index-file
+      (concat org-roam-directory "/20200724000434-index.org")
       org-roam-capture-templates
-      '(("d" "default" plain (function org-roam--capture-get-point)
+      '(("d" "default"
+         plain
+         (function org-roam--capture-get-point)
          "%?"
          :file-name "%<%Y%m%d%H%M%S>-${slug}"
          :head "#+TITLE: ${title}\n#+ROAM_ALIAS: \n#+ROAM_TAGS: \n- related :: \n\n* "
          :unnarrowed t)))
-(custom-set-faces!
-  `(org-roam-link :inherit org-link :foreground "dark orange"))
+(custom-set-faces! `(org-roam-link :inherit org-link
+                                   :foreground "dark orange"))
 (after! org-roam
-      (setq org-roam-capture-ref-templates
-            '(("r" "ref" plain (function org-roam-capture--get-point)
-               "%?"
-               :file-name "websites/${slug}"
-               :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n- source :: ${ref}\n- related :: \n\n* "
-               :unnarrowed t))))
+  (setq org-roam-capture-ref-templates '(("r" "ref"
+                                          plain
+                                          (function org-roam-capture--get-point)
+                                          "%?"
+                                          :file-name "websites/${slug}"
+                                          :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n- source :: ${ref}\n- related :: \n\n* "
+                                          :unnarrowed t))))
 
 ;; Org-roam-server
 (use-package! org-roam-server
   :after org-roam
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 38080
-        org-roam-server-export-inline-images t
-        org-roam-server-authenticate nil
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20))
+  :config (setq org-roam-server-host "127.0.0.1" org-roam-server-port
+                38080 org-roam-server-export-inline-images
+                t org-roam-server-authenticate nil org-roam-server-network-poll
+                t org-roam-server-network-arrows nil org-roam-server-network-label-truncate
+                t org-roam-server-network-label-truncate-length
+                60 org-roam-server-network-label-wrap-length
+                20))
 
 ;; Org-journal customization
 (setq org-journal-date-prefix "#+TITLE: "
-      org-journal-file-format "%Y-%m-%d.org"
-      org-journal-date-format "%A, %d %B %Y"
-      org-journal-enable-agenda-integration t)
+      org-journal-file-format "%Y-%m-%d.org" org-journal-date-format
+      "%A, %d %B %Y" org-journal-enable-agenda-integration
+      t)
 
 ;; Anki-editor
 (use-package! anki-editor
   :after org
-  :config
-  (setq anki-editor-anki-connect-listening-port 38040))
+  :config (setq anki-editor-anki-connect-listening-port
+                38040))
 
-;; Anki-editor, filter out <p> tags
 (defun filter-out-p (str _ _)
-  (replace-regexp-in-string "\n<p>\\|</p>\n\\|<p>\\|</p>" "" str))
-(setq anki-editor--ox-anki-html-backend
-  (org-export-create-backend
-    :parent 'html
-    :filters
-      '((:filter-paragraph . filter-out-p))))
+  "Filter out <p> tags from STR when exporting Anki notes."
+  (replace-regexp-in-string "\n<p>\\|</p>\n\\|<p>\\|</p>"
+                            "" str))
+(setq anki-editor--ox-anki-html-backend (org-export-create-backend :parent 'html
+                                                                   :filters '((:filter-paragraph . filter-out-p))))
 
 ;; Deft customization
-(setq deft-use-filter-string-for-filename t
-      deft-recursive t)
+(setq deft-use-filter-string-for-filename
+      t deft-recursive t)
 
 ;; Enable emacs to open links in Windows
 (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
       (cmd-args '("/c" "start")))
-    (when (file-exists-p cmd-exe)
-      (setq browse-url-generic-program  cmd-exe
-            browse-url-generic-args     cmd-args
-            browse-url-browser-function 'browse-url-generic)))
+  (when (file-exists-p cmd-exe)
+    (setq browse-url-generic-program cmd-exe browse-url-generic-args
+          cmd-args browse-url-browser-function 'browse-url-generic)))
+
+
+;; ================
+;;   Code related
+;; ================
+
+;; Semantic Refactor (for lisp formatting)
+(use-package! srefactor)
+(use-package! srefactor-lisp :after srefactor)
 
 ;;; config.el ends here
 (custom-set-variables
