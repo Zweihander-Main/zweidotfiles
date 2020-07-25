@@ -158,14 +158,11 @@
 (use-package! anki-editor
   :after org
   :config (setq anki-editor-anki-connect-listening-port
-                38040))
-
-(defun filter-out-p (str _ _)
-  "Filter out <p> tags from STR when exporting Anki notes."
-  (replace-regexp-in-string "\n<p>\\|</p>\n\\|<p>\\|</p>"
-                            "" str))
-(setq anki-editor--ox-anki-html-backend (org-export-create-backend :parent 'html
-                                                                   :filters '((:filter-paragraph . filter-out-p))))
+                38040)(defun filter-out-p (str _ _)
+                "Filter out <p> tags from STR when exporting Anki notes."
+                (replace-regexp-in-string "\n<p>\\|</p>\n\\|<p>\\|</p>"
+                                          "" str))(setq anki-editor--ox-anki-html-backend (org-export-create-backend :parent 'html
+                                          :filters '((:filter-paragraph . filter-out-p)))))
 
 ;; Deft customization
 (setq deft-use-filter-string-for-filename
