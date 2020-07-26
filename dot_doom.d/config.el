@@ -62,7 +62,8 @@
 (custom-set-faces!
   '(org-roam-link :inherit org-link
                   :foreground "DarkOrange3")
-  '(line-number :family "Iosevka Term SS09"))
+  '(line-number :family "Iosevka Term SS09")
+  '(line-number-current-line :inherit line-number))
 
 
 ;; ===============
