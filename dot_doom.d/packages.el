@@ -53,5 +53,5 @@
 ;;; Code:
 (package! org-roam-server)
 (package! anki-editor)
-(package! srefactor)
+(package! format-all)
 ;;; packages.el ends here
