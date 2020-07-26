@@ -40,12 +40,29 @@
 ;;   General + Theming
 ;; ======================
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
+(load! "lisp/org-variable-pitch.el")
+
 (setq user-full-name "Zweihänder"
       user-mail-address "zweidev@zweihander.me"
-      doom-theme 'doom-one
+      doom-theme 'doom-tomorrow-night
+      doom-font (font-spec :family "Iosevka SS09 Extended" :size 15)
+      doom-unicode-font (font-spec :family "Iosevka Term SS09 Extended" :size 15)
+      doom-variable-pitch-font (font-spec :family "Iosevka Aile" :size 16)
+      doom-serif-font doom-variable-pitch-font
+      org-variable-pitch-fixed-font "Iosevka SS09 Extended"
+      org-ellipsis "▼"
       display-line-numbers-type t)
+
+(doom-themes-org-config)
+(doom-init-extra-fonts-h)
+
+(add-hook! 'org-mode-hook #'+org-pretty-mode)
+(add-hook! 'org-mode-hook 'org-variable-pitch-minor-mode)
+
+(custom-set-faces!
+  '(org-roam-link :inherit org-link
+                  :foreground "DarkOrange3")
+  '(line-number :family "Iosevka Term SS09"))
 
 
 ;; ===============
@@ -105,9 +122,6 @@
          :file-name "%<%Y%m%d%H%M%S>-${slug}"
          :head "#+TITLE: ${title}\n#+ROAM_ALIAS: \n#+ROAM_TAGS: \n- related :: \n\n* "
          :unnarrowed t)))
-(custom-set-faces!
-  `(org-roam-link :inherit org-link
-                  :foreground "dark orange"))
 (after! org-roam
   (setq org-roam-capture-ref-templates
         '(("r" "ref"
@@ -172,21 +186,3 @@
 (use-package! format-all)
 
 ;;; config.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (org-roam-server))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-roam-link ((t (:inherit org-link :foreground "dark orange"))))
- '(outline-1 ((t (:weight normal))))
- '(outline-2 ((t (:weight normal))))
- '(outline-3 ((t (:weight normal))))
- '(outline-4 ((t (:weight normal))))
- '(outline-5 ((t (:weight normal))))
- '(outline-6 ((t (:weight normal)))))

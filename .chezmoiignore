@@ -31,6 +31,7 @@ README.org
 /doom.d/init.el
 /doom.d/packages.el
 /doom.d/config.el
+/doom.d/lisp/org-variable-pitch.el
 Roaming/VSCodium/User/settings.json
 Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-build,sublime-snippet}
 
