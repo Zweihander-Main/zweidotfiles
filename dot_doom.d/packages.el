@@ -54,4 +54,5 @@
 (package! org-roam-server)
 (package! anki-editor)
 (package! format-all)
+(package! org-clock-convenience)
 ;;; packages.el ends here
