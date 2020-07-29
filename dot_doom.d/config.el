@@ -117,11 +117,28 @@
            (file+olp+datetree ,(concat zwei/org-agenda-directory "reviews.org"))
            (file ,(concat zwei/org-agenda-directory "templates/weekly_review.org")))))
 
+  (defun zwei/org-agenda-bulk-mark-regexp-category (regexp)
+    "Mark entries whose category matches REGEXP for future agenda bulk action."
+    (interactive "sMark entries with category matching regexp: ")
+    (let ((entries-marked 0) txt-at-point)
+      (save-excursion
+        (goto-char (point-min))
+        (goto-char (next-single-property-change (point) 'org-hd-marker))
+        (while (and (re-search-forward regexp nil t)
+                    (setq category-at-point
+                          (get-text-property (match-beginning 0) 'org-category)))
+          (if (get-char-property (point) 'invisible)
+              (beginning-of-line 2)
+            (when (string-match-p regexp category-at-point)
+              (setq entries-marked (1+ entries-marked))
+              (call-interactively 'org-agenda-bulk-mark)))))
+      (unless entries-marked
+        (message "No entry matching this regexp."))))
 
   (defun zwei/org-process-inbox ()
     "Called in org-agenda-mode, processes all inbox items."
     (interactive)
-    (org-agenda-bulk-mark-regexp "inbox:")
+    (zwei/org-agenda-bulk-mark-regexp-category "inbox")
     (jethro/bulk-process-entries))
 
   (defun zwei/org-inbox-capture ()
