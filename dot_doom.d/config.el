@@ -117,11 +117,19 @@
            (file+olp+datetree ,(concat zwei/org-agenda-directory "reviews.org"))
            (file ,(concat zwei/org-agenda-directory "templates/weekly_review.org")))))
 
+
+  (defun zwei/org-process-inbox ()
+    "Called in org-agenda-mode, processes all inbox items."
+    (interactive)
+    (org-agenda-bulk-mark-regexp "inbox:")
+    (jethro/bulk-process-entries))
+
   (defun zwei/org-inbox-capture ()
     "Shortcut to org-capture->inbox."
     (interactive)
     "Capture a an inbox task."
     (org-capture nil "i"))
+
   (map! :leader
         (:prefix-map ("n" . "notes")
          :desc "Inbox entry" "i" #'zwei/org-inbox-capture))
@@ -129,7 +137,7 @@
   (map! :after org-agenda
         :map org-agenda-mode-map
         :localleader
-        "p" #'jethro/org-process-inbox)
+        "p" #'zwei/org-process-inbox)
 
   ;; Journal
   (setq org-journal-date-prefix "#+TITLE: "
@@ -166,12 +174,6 @@
 
 (defvar jethro/org-agenda-bulk-process-key ?f
   "Default key for bulk processing inbox items.")
-
-(defun jethro/org-process-inbox ()
-  "Called in org-agenda-mode, processes all inbox items."
-  (interactive)
-  (org-agenda-bulk-mark-regexp "inbox:")
-  (jethro/bulk-process-entries))
 
 (defvar jethro/org-current-effort "1:00"
   "Current effort for agenda items.")
