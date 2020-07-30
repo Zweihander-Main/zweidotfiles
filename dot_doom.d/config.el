@@ -116,8 +116,41 @@
            :immediate-finish t)
           ("w" "Weekly Review"
            entry
+<<<<<<< HEAD
            (file+olp+datetree ,(concat zwei/org-agenda-directory "/reviews.org"))
            (file ,(concat zwei/org-agenda-directory "/templates/weekly_review.org")))))
+=======
+           (file+olp+datetree ,(concat zwei/org-agenda-directory "reviews.org"))
+           (file ,(concat zwei/org-agenda-directory "templates/weekly_review.org")))))
+
+
+  (defun zwei/org-process-inbox ()
+    "Called in org-agenda-mode, processes all inbox items."
+    (interactive)
+    (org-agenda-bulk-mark-regexp "inbox:")
+    (jethro/bulk-process-entries))
+
+  (defun zwei/org-inbox-capture ()
+    "Shortcut to org-capture->inbox."
+    (interactive)
+    "Capture a an inbox task."
+    (org-capture nil "i"))
+
+  (map! :leader
+        (:prefix-map ("n" . "notes")
+         :desc "Inbox entry" "i" #'zwei/org-inbox-capture))
+
+  (map! :after org-agenda
+        :map org-agenda-mode-map
+        :localleader
+        "p" #'zwei/org-process-inbox)
+
+  ;; Journal
+  (setq org-journal-date-prefix "#+TITLE: "
+        org-journal-file-format "%Y-%m-%d.org"
+        org-journal-date-format "%A, %d %B %Y"
+        org-journal-enable-agenda-integration t)
+>>>>>>> 1d88b4bf8018bbc3f8d09e09ab104abca7cd87f7
 
   ;; Logging
   (setq org-log-done 'time
@@ -294,7 +327,74 @@
 (defvar jethro/org-agenda-bulk-process-key ?f
   "Default key for bulk processing inbox items.")
 
+<<<<<<< HEAD
 (setq org-agenda-bulk-custom-functions `((,jethro/org-agenda-bulk-process-key zwei/org-agenda-process-inbox-item)))
+=======
+(defvar jethro/org-current-effort "1:00"
+  "Current effort for agenda items.")
+
+(defun jethro/my-org-agenda-set-effort (effort)
+  "Set the EFFORT property for the current headline."
+  (interactive
+   (list (read-string (format "Effort [%s]: " jethro/org-current-effort) nil nil jethro/org-current-effort)))
+  (setq jethro/org-current-effort effort)
+  (org-agenda-check-no-diary)
+  (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+                       (org-agenda-error)))
+         (buffer (marker-buffer hdmarker))
+         (pos (marker-position hdmarker))
+         (inhibit-read-only t)
+         newhead)
+    (org-with-remote-undo buffer
+      (with-current-buffer buffer
+        (widen)
+        (goto-char pos)
+        (org-show-context 'agenda)
+        (funcall-interactively 'org-set-effort nil jethro/org-current-effort)
+        (end-of-line 1)
+        (setq newhead (org-get-heading)))
+      (org-agenda-change-all-lines newhead hdmarker))))
+
+(defun jethro/org-agenda-process-inbox-item ()
+  "Process a single item in the agenda."
+  (org-with-wide-buffer
+   (org-agenda-set-tags)
+   (org-agenda-priority)
+   (call-interactively 'jethro/my-org-agenda-set-effort)
+   (org-agenda-refile nil nil t)))
+
+(defun jethro/bulk-process-entries ()
+  "Bulk process entries in agenda."
+  (if (not (null org-agenda-bulk-marked-entries))
+      (let ((entries (reverse org-agenda-bulk-marked-entries))
+            (processed 0)
+            (skipped 0))
+        (dolist (e entries)
+          (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
+            (if (not pos)
+                (progn (message "Skipping removed entry at %s" e)
+                       (cl-incf skipped))
+              (goto-char pos)
+              (let (org-loop-over-headlines-in-active-region) (funcall 'jethro/org-agenda-process-inbox-item))
+              ;; `post-command-hook' is not run yet.  We make sure any
+              ;; pending log note is processed.
+              (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
+                        (memq 'org-add-log-note post-command-hook))
+                (org-add-log-note))
+              (cl-incf processed))))
+        (org-agenda-redo)
+        (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
+        (message "Acted on %d entries%s%s"
+                 processed
+                 (if (= skipped 0)
+                     ""
+                   (format ", skipped %d (disappeared before their turn)"
+                           skipped))
+                 (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
+
+
+(setq org-agenda-bulk-custom-functions `((,jethro/org-agenda-bulk-process-key jethro/org-agenda-process-inbox-item)))
+>>>>>>> 1d88b4bf8018bbc3f8d09e09ab104abca7cd87f7
 
 (defun jethro/set-todo-state-next ()
   "Visit each parent task and change NEXT states to TODO."
