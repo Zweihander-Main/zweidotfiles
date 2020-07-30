@@ -71,13 +71,19 @@
 ;;   Directories
 ;; ===============
 
-;; Load machine specific directories
+;; Load machine specific directories which includes org-directory
 (load! "~/.doom.d/machine_config.el")
 ;; Set all directories around org
-(setq org-roam-directory org-directory
-      default-directory org-directory
+(setq default-directory org-directory
+      org-roam-directory (concat org-directory "/zettel")
       deft-directory org-roam-directory
       org-journal-dir (concat org-directory "/dailies"))
+
+(defvar zwei/org-agenda-directory (concat org-directory "/gtd")
+  "Directory for GTD/work/agenda sytem.")
+
+(defvar zwei/org-agenda-todo-file (concat zwei/org-agenda-directory "/inbox.org")
+  "Inbox file for quickly capturing ideas/tasks.")
 
 
 ;; ===============
@@ -85,23 +91,19 @@
 ;; ===============
 
 ;; ispell configuration
-(setq ispell-list-command "--list"
-      ispell-extra-args '("--sug-mode=fast"))
+(after! ispell
+  :config
+  (setq ispell-list-command "--list"
+        ispell-extra-args '("--sug-mode=fast")))
 
-;; General org configuration
-(setq org-hide-emphasis-markers t)
-
-;; Org (journal, agenda, ect.)
+;; Org
 (after! org
-  ;; Agenda and capture
-  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil " ")))
-  (require 'find-lisp)
-  (setq zwei/org-agenda-directory (concat org-roam-directory "/gtd/")
-        org-agenda-files (find-lisp-find-files zwei/org-agenda-directory "\.org$")
-        +org-capture-todo-file (concat zwei/org-agenda-directory "inbox.org")
-        org-agenda-start-with-log-mode t
-        org-agenda-block-separator nil
-        org-fast-tag-selection-single-key t
+  :config
+  ;; General
+  (setq org-hide-emphasis-markers t)
+
+  ;; Capture
+  (setq +org-capture-todo-file zwei/org-agenda-todo-file
         org-capture-templates
         `(("i" "inbox"
            entry
@@ -114,8 +116,72 @@
            :immediate-finish t)
           ("w" "Weekly Review"
            entry
-           (file+olp+datetree ,(concat zwei/org-agenda-directory "reviews.org"))
-           (file ,(concat zwei/org-agenda-directory "templates/weekly_review.org")))))
+           (file+olp+datetree ,(concat zwei/org-agenda-directory "/reviews.org"))
+           (file ,(concat zwei/org-agenda-directory "/templates/weekly_review.org")))))
+
+  ;; Logging
+  (setq org-log-done 'time
+        org-log-into-drawer t)
+
+  ;; Tagging -- currently used for just where tasks take place, not status
+  (setq org-tag-alist '((:startgroup . "place")
+                        ("@work" . ?w)
+                        ("@play" . ?p)
+                        ("@down" . ?d)
+                        ("@end" . ?e)
+                        (:endgroup . "place"))
+        org-fast-tag-selection-single-key t)
+
+
+  ;; Filing
+  (setq org-refile-allow-creating-parent-nodes 'confirm
+        org-refile-targets '(("next.org" :level . 0)
+                             ("someday.org" :level . 0)
+                             ("work.org" :level . 0)
+                             ("reading.org" :level . 0 )
+                             ("projects.org" :maxlevel . 1))))
+
+;; Org-journal
+(after! org-journal
+  :config
+  (setq org-journal-date-prefix "#+TITLE: "
+        org-journal-file-format "%Y-%m-%d.org"
+        org-journal-date-format "%A, %d %B %Y"
+        org-journal-enable-agenda-integration t))
+
+;; Org-agenda
+(after! org-agenda
+  :config
+  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil " ")))
+  (require 'find-lisp)
+  (setq org-agenda-files (find-lisp-find-files zwei/org-agenda-directory "\.org$")
+        org-agenda-start-with-log-mode t
+        org-agenda-block-separator nil
+        org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)"
+        org-agenda-custom-commands `((" " "Agenda"
+                                      ((agenda ""
+                                               ((org-agenda-span 'week)
+                                                (org-deadline-warning-days 365)))
+                                       (todo "TODO"
+                                             ((org-agenda-overriding-header "To Refile")
+                                              (org-agenda-files '(,zwei/org-agenda-todo-file))))
+                                       (todo "TODO"
+                                             ((org-agenda-overriding-header "Emails")
+                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "/emails.org")))))
+                                       (todo "NEXT"
+                                             ((org-agenda-overriding-header "In Progress")
+                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "/someday.org")
+                                                                  ,(concat zwei/org-agenda-directory "/projects.org")
+                                                                  ,(concat zwei/org-agenda-directory "/next.org")))
+                                              ))
+                                       (todo "TODO"
+                                             ((org-agenda-overriding-header "Projects")
+                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "/projects.org")
+                                                                  ,(concat zwei/org-agenda-directory "/work.org")))))
+                                       (todo "TODO"
+                                             ((org-agenda-overriding-header "One-off Tasks")
+                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "/next.org")))
+                                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))))))
 
   (defun zwei/org-agenda-bulk-mark-regexp-category (regexp)
     "Mark entries whose category matches REGEXP for future agenda bulk action."
@@ -135,7 +201,7 @@
       (unless entries-marked
         (message "No entry matching this regexp."))))
 
-  (defun zwei/org-process-inbox ()
+  (defun zwei/org-agenda-process-inbox ()
     "Called in org-agenda-mode, processes all inbox items."
     (interactive)
     (zwei/org-agenda-bulk-mark-regexp-category "inbox")
@@ -154,33 +220,69 @@
   (map! :after org-agenda
         :map org-agenda-mode-map
         :localleader
-        "p" #'zwei/org-process-inbox)
+        "p" #'zwei/org-agenda-process-inbox)
 
-  ;; Journal
-  (setq org-journal-date-prefix "#+TITLE: "
-        org-journal-file-format "%Y-%m-%d.org"
-        org-journal-date-format "%A, %d %B %Y"
-        org-journal-enable-agenda-integration t)
+  (defvar zwei/org-current-effort "1:00"
+    "Current effort for agenda items.")
 
-  ;; Logging
-  (setq org-log-done 'time
-        org-log-into-drawer t)
+  (defun zwei/my-org-agenda-set-effort (effort)
+    "Set the EFFORT property for the current headline."
+    (interactive
+     (list (read-string (format "Effort [%s]: " zwei/org-current-effort) nil nil zwei/org-current-effort)))
+    (setq zwei/org-current-effort effort)
+    (org-agenda-check-no-diary)
+    (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+                         (org-agenda-error)))
+           (buffer (marker-buffer hdmarker))
+           (pos (marker-position hdmarker))
+           (inhibit-read-only t)
+           newhead)
+      (org-with-remote-undo buffer
+        (with-current-buffer buffer
+          (widen)
+          (goto-char pos)
+          (org-show-context 'agenda)
+          (funcall-interactively 'org-set-effort nil zwei/org-current-effort)
+          (end-of-line 1)
+          (setq newhead (org-get-heading)))
+        (org-agenda-change-all-lines newhead hdmarker))))
 
-  ;; Tagging -- currently used for just where tasks take place, not status
-  (setq org-tag-alist '((:startgroup . "place")
-                        ("@work" . ?w)
-                        ("@play" . ?p)
-                        ("@down" . ?d)
-                        ("@end" . ?e)
-                        (:endgroup . "place")))
+  (defun zwei/org-agenda-process-inbox-item ()
+    "Process a single item in the agenda."
+    (org-with-wide-buffer
+     (org-agenda-set-tags)
+     (org-agenda-priority)
+     (call-interactively 'jethro/my-org-agenda-set-effort)
+     (org-agenda-refile nil nil t)))
 
-  ;; Filing
-  (setq org-refile-allow-creating-parent-nodes 'confirm
-        org-refile-targets '(("next.org" :level . 0)
-                             ("someday.org" :level . 0)
-                             ("work.org" :level . 0)
-                             ("reading.org" :level . 0 )
-                             ("projects.org" :maxlevel . 1))))
+  (defun zwei/bulk-process-entries ()
+    "Bulk process entries in agenda."
+    (if (not (null org-agenda-bulk-marked-entries))
+        (let ((entries (reverse org-agenda-bulk-marked-entries))
+              (processed 0)
+              (skipped 0))
+          (dolist (e entries)
+            (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
+              (if (not pos)
+                  (progn (message "Skipping removed entry at %s" e)
+                         (cl-incf skipped))
+                (goto-char pos)
+                (let (org-loop-over-headlines-in-active-region) (funcall 'zwei/org-agenda-process-inbox-item))
+                ;; `post-command-hook' is not run yet.  We make sure any
+                ;; pending log note is processed.
+                (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
+                          (memq 'org-add-log-note post-command-hook))
+                  (org-add-log-note))
+                (cl-incf processed))))
+          (org-agenda-redo)
+          (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
+          (message "Acted on %d entries%s%s"
+                   processed
+                   (if (= skipped 0)
+                       ""
+                     (format ", skipped %d (disappeared before their turn)"
+                             skipped))
+                   (if (not org-agenda-persistent-marks) "" " (kept marked)"))))))
 
 ;; ====================================================================================Jethro test
 
@@ -192,70 +294,7 @@
 (defvar jethro/org-agenda-bulk-process-key ?f
   "Default key for bulk processing inbox items.")
 
-(defvar jethro/org-current-effort "1:00"
-  "Current effort for agenda items.")
-
-(defun jethro/my-org-agenda-set-effort (effort)
-  "Set the EFFORT property for the current headline."
-  (interactive
-   (list (read-string (format "Effort [%s]: " jethro/org-current-effort) nil nil jethro/org-current-effort)))
-  (setq jethro/org-current-effort effort)
-  (org-agenda-check-no-diary)
-  (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
-                       (org-agenda-error)))
-         (buffer (marker-buffer hdmarker))
-         (pos (marker-position hdmarker))
-         (inhibit-read-only t)
-         newhead)
-    (org-with-remote-undo buffer
-      (with-current-buffer buffer
-        (widen)
-        (goto-char pos)
-        (org-show-context 'agenda)
-        (funcall-interactively 'org-set-effort nil jethro/org-current-effort)
-        (end-of-line 1)
-        (setq newhead (org-get-heading)))
-      (org-agenda-change-all-lines newhead hdmarker))))
-
-(defun jethro/org-agenda-process-inbox-item ()
-  "Process a single item in the agenda."
-  (org-with-wide-buffer
-   (org-agenda-set-tags)
-   (org-agenda-priority)
-   (call-interactively 'jethro/my-org-agenda-set-effort)
-   (org-agenda-refile nil nil t)))
-
-(defun jethro/bulk-process-entries ()
-  "Bulk process entries in agenda."
-  (if (not (null org-agenda-bulk-marked-entries))
-      (let ((entries (reverse org-agenda-bulk-marked-entries))
-            (processed 0)
-            (skipped 0))
-        (dolist (e entries)
-          (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
-            (if (not pos)
-                (progn (message "Skipping removed entry at %s" e)
-                       (cl-incf skipped))
-              (goto-char pos)
-              (let (org-loop-over-headlines-in-active-region) (funcall 'jethro/org-agenda-process-inbox-item))
-              ;; `post-command-hook' is not run yet.  We make sure any
-              ;; pending log note is processed.
-              (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
-                        (memq 'org-add-log-note post-command-hook))
-                (org-add-log-note))
-              (cl-incf processed))))
-        (org-agenda-redo)
-        (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
-        (message "Acted on %d entries%s%s"
-                 processed
-                 (if (= skipped 0)
-                     ""
-                   (format ", skipped %d (disappeared before their turn)"
-                           skipped))
-                 (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
-
-
-(setq org-agenda-bulk-custom-functions `((,jethro/org-agenda-bulk-process-key jethro/org-agenda-process-inbox-item)))
+(setq org-agenda-bulk-custom-functions `((,jethro/org-agenda-bulk-process-key zwei/org-agenda-process-inbox-item)))
 
 (defun jethro/set-todo-state-next ()
   "Visit each parent task and change NEXT states to TODO."
@@ -270,35 +309,6 @@
   ;;         ("o" #'org-clock-convenience-fill-gap)
   ;;         ("e" #'org-clock-convenience-fill-gap-both))
   )
-
-(after! org-agenda
-  :config
-  (setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)")
-  (setq org-agenda-custom-commands `((" " "Agenda"
-                                      ((agenda ""
-                                               ((org-agenda-span 'week)
-                                                (org-deadline-warning-days 365)))
-                                       (todo "TODO"
-                                             ((org-agenda-overriding-header "To Refile")
-                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "inbox.org")))))
-                                       (todo "TODO"
-                                             ((org-agenda-overriding-header "Emails")
-                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "emails.org")))))
-                                       (todo "NEXT"
-                                             ((org-agenda-overriding-header "In Progress")
-                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "someday.org")
-                                                                  ,(concat zwei/org-agenda-directory "projects.org")
-                                                                  ,(concat zwei/org-agenda-directory "next.org")))
-                                              ))
-                                       (todo "TODO"
-                                             ((org-agenda-overriding-header "Projects")
-                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "projects.org")
-                                                                  ,(concat zwei/org-agenda-directory "work.org")))))
-                                       (todo "TODO"
-                                             ((org-agenda-overriding-header "One-off Tasks")
-                                              (org-agenda-files '(,(concat zwei/org-agenda-directory "next.org")))
-                                              (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))))))
-
 
 ;; ===========================================================End
 ;; Org-roam customization
