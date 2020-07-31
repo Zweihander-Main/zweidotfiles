@@ -85,6 +85,18 @@
 (defvar zwei/org-agenda-todo-file (concat zwei/org-agenda-directory "/inbox.org")
   "Inbox file for quickly capturing ideas/tasks.")
 
+(defvar zwei/org-agenda-reviews-file (concat zwei/org-agenda-directory "/reviews.org")
+  "Reviews files for interval reviews.")
+
+(defvar zwei/org-agenda-templates-directory (concat zwei/org-agenda-directory "/templates")
+  "Directory to store templates for GTD system (weekly review template for example).")
+
+(defvar zwei/org-agenda-weekly-review-template-file (concat zwei/org-agenda-templates-directory "/weekly_review.org")
+  "Template file for weekly review.")
+
+(defvar zwei/org-agenda-projects-file (concat zwei/org-agenda-directory "/projects.org")
+  "File for all tasks that can be put into a given project.")
+
 (setq +org-capture-todo-file zwei/org-agenda-todo-file)
 
 
@@ -102,45 +114,79 @@
 (after! org
   :config
   ;; General
-  (setq org-hide-emphasis-markers t)
+  (setq org-hide-emphasis-markers t
+        org-todo-keywords
+        '((sequence
+           "TODO(t)"  ; A task that needs doing & is ready to do
+           "NEXT(n)"  ; A task that is in progress
+           "WAIT(w)"  ; Something external is holding up this task
+           "HOLD(h)"  ; This task is paused/on hold because of me
+           "|"
+           "DONE(d)"  ; Task successfully completed
+           "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
+          (sequence
+           "[ ](T)"   ; A checklist that needs doing
+           "[-](N)"   ; Checklist is in progress
+           "[?](W)"   ; Checklist is being held up or paused
+           "|"
+           "[X](D)")) ; Checklist was completed
+        org-todo-keyword-faces
+        '(("[-]"  . +org-todo-active)
+          ("NEXT" . +org-todo-active)
+          ("[?]"  . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("HOLD" . +org-todo-onhold)))
 
   ;; Capture
   (setq org-capture-templates
         `(("i" "inbox"
            entry
-           (file ,+org-capture-todo-file)
+           (file ,zwei/org-agenda-todo-file)
            "* TODO %?")
           ("c" "org-protocol-capture"
            entry
-           (file ,+org-capture-todo-file)
+           (file ,zwei/org-agenda-todo-file)
            "* TODO [[%:link][%:description]]\n\n %i"
            :immediate-finish t)
           ("w" "Weekly Review"
            entry
-           (file+olp+datetree ,(concat zwei/org-agenda-directory "/reviews.org"))
-           (file ,(concat zwei/org-agenda-directory "/templates/weekly_review.org")))))
+           (file+olp+datetree ,zwei/org-agenda-reviews-file)
+           (file ,zwei/org-agenda-weekly-review-template-file))))
 
   ;; Logging
   (setq org-log-done 'time
         org-log-into-drawer t)
 
-  ;; Tagging -- currently used for just where tasks take place, not status
-  (setq org-tag-alist '((:startgroup . "place")
+  ;; Tagging -- currently used for place and goal
+  (setq org-tag-persistent-alist '((:startgroup . "place")
                         ("@work" . ?w)
                         ("@play" . ?p)
                         ("@down" . ?d)
                         ("@end" . ?e)
-                        (:endgroup . "place"))
-        org-fast-tag-selection-single-key t)
+                        (:endgroup . "place")
+                        (:startgroup "goal")
+                        ("1#PHYSICAL" . ?1)
+                        ("2#MENTAL" . ?2)
+                        ("3#CODING" . ?3)
+                        ("4#AUTOMATION" . ?4)
+                        ("5#BUSINESS" . ?5)
+                        ("6#WANKER" . ?6)
+                        (:endgroup "goal"))
+        org-fast-tag-selection-single-key nil
+        org-use-tag-inheritance t
+        org-tags-exclude-from-inheritance '("crypt" "@work" "@play" "@down" "@end")
+        org-tag-faces
+        '(("1#PHYSICAL"   . (:foreground "#CC2200" :weight bold))
+          ("2#MENTAL"     . (:foreground "#00886D" :weight bold))
+          ("3#CODING"     . (:foreground "#00441F" :weight bold))
+          ("4#AUTOMATION" . (:foreground "#00FF33" :weight bold))
+          ("5#BUSINESS"   . (:foreground "#886D00" :weight bold))
+          ("6#WANKER"     . (:foreground "#6A3B9F" :weight bold))))
 
 
   ;; Filing
   (setq org-refile-allow-creating-parent-nodes 'confirm
-        org-refile-targets '(("next.org" :level . 0)
-                             ("someday.org" :level . 0)
-                             ("work.org" :level . 0)
-                             ("reading.org" :level . 0 )
-                             ("projects.org" :maxlevel . 1))))
+        org-refile-targets '((zwei/org-agenda-projects-file :maxlevel . 1))))
 
 ;; Org-journal
 (after! org-journal
@@ -163,28 +209,15 @@
         org-agenda-custom-commands
         `((" " "Agenda"
            ((agenda ""
-                    ((org-agenda-span 'week)
+                    ((org-agenda-span 'day)
                      (org-deadline-warning-days 365)))
             (todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
                    (org-agenda-files '(,zwei/org-agenda-todo-file))))
-            (todo "TODO"
-                  ((org-agenda-overriding-header "Emails")
-                   (org-agenda-files '(,(concat zwei/org-agenda-directory "/emails.org")))))
             (todo "NEXT"
                   ((org-agenda-overriding-header "In Progress")
-                   (org-agenda-files '(,(concat zwei/org-agenda-directory "/someday.org")
-                                       ,(concat zwei/org-agenda-directory "/projects.org")
-                                       ,(concat zwei/org-agenda-directory "/next.org")))
-                   ))
-            (todo "TODO"
-                  ((org-agenda-overriding-header "Projects")
-                   (org-agenda-files '(,(concat zwei/org-agenda-directory "/projects.org")
-                                       ,(concat zwei/org-agenda-directory "/work.org")))))
-            (todo "TODO"
-                  ((org-agenda-overriding-header "One-off Tasks")
-                   (org-agenda-files '(,(concat zwei/org-agenda-directory "/next.org")))
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))))))
+                   (org-agenda-files '(,zwei/org-agenda-projects-file))
+                   ))))))
 
   (defun zwei/org-agenda-bulk-mark-regexp-category (regexp)
     "Mark entries whose category matches REGEXP for future agenda bulk action."
