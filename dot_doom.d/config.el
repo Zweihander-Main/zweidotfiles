@@ -58,6 +58,8 @@
 (doom-init-extra-fonts-h)
 
 (add-hook! 'org-mode-hook #'(+org-pretty-mode org-variable-pitch-minor-mode))
+;; Fix issues with jit-lock in org-capture buffer when variable-pitch fonts are used:
+(add-hook! 'org-capture-mode-hook (lambda() (org-variable-pitch-minor-mode nil)))
 (add-hook! 'org-agenda-mode-hook #'(solaire-mode hl-line-mode))
 
 (custom-set-faces!
@@ -98,7 +100,6 @@
   "File for all tasks that can be put into a given project.")
 
 (setq +org-capture-todo-file zwei/org-agenda-todo-file)
-
 
 ;; ===============
 ;;   Org-related
