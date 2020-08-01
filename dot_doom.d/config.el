@@ -159,19 +159,19 @@
 
   ;; Tagging -- currently used for place and goal
   (setq org-tag-persistent-alist '((:startgroup . "place")
-                        ("@work" . ?w)
-                        ("@play" . ?p)
-                        ("@down" . ?d)
-                        ("@end" . ?e)
-                        (:endgroup . "place")
-                        (:startgroup "goal")
-                        ("1#PHYSICAL" . ?1)
-                        ("2#MENTAL" . ?2)
-                        ("3#CODING" . ?3)
-                        ("4#AUTOMATION" . ?4)
-                        ("5#BUSINESS" . ?5)
-                        ("6#WANKER" . ?6)
-                        (:endgroup "goal"))
+                                   ("@work" . ?w)
+                                   ("@play" . ?p)
+                                   ("@down" . ?d)
+                                   ("@end" . ?e)
+                                   (:endgroup . "place")
+                                   (:startgroup "goal")
+                                   ("1#PHYSICAL" . ?1)
+                                   ("2#MENTAL" . ?2)
+                                   ("3#CODING" . ?3)
+                                   ("4#AUTOMATION" . ?4)
+                                   ("5#BUSINESS" . ?5)
+                                   ("6#WANKER" . ?6)
+                                   (:endgroup "goal"))
         org-fast-tag-selection-single-key nil
         org-use-tag-inheritance t
         org-tags-exclude-from-inheritance '("crypt" "@work" "@play" "@down" "@end")
@@ -204,6 +204,7 @@
   (setq org-agenda-files (find-lisp-find-files zwei/org-agenda-directory "\.org$")
         org-agenda-start-with-log-mode t
         org-agenda-block-separator nil
+        org-agenda-bulk-custom-functions `((?c zwei/org-agenda-process-inbox-item))
         org-columns-default-format
         "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)"
         org-agenda-custom-commands
@@ -217,7 +218,11 @@
             (todo "NEXT"
                   ((org-agenda-overriding-header "In Progress")
                    (org-agenda-files '(,zwei/org-agenda-projects-file))
-                   ))))))
+                   ))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Projects")
+                   (org-agenda-files '(,zwei/org-agenda-projects-file))))
+            ))))
 
   (defun zwei/org-agenda-bulk-mark-regexp-category (regexp)
     "Mark entries whose category matches REGEXP for future agenda bulk action."
@@ -241,7 +246,7 @@
     "Called in org-agenda-mode, processes all inbox items."
     (interactive)
     (zwei/org-agenda-bulk-mark-regexp-category "inbox")
-    (jethro/bulk-process-entries))
+    (zwei/bulk-process-entries))
 
   (defun zwei/org-inbox-capture ()
     "Shortcut to org-capture->inbox."
@@ -261,7 +266,7 @@
   (defvar zwei/org-current-effort "1:00"
     "Current effort for agenda items.")
 
-  (defun zwei/my-org-agenda-set-effort (effort)
+  (defun zwei/org-agenda-set-effort (effort)
     "Set the EFFORT property for the current headline."
     (interactive
      (list (read-string (format "Effort [%s]: " zwei/org-current-effort) nil nil zwei/org-current-effort)))
@@ -288,7 +293,7 @@
     (org-with-wide-buffer
      (org-agenda-set-tags)
      (org-agenda-priority)
-     (call-interactively 'jethro/my-org-agenda-set-effort)
+     (call-interactively 'zwei/org-agenda-set-effort)
      (org-agenda-refile nil nil t)))
 
   (defun zwei/bulk-process-entries ()
@@ -318,19 +323,18 @@
                        ""
                      (format ", skipped %d (disappeared before their turn)"
                              skipped))
-                   (if (not org-agenda-persistent-marks) "" " (kept marked)"))))))
+                   (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
+
+
+  (defun zwei/org-archive-done-tasks ()
+    "Archive all done tasks."
+    (interactive)
+    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+
+  )
 
 ;; ====================================================================================Jethro test
 
-(defun jethro/org-archive-done-tasks ()
-  "Archive all done tasks."
-  (interactive)
-  (org-map-entries 'org-archive-subtree "/DONE" 'file))
-
-(defvar jethro/org-agenda-bulk-process-key ?f
-  "Default key for bulk processing inbox items.")
-
-(setq org-agenda-bulk-custom-functions `((,jethro/org-agenda-bulk-process-key zwei/org-agenda-process-inbox-item)))
 
 (defun jethro/set-todo-state-next ()
   "Visit each parent task and change NEXT states to TODO."
@@ -338,15 +342,17 @@
 
 (add-hook 'org-clock-in-hook 'jethro/set-todo-state-next 'append)
 
-(use-package! org-clock-convenience
-  ;;  :bind (:map org-agenda-mode-map
-  ;;         ("<S-up>" #'org-clock-convenience-timestamp-up)
-  ;;         ("<S-down>" #'org-clock-convenience-timestamp-down)
-  ;;         ("o" #'org-clock-convenience-fill-gap)
-  ;;         ("e" #'org-clock-convenience-fill-gap-both))
-  )
+;; (use-package! org-clock-convenience
+;; :after org-agenda
+;;  :bind (:map org-agenda-mode-map
+;;         ("<S-up>" #'org-clock-convenience-timestamp-up)
+;;         ("<S-down>" #'org-clock-convenience-timestamp-down)
+;;         ("o" #'org-clock-convenience-fill-gap)
+;;         ("e" #'org-clock-convenience-fill-gap-both))
+;; )
 
 ;; ===========================================================End
+
 ;; Org-roam customization
 (after! org-roam
   (setq  org-roam--extract-titles '(title alias)
@@ -372,6 +378,7 @@
 ;; Org-roam-server
 (use-package! org-roam-server
   :after org-roam
+  :defer t
   :config (setq org-roam-server-host "127.0.0.1"
                 org-roam-server-port 38080
                 org-roam-server-export-inline-images t
@@ -384,7 +391,8 @@
 
 ;; Anki-editor
 (use-package! anki-editor
-  :after org
+  :after org-roam
+  :defer t
   :config
   (setq anki-editor-anki-connect-listening-port 38040)
   (defun filter-out-p (str _ _)
@@ -415,6 +423,7 @@
 
 ;; format-all-buffer for code formatting
 ;; Note that formatters should be loaded on PATH
-(use-package! format-all)
+(use-package! format-all
+  :defer t)
 
 ;;; config.el ends here
