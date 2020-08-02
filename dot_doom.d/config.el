@@ -58,8 +58,13 @@
 (doom-init-extra-fonts-h)
 
 (add-hook! 'org-mode-hook #'(+org-pretty-mode org-variable-pitch-minor-mode))
+
 ;; Fix issues with jit-lock in org-capture buffer when variable-pitch fonts are used:
-(add-hook! 'org-capture-mode-hook (lambda() (org-variable-pitch-minor-mode nil)))
+(defun zwei/disable-org-variable-pitch-minor-mode ()
+  "Disable variable pitch mode."
+  (org-variable-pitch-minor-mode -1))
+(add-hook! 'org-capture-mode-hook #'(zwei/disable-org-variable-pitch-minor-mode))
+
 (add-hook! 'org-agenda-mode-hook #'(solaire-mode hl-line-mode))
 
 (custom-set-faces!
@@ -97,7 +102,13 @@
   "Template file for weekly review.")
 
 (defvar zwei/org-agenda-projects-file (concat zwei/org-agenda-directory "/projects.org")
-  "File for all tasks that can be put into a given project.")
+  "File for all tasks that can be put into a given active project.")
+
+(defvar zwei/org-agenda-tickler-file (concat zwei/org-agenda-directory "/tickler.org")
+  "File for all tickler tasks. Can include projects but only non-active ones.")
+
+(defvar zwei/org-agenda-next-file (concat zwei/org-agenda-directory "/next.org")
+  "File for one-off tasks that should be done immediately or are currently being worked on.")
 
 (setq +org-capture-todo-file zwei/org-agenda-todo-file)
 
@@ -187,7 +198,9 @@
 
   ;; Filing
   (setq org-refile-allow-creating-parent-nodes 'confirm
-        org-refile-targets '((zwei/org-agenda-projects-file :maxlevel . 1))))
+        org-refile-targets '((zwei/org-agenda-projects-file :maxlevel . 1)
+                             (zwei/org-agenda-tickler-file :maxlevel . 1)
+                             (zwei/org-agenda-next-file :level . 0 ))))
 
 ;; Org-journal
 (after! org-journal
@@ -218,12 +231,17 @@
                    (org-agenda-files '(,zwei/org-agenda-todo-file))))
             (todo "NEXT"
                   ((org-agenda-overriding-header "In Progress")
-                   (org-agenda-files '(,zwei/org-agenda-projects-file))
+                   (org-agenda-files '(,zwei/org-agenda-projects-file
+                                       ,zwei/org-agenda-tickler-file
+                                       ,zwei/org-agenda-next-file))
                    ))
             (todo "TODO"
                   ((org-agenda-overriding-header "Projects")
                    (org-agenda-files '(,zwei/org-agenda-projects-file))))
-            ))))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "One-offs")
+                   (org-agenda-files '(,zwei/org-agenda-next-file))
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))))))
 
   (defun zwei/org-agenda-bulk-mark-regexp-category (regexp)
     "Mark entries whose category matches REGEXP for future agenda bulk action."
@@ -316,7 +334,7 @@
                           (memq 'org-add-log-note post-command-hook))
                   (org-add-log-note))
                 (cl-incf processed))))
-          (org-agenda-redo)
+          (org-agenda-redo t)
           (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
           (message "Acted on %d entries%s%s"
                    processed
@@ -332,27 +350,31 @@
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
 
-  )
+  (defun zwei/set-todo-state-next ()
+    "Visit each parent task and change NEXT states to TODO."
+    (org-todo "NEXT"))
 
-;; ====================================================================================Jethro test
+  (defun zwei/org-agenda-redo-all-buffers ()
+    "Refresh/redo all org-agenda buffers."
+    (interactive)
+    (dolist (buffer (doom-visible-buffers))
+      (with-current-buffer buffer
+        (when (derived-mode-p 'org-agenda-mode)
+          (org-agenda-redo)))))
 
+  (add-hook! 'org-clock-in-hook :append #'zwei/set-todo-state-next)
+  (add-hook! '(org-after-todo-state-change-hook org-capture-after-finalize-hook) :append #'zwei/org-agenda-redo-all-buffers))
 
-(defun jethro/set-todo-state-next ()
-  "Visit each parent task and change NEXT states to TODO."
-  (org-todo "NEXT"))
+;; Org-clock-convenience
+(use-package! org-clock-convenience
+  :after org-agenda)
 
-(add-hook 'org-clock-in-hook 'jethro/set-todo-state-next 'append)
-
-;; (use-package! org-clock-convenience
-;; :after org-agenda
-;;  :bind (:map org-agenda-mode-map
-;;         ("<S-up>" #'org-clock-convenience-timestamp-up)
-;;         ("<S-down>" #'org-clock-convenience-timestamp-down)
-;;         ("o" #'org-clock-convenience-fill-gap)
-;;         ("e" #'org-clock-convenience-fill-gap-both))
-;; )
-
-;; ===========================================================End
+(map! :after org-clock-convenience
+      :map org-agenda-mode-map
+      "<S-up>" #'org-clock-convenience-timestamp-up
+      "<S-down>" #'org-clock-convenience-timestamp-down
+      "o" #'org-clock-convenience-fill-gap
+      "e" #'org-clock-convenience-fill-gap-both)
 
 ;; Org-roam customization
 (after! org-roam
