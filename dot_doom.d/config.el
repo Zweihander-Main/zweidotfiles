@@ -200,7 +200,19 @@
   (setq org-refile-allow-creating-parent-nodes 'confirm
         org-refile-targets '((zwei/org-agenda-projects-file :maxlevel . 1)
                              (zwei/org-agenda-tickler-file :maxlevel . 1)
-                             (zwei/org-agenda-next-file :level . 0 ))))
+                             (zwei/org-agenda-next-file :level . 0 )))
+
+  ;; Archive related
+  (defun zwei/org-archive-done-tasks ()
+    "Archive all done tasks."
+    (interactive)
+    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+
+  (map! :after org
+        :map org-mode-map
+        :localleader
+        (:prefix ("r" . "refile")
+         :desc "Archive all done tasks" "a" #'zwei/org-archive-done-tasks)))
 
 ;; Org-journal
 (after! org-journal
@@ -343,12 +355,6 @@
                      (format ", skipped %d (disappeared before their turn)"
                              skipped))
                    (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
-
-
-  (defun zwei/org-archive-done-tasks ()
-    "Archive all done tasks."
-    (interactive)
-    (org-map-entries 'org-archive-subtree "/DONE" 'file))
 
   (defun zwei/set-todo-state-next ()
     "Visit each parent task and change NEXT states to TODO."
