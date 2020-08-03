@@ -229,14 +229,22 @@
   (require 'find-lisp)
   (setq org-agenda-files (find-lisp-find-files zwei/org-agenda-directory "\.org$")
         org-agenda-start-with-log-mode t
+        org-agenda-start-day "-1d"
+        org-agenda-span 3
         org-agenda-block-separator nil
         org-agenda-bulk-custom-functions `((?c zwei/org-agenda-process-inbox-item))
+        org-agenda-prefix-format
+        `((agenda . " %i %-12:c%?-12t% s|%e|")
+         (todo . " %i %-12:c|%e|")
+         (tags . " %i %-12:c|%e|")
+         (search . " %i %-12:c|%e|"))
         org-columns-default-format
         "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)"
         org-agenda-custom-commands
         `((" " "Agenda"
            ((agenda ""
-                    ((org-agenda-span 'day)
+                    ((org-agenda-span 1)
+                     (org-agenda-start-day "+0d")
                      (org-deadline-warning-days 365)))
             (todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
