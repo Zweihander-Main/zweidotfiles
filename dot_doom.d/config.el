@@ -235,11 +235,11 @@
         org-agenda-bulk-custom-functions `((?c zwei/org-agenda-process-inbox-item))
         org-agenda-prefix-format
         `((agenda . " %i %-12:c%?-12t% s|%e|")
-         (todo . " %i %-12:c|%e|")
-         (tags . " %i %-12:c|%e|")
-         (search . " %i %-12:c|%e|"))
+          (todo . " %i %-12:c|%e|")
+          (tags . " %i %-12:c|%e|")
+          (search . " %i %-12:c|%e|"))
         org-columns-default-format
-        "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)"
+        "%40ITEM(Task) %Effort(E Est){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)"
         org-agenda-custom-commands
         `((" " "Agenda"
            ((agenda ""
@@ -444,6 +444,48 @@
 (after! deft
   (setq deft-use-filter-string-for-filename t
         deft-recursive t))
+
+
+(after! centaur-tabs
+  (defun centaur-tabs-hide-tab (x)
+    "Do no to show buffer X in tabs."
+    (let ((name (format "%s" x)))
+      (or
+       ;; Current window is not dedicated window.
+       (window-dedicated-p (selected-window))
+
+       ;; Buffer name not match below blacklist.
+       (string-prefix-p "*epc" name)
+       (string-prefix-p "*helm" name)
+       (string-prefix-p "*Helm" name)
+       (string-prefix-p "*Compile-Log*" name)
+       (string-prefix-p "*lsp" name)
+       (string-prefix-p "*company" name)
+       (string-prefix-p "*Flycheck" name)
+       (string-prefix-p "*tramp" name)
+       (string-prefix-p " *Mini" name)
+       (string-prefix-p "*help" name)
+       (string-prefix-p "*straight" name)
+       (string-prefix-p " *temp" name)
+       (string-prefix-p "*Help" name)
+
+       ;; Prevent org and doom related buffers
+       (string-prefix-p "*org-roam" name)
+       (string-prefix-p "*Messages" name)
+       (string-prefix-p "*scratch" name)
+       (string-prefix-p "*doom" name)
+       (string-prefix-p "*tide-server" name)
+       (string-prefix-p "*vls" name)
+       (string-prefix-p "*Org Agenda" name)
+       (string-prefix-p "*Apropos" name)
+
+       ;; Stop org-roam string from showing up
+       (string-match-p (concat "[0-9]\\{14\\}" ".*-.*\\.org") name)
+
+       ;; Is not magit buffer.
+       (and (string-prefix-p "magit" name)
+            (not (file-name-extension name)))
+       ))))
 
 ;; Enable emacs to open links in Windows
 (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
