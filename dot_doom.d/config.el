@@ -225,7 +225,6 @@
 ;; Org-agenda
 (after! org-agenda
   :config
-  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil " ")))
   (require 'find-lisp)
   (setq org-agenda-files (find-lisp-find-files zwei/org-agenda-directory "\.org$")
         org-agenda-start-with-log-mode t
@@ -292,15 +291,6 @@
     (interactive)
     "Capture a an inbox task."
     (org-capture nil "i"))
-
-  (map! :leader
-        (:prefix-map ("n" . "notes")
-         :desc "Inbox entry" "i" #'zwei/org-inbox-capture))
-
-  (map! :after org-agenda
-        :map org-agenda-mode-map
-        :localleader
-        "p" #'zwei/org-agenda-process-inbox)
 
   (defvar zwei/org-current-effort "1:00"
     "Current effort for agenda items.")
@@ -376,8 +366,42 @@
         (when (derived-mode-p 'org-agenda-mode)
           (org-agenda-redo)))))
 
+  (defun zwei/org-agenda-edit-headline ()
+    "Perform org-edit-headline on current agenda item."
+    (interactive)
+    (org-agenda-check-no-diary)
+    (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+                         (org-agenda-error)))
+           (buffer (marker-buffer hdmarker))
+           (pos (marker-position hdmarker))
+           (inhibit-read-only t)
+           newhead)
+      (org-with-remote-undo buffer
+        (with-current-buffer buffer
+          (widen)
+          (goto-char pos)
+          (org-show-context 'agenda)
+          (call-interactively #'org-edit-headline)
+          (end-of-line 1)
+          (setq newhead (org-get-heading)))
+        (org-agenda-change-all-lines newhead hdmarker)
+        (beginning-of-line 1))))
+
   (add-hook! 'org-clock-in-hook :append #'zwei/set-todo-state-next)
-  (add-hook! '(org-after-todo-state-change-hook org-capture-after-finalize-hook) :append #'zwei/org-agenda-redo-all-buffers))
+  (add-hook! '(org-after-todo-state-change-hook org-capture-after-finalize-hook) :append #'zwei/org-agenda-redo-all-buffers)
+
+  ;; Key mapping for org-agenda
+  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil " ")))
+
+  (map! :leader
+        (:prefix-map ("n" . "notes")
+         :desc "Inbox entry" "i" #'zwei/org-inbox-capture))
+
+  (map! :after org-agenda
+        :map org-agenda-mode-map
+        :localleader
+        "p" #'zwei/org-agenda-process-inbox
+        "e" #'zwei/org-agenda-edit-headline))
 
 ;; Org-clock-convenience
 (use-package! org-clock-convenience
