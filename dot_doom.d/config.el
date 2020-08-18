@@ -52,7 +52,8 @@
       org-variable-pitch-fixed-font "Iosevka SS09 Extended"
       org-ellipsis "▼"
       display-line-numbers-type t
-      line-spacing 0.1)
+      line-spacing 0.1
+      garbage-collection-messages nil)
 
 (doom-themes-org-config)
 (doom-init-extra-fonts-h)
@@ -206,7 +207,8 @@
   (defun zwei/org-archive-done-tasks ()
     "Archive all done tasks."
     (interactive)
-    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+    (org-map-entries 'org-archive-subtree "/DONE" 'file)
+    (org-map-entries 'org-archive-subtree "/KILL" 'file))
 
   (map! :after org
         :map org-mode-map
@@ -387,6 +389,35 @@
         (org-agenda-change-all-lines newhead hdmarker)
         (beginning-of-line 1))))
 
+  (defun zwei/org-agenda-break-into-child (child)
+    "Create CHILD heading to current heading with the same properties."
+    (interactive
+     (list (read-string "Child task: " nil nil nil)))
+    (org-agenda-check-no-diary)
+    (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+                         (org-agenda-error)))
+           (buffer (marker-buffer hdmarker))
+           (pos (marker-position hdmarker))
+           (inhibit-read-only t))
+      (org-with-remote-undo buffer
+        (with-current-buffer buffer
+          (widen)
+          (goto-char pos)
+          (org-show-context 'agenda)
+          (setq curline (thing-at-point 'line t))
+          (if (string-match org-priority-regexp curline)
+              (setq curpriority (match-string 2 curline)))
+          (setq curtags (org-get-tags-string))
+          (call-interactively #'+org/insert-item-below)
+          (call-interactively #'org-demote-subtree)
+          (funcall-interactively 'org-edit-headline child)
+          (funcall-interactively 'org-set-tags-to curtags)
+          (if curpriority
+              (funcall-interactively 'org-priority (string-to-char curpriority)))
+          (end-of-line 1))
+        (beginning-of-line 1)))
+    (zwei/org-agenda-redo-all-buffers))
+
   (add-hook! 'org-clock-in-hook :append #'zwei/set-todo-state-next)
   (add-hook! '(org-after-todo-state-change-hook org-capture-after-finalize-hook) :append #'zwei/org-agenda-redo-all-buffers)
 
@@ -401,7 +432,8 @@
         :map org-agenda-mode-map
         :localleader
         "p" #'zwei/org-agenda-process-inbox
-        "e" #'zwei/org-agenda-edit-headline))
+        "e" #'zwei/org-agenda-edit-headline
+        "b" #'zwei/org-agenda-break-into-child))
 
 ;; Org-clock-convenience
 (use-package! org-clock-convenience
