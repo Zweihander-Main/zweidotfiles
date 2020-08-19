@@ -36,6 +36,7 @@
 
 ;;; Code:
 
+
 ;; ======================
 ;;   General + Theming
 ;; ======================
@@ -74,7 +75,7 @@
   '(line-number :family "Iosevka Term SS09")
   '(line-number-current-line :inherit line-number))
 
-
+
 ;; ===============
 ;;   Directories
 ;; ===============
@@ -113,6 +114,7 @@
 
 (setq +org-capture-todo-file zwei/org-agenda-todo-file)
 
+
 ;; ===============
 ;;   Org-related
 ;; ===============
@@ -128,6 +130,7 @@
   :config
   ;; General
   (setq org-hide-emphasis-markers t
+        org-hierarchical-todo-statistics nil
         org-todo-keywords
         '((sequence
            "TODO(t)"  ; A task that needs doing & is ready to do
@@ -169,6 +172,54 @@
   ;; Logging
   (setq org-log-done 'time
         org-log-into-drawer t)
+
+  ;; Statistics Cookies related
+  (defun zwei/org-toggle-statistics-cookies ()
+    "Toggle between [/] and [%] type statistics cookies on line."
+    (interactive)
+    (let ((type (plist-get (zwei/org-find-statistics-cookies) :type)))
+      (zwei/org-delete-statistics-cookies)
+      (cond ((eq type '%) (zwei/org-insert-statistics-cookies '/))
+            ((eq type '/) (zwei/org-insert-statistics-cookies '%)))))
+
+  (defun zwei/org-delete-statistics-cookies ()
+    "Delete statistics cookies on line."
+    (let ((cookie (zwei/org-find-statistics-cookies)))
+      (when cookie
+        (delete-region (plist-get cookie :begin) (plist-get cookie :end))
+        (save-excursion
+          (end-of-line)
+          (when (eq (char-before) ? )
+            (delete-backward-char 1))))))
+
+  (defun zwei/org-insert-statistics-cookies (&optional type)
+    "Insert statistics cookie of optional TYPE % (default) or /."
+    (save-excursion
+      (setq cur-tags-string (org-get-tags-string))
+      (if (not(eq cur-tags-string ""))
+          (when (org-back-to-heading t)
+           (re-search-forward org-tag-line-re)
+           (goto-char (-(match-beginning 1) 1)))
+          (end-of-line))
+      (insert (concat " " (if (eq type '/) "[/]" "[%]")))
+      (org-update-statistics-cookies nil)))
+
+  (defun zwei/org-find-statistics-cookies ()
+    "Find statistics cookies on line and return as plist."
+    (save-excursion
+      (beginning-of-line)
+      (let ((end-point (save-excursion (end-of-line) (point)))
+            (search-point (point))
+            (cookie nil))
+        (while (and (not cookie) search-point)
+          (setq search-point (re-search-forward "\\[" end-point t))
+          (when search-point
+            (forward-char -1)
+            (setq cookie (cadr (org-element-statistics-cookie-parser)))
+            (forward-char 1)))
+        (if cookie
+            (plist-put cookie :type (if (eq (string-match-p "%" (plist-get cookie :value)) nil) '/ '%))
+          cookie))))
 
   ;; Tagging -- currently used for place and goal
   (setq org-tag-persistent-alist '((:startgroup . "place")
@@ -390,7 +441,7 @@
         (beginning-of-line 1))))
 
   (defun zwei/org-agenda-break-into-child (child)
-    "Create CHILD heading to current heading with the same properties."
+    "Create CHILD heading under current heading with the same properties and custom effort."
     (interactive
      (list (read-string "Child task: " nil nil nil)))
     (org-agenda-check-no-diary)
@@ -398,25 +449,40 @@
                          (org-agenda-error)))
            (buffer (marker-buffer hdmarker))
            (pos (marker-position hdmarker))
-           (inhibit-read-only t))
+           (inhibit-read-only t)
+           cur-tags cur-line cur-priority cur-stats-cookies)
       (org-with-remote-undo buffer
         (with-current-buffer buffer
           (widen)
           (goto-char pos)
           (org-show-context 'agenda)
-          (setq curline (thing-at-point 'line t))
-          (if (string-match org-priority-regexp curline)
-              (setq curpriority (match-string 2 curline)))
-          (setq curtags (org-get-tags-string))
+          (setq cur-line (thing-at-point 'line t))
+          (if (string-match org-priority-regexp cur-line)
+              (setq cur-priority (match-string 2 cur-line)))
+          (setq cur-tags (org-get-tags-string))
+          (setq cur-stats-cookies (zwei/org-find-statistics-cookies))
+          (if (eq cur-stats-cookies 'nil)
+              (zwei/org-insert-statistics-cookies))
           (call-interactively #'+org/insert-item-below)
           (call-interactively #'org-demote-subtree)
           (funcall-interactively 'org-edit-headline child)
-          (funcall-interactively 'org-set-tags-to curtags)
-          (if curpriority
-              (funcall-interactively 'org-priority (string-to-char curpriority)))
+          (funcall-interactively 'org-set-tags-to cur-tags)
+          (if cur-priority
+              (funcall-interactively 'org-priority (string-to-char cur-priority)))
+          (org-update-parent-todo-statistics)
           (end-of-line 1))
         (beginning-of-line 1)))
-    (zwei/org-agenda-redo-all-buffers))
+    (zwei/org-agenda-redo-all-buffers)
+    (save-excursion
+      (goto-char (point-min))
+      (goto-char (next-single-property-change (point) 'org-hd-marker))
+      (and (search-forward child nil t)
+           (setq txt-at-point
+                 (get-text-property (match-beginning 0) 'txt)))
+      (if (get-char-property (point) 'invisible)
+          (beginning-of-line 2)
+        (when (string-match-p child txt-at-point)
+          (call-interactively 'zwei/org-agenda-set-effort)))))
 
   (add-hook! 'org-clock-in-hook :append #'zwei/set-todo-state-next)
   (add-hook! '(org-after-todo-state-change-hook org-capture-after-finalize-hook) :append #'zwei/org-agenda-redo-all-buffers)
@@ -551,7 +617,7 @@
           browse-url-generic-args cmd-args
           browse-url-browser-function 'browse-url-generic)))
 
-
+
 ;; ================
 ;;   Code related
 ;; ================
