@@ -195,14 +195,14 @@
   (defun zwei/org-insert-statistics-cookies (&optional type)
     "Insert statistics cookie of optional TYPE % (default) or /."
     (save-excursion
-      (setq cur-tags-string (org-get-tags-string))
-      (if (not(eq cur-tags-string ""))
-          (when (org-back-to-heading t)
-           (re-search-forward org-tag-line-re)
-           (goto-char (-(match-beginning 1) 1)))
-          (end-of-line))
-      (insert (concat " " (if (eq type '/) "[/]" "[%]")))
-      (org-update-statistics-cookies nil)))
+      (let (cur-tags-string (org-get-tags-string))
+           (if (not(eq cur-tags-string ""))
+               (when (org-back-to-heading t)
+                 (re-search-forward org-tag-line-re)
+                 (goto-char (-(match-beginning 1) 1)))
+             (end-of-line))
+           (insert (concat " " (if (eq type '/) "[/]" "[%]")))
+           (org-update-statistics-cookies nil))))
 
   (defun zwei/org-find-statistics-cookies ()
     "Find statistics cookies on line and return as plist."
@@ -450,7 +450,7 @@
            (buffer (marker-buffer hdmarker))
            (pos (marker-position hdmarker))
            (inhibit-read-only t)
-           cur-tags cur-line cur-priority cur-stats-cookies)
+           cur-tags cur-line cur-priority cur-stats-cookies txt-at-point)
       (org-with-remote-undo buffer
         (with-current-buffer buffer
           (widen)
