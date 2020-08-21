@@ -135,6 +135,7 @@
   ;; General
   (setq org-hide-emphasis-markers t
         org-hierarchical-todo-statistics nil
+        org-fancy-priorities-mode -1
         org-todo-keywords
         '((sequence
            "TODO(t)"  ; A task that needs doing & is ready to do
