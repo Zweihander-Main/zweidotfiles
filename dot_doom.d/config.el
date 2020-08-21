@@ -75,6 +75,10 @@
   '(line-number :family "Iosevka Term SS09")
   '(line-number-current-line :inherit line-number))
 
+;; Backup related
+(setq delete-old-versions -1
+      version-control t
+      vc-make-backup-files t)
 
 ;; ===============
 ;;   Directories
