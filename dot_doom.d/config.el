@@ -135,7 +135,6 @@
   ;; General
   (setq org-hide-emphasis-markers t
         org-hierarchical-todo-statistics nil
-        org-fancy-priorities-mode -1
         org-todo-keywords
         '((sequence
            "TODO(t)"  ; A task that needs doing & is ready to do
@@ -201,13 +200,13 @@
     "Insert statistics cookie of optional TYPE % (default) or /."
     (save-excursion
       (let (cur-tags-string (org-get-tags-string))
-           (if (not(eq cur-tags-string ""))
-               (when (org-back-to-heading t)
-                 (re-search-forward org-tag-line-re)
-                 (goto-char (-(match-beginning 1) 1)))
-             (end-of-line))
-           (insert (concat " " (if (eq type '/) "[/]" "[%]")))
-           (org-update-statistics-cookies nil))))
+        (if (not(eq cur-tags-string ""))
+            (when (org-back-to-heading t)
+              (re-search-forward org-tag-line-re)
+              (goto-char (-(match-beginning 1) 1)))
+          (end-of-line))
+        (insert (concat " " (if (eq type '/) "[/]" "[%]")))
+        (org-update-statistics-cookies nil))))
 
   (defun zwei/org-find-statistics-cookies ()
     "Find statistics cookies on line and return as plist."
@@ -279,6 +278,11 @@
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-date-format "%A, %d %B %Y"
         org-journal-enable-agenda-integration t))
+
+;; Disable fancy-priorities for now
+(after! org-fancy-priorities
+  :config
+  (setq org-fancy-priorities-mode -1))
 
 ;; Org-agenda
 (after! org-agenda
