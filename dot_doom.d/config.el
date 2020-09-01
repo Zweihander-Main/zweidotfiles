@@ -346,7 +346,7 @@
     "Called in org-agenda-mode, processes all inbox items."
     (interactive)
     (zwei/org-agenda-bulk-mark-regexp-category "inbox")
-    (zwei/bulk-process-entries))
+    (zwei/org-agenda-bulk-process-entries))
 
   (defun zwei/org-inbox-capture ()
     "Shortcut to org-capture->inbox."
@@ -387,8 +387,9 @@
      (call-interactively 'zwei/org-agenda-set-effort)
      (org-agenda-refile nil nil t)))
 
-  (defun zwei/bulk-process-entries ()
+  (defun zwei/org-agenda-bulk-process-entries ()
     "Bulk process entries in agenda."
+    (interactive)
     (if (not (null org-agenda-bulk-marked-entries))
         (let ((entries (reverse org-agenda-bulk-marked-entries))
               (processed 0)
@@ -506,9 +507,10 @@
   (map! :after org-agenda
         :map org-agenda-mode-map
         :localleader
-        "p" #'zwei/org-agenda-process-inbox
-        "e" #'zwei/org-agenda-edit-headline
-        "b" #'zwei/org-agenda-break-into-child))
+        :desc "Process inbox items" "p" #'zwei/org-agenda-process-inbox
+        :desc "Process marked items" "P" #'zwei/org-agenda-bulk-process-entries
+        :desc "Edit headline" "e" #'zwei/org-agenda-edit-headline
+        :desc "Break into child tasks" "b" #'zwei/org-agenda-break-into-child))
 
 ;; Org-clock-convenience
 (use-package! org-clock-convenience
