@@ -285,14 +285,11 @@
         org-columns-default-format
         "%40ITEM(Task) %Effort(E Est){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)"
         org-agenda-custom-commands
-        `((" " "Agenda"
+        `(("1" "Agenda"
            ((agenda ""
                     ((org-agenda-span 1)
                      (org-agenda-start-day "+0d")
                      (org-deadline-warning-days 365)))
-            (todo "TODO"
-                  ((org-agenda-overriding-header "To Refile")
-                   (org-agenda-files '(,zwei/org-agenda-todo-file))))
             (todo "NEXT"
                   ((org-agenda-overriding-header "In Progress")
                    (org-agenda-files '(,zwei/org-agenda-projects-file
@@ -305,7 +302,11 @@
             (todo "TODO"
                   ((org-agenda-overriding-header "One-offs")
                    (org-agenda-files '(,zwei/org-agenda-next-file))
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))))))
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
+          ("2" "Inbox"
+           ((todo "TODO"
+                  ((org-agenda-overriding-header "To Refile")
+                   (org-agenda-files '(,zwei/org-agenda-todo-file))))))))
 
   (defun zwei/org-agenda-bulk-mark-regexp-category (regexp)
     "Mark entries whose category matches REGEXP for future agenda bulk action."
@@ -481,7 +482,8 @@
   (add-hook! '(org-after-todo-state-change-hook org-capture-after-finalize-hook) :append #'zwei/org-agenda-redo-all-buffers)
 
   ;; Key mapping for org-agenda
-  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil " ")))
+  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil "1")))
+  (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2")))
 
   (map! :leader
         (:prefix-map ("n" . "notes")
