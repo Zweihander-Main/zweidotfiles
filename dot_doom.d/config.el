@@ -6,12 +6,29 @@
 
 ;;; Code:
 
+
+
+;; ===========
+;;  Load Lisp
+;; ===========
+
+;;Fix issues with emacs 27 warnings
+(setq byte-compile-warnings '(cl-functions))
+(defun zwei/which-linux-distro ()
+  "Info from lsb_release."
+  (interactive)
+  (when (eq system-type 'gnu/linux)
+    (shell-command-to-string "echo -n $(lsb_release -is)")))
+
+(when (string= (zwei/which-linux-distro) "Debian")
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp"))
+(load! "lisp/org-variable-pitch.el")
+
+
 
 ;; ======================
 ;;   General + Theming
 ;; ======================
-
-(load! "lisp/org-variable-pitch.el")
 
 (setq user-full-name "Zweihänder"
       user-mail-address "zweidev@zweihander.me"
@@ -508,6 +525,7 @@
       "o" #'org-clock-convenience-fill-gap
       "e" #'org-clock-convenience-fill-gap-both)
 
+
 ;; Org-roam customization
 (after! org-roam
   (setq  org-roam--extract-titles '(title alias)
@@ -543,7 +561,7 @@
                 org-roam-server-network-label-truncate t
                 org-roam-server-network-label-truncate-length 60
                 org-roam-server-network-label-wrap-length 20))
-
+
 ;; Anki-editor
 (use-package! anki-editor
   :after org-roam
@@ -557,13 +575,16 @@
   (setq anki-editor--ox-anki-html-backend
         (org-export-create-backend :parent 'html
                                    :filters '((:filter-paragraph . filter-out-p)))))
-
+
 ;; Deft customization
 (after! deft
   (setq deft-use-filter-string-for-filename t
         deft-recursive t))
 
-
+
+;; ==============
+;;  Centaur Tabs
+;; ==============
 (after! centaur-tabs
   (defun centaur-tabs-hide-tab (x)
     "Do no to show buffer X in tabs."
@@ -596,7 +617,6 @@
        (string-prefix-p "*vls" name)
        (string-prefix-p "*Org Agenda" name)
        (string-prefix-p "*Apropos" name)
-
        ;; Stop org-roam string from showing up
        (string-match-p (concat "[0-9]\\{14\\}" ".*-.*\\.org") name)
 
@@ -612,6 +632,29 @@
     (setq browse-url-generic-program cmd-exe
           browse-url-generic-args cmd-args
           browse-url-browser-function 'browse-url-generic)))
+
+
+;; =======
+;;  Mu4e
+;; =======
+
+;; Built from source
+(when (string= (zwei/which-linux-distro) "Debian")
+  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
+(after! mu4e
+  (setq +mu4e-backend 'mbsync
+        mu4e-get-mail-command "mbsync --all"
+        mu4e-update-interval 1200)
+  (require 'org-mu4e)
+  (setq org-mu4e-link-query-in-headers-mode nil)
+  (set-email-account! "fastmail"
+                      '((mu4e-sent-folder       . "/fastmail/Sent")
+                        (mu4e-drafts-folder     . "/fastmail/Drafts")
+                        (mu4e-trash-folder      . "/fastmail/Trash")
+                        (mu4e-refile-folder     . "/fastmail/Archive")
+                        (smtpmail-smtp-user     . "zweihander@fastmail.com")
+                        (user-mail-address      . "zweihander@fastmail.com")
+                        )t))
 
 
 ;; ================

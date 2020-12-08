@@ -166,7 +166,7 @@
        ;;yaml              ; JSON, but readable
 
        :email
-       ;;(mu4e +gmail)
+       mu4e ; +gmail
        ;;notmuch
        ;;(wanderlust +gmail)
 
