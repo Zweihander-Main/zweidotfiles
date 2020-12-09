@@ -5,7 +5,7 @@ IMAPStore fastmail-remote
 Host imap.fastmail.com
 Port 993
 User zweihander@fastmail.com
-PassCmd "gpg --quiet --decrypt ~/.mbsync-pw-fastmail.gpg"
+PassCmd "secret-tool lookup user zweihander@fastmail.com"
 SSLType IMAPS
 SSLVersions TLSv1.2
 

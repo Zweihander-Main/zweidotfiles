@@ -654,11 +654,66 @@
                         (mu4e-refile-folder     . "/fastmail/Archive")
                         (smtpmail-smtp-user     . "zweihander@fastmail.com")
                         (user-mail-address      . "zweihander@fastmail.com")
-                        )t))
+                        )t)
+
+  (defvar zwei/mu4e-memo-to-inbox-saved-excursion nil
+    "Saved mark and buffer when waiting for mu4e. Nil if nothing saved.")
+
+  (defun zwei/mu4e-memo-to-inbox ()
+    "Pull in emails to memo folder and convert them to org headings in the inbox. Use the email body for content and mark the emails as read. This is the first part of the function which calls the search and saves the location to restore after the search is completed."
+    (interactive)
+    (let ((old-point (gensym "old-point"))
+          (old-buff (gensym "old-buff"))
+          (old-mark (gensym "old-mark")))
+      (let ((old-point (point))
+            (old-buff (current-buffer))
+            (old-mark (save-mark-and-excursion--save)))
+        (setq zwei/mu4e-memo-to-inbox-saved-excursion (list old-point old-buff old-mark))))
+    (mu4e-headers-search-bookmark "flag:unread AND NOT flag:trashed AND maildir:/fastmail/memo"))
+
+  (defun zwei/mu4e-memo-to-inbox-process-found-headers ()
+    "Hooked to call after a search for memos is completed, process the found headers and add them to the org file. Restore old buffer position from before the search."
+    (interactive)
+    (when zwei/mu4e-memo-to-inbox-saved-excursion
+      (let (data-list '())
+        (while (mu4e-message-at-point t)
+          (let* ((msg (mu4e-message-at-point))
+                 (body (mu4e-body-text msg))
+                 (data-to-set (cond
+                               ((string= "" body) (mu4e-message-field msg :subject))
+                               (t body))))
+            (push data-to-set data-list)
+            (mu4e-headers-mark-for-read)))
+        (let ((marknum (hash-table-count mu4e~mark-map)))
+          (if (not (zerop marknum)) ;; Don't mark if empty
+              (mu4e-mark-execute-all t)))
+        (unless (= (length data-list) 0)
+          (org-capture nil "i")
+          (let (value)
+            (while data-list
+              (setq value (car data-list))
+              (setq data-list (cdr data-list))
+              (message value)
+              (funcall-interactively 'org-edit-headline value)
+              (if data-list ;;has more so create a newheadline for them
+                  (call-interactively #'+org/insert-item-below))))
+          (org-capture-finalize)))
+      (let ((old-point (nth 0 zwei/mu4e-memo-to-inbox-saved-excursion))
+            (old-buff (nth 1 zwei/mu4e-memo-to-inbox-saved-excursion))
+            (old-mark (nth 2 zwei/mu4e-memo-to-inbox-saved-excursion)))
+        (unless (eq (current-buffer) old-buff)
+          (switch-to-buffer old-buff))
+        (goto-char old-point)
+        (save-mark-and-excursion--restore old-mark))
+      (setq zwei/mu4e-memo-to-inbox-saved-excursion nil)))
+
+  (add-hook 'mu4e-headers-found-hook 'zwei/mu4e-memo-to-inbox-process-found-headers)
+  (add-hook 'mu4e-index-updated-hook 'zwei/mu4e-memo-to-inbox)
+  )
 
 
 ;; ================
-;;   Code related
+;;   code related
 ;; ================
 
 ;; format-all-buffer for code formatting

@@ -50,6 +50,8 @@ Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-
 .profile
 .zprofile
 .zshrc
+.mbsyncrc
+.mbsync-pw-failmail.gpg
 {{- end }}
 
 
