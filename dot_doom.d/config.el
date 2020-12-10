@@ -284,6 +284,10 @@
   :config
   (setq org-fancy-priorities-mode -1))
 
+(use-package! org-agenda
+  :defer t
+  :after org
+  :defer-incrementally mu4e org-roam)
 ;; Org-agenda
 (after! org-agenda
   :config
@@ -516,7 +520,7 @@
 
 ;; Org-clock-convenience
 (use-package! org-clock-convenience
-  :after org-agenda)
+  :after org-clock)
 
 (map! :after org-clock-convenience
       :map org-agenda-mode-map
@@ -546,7 +550,8 @@
             "%?"
             :file-name "websites/${slug}"
             :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n- source :: ${ref}\n- related :: \n\n* "
-            :unnarrowed t))))
+            :unnarrowed t)))
+  (org-roam-db-build-cache)) ;; Seems to be neccesary
 
 ;; Org-roam-server
 (use-package! org-roam-server
@@ -641,12 +646,9 @@
 ;; Built from source
 (when (string= (zwei/which-linux-distro) "Debian")
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e"))
+(use-package! mu4e
+  :after org-agenda)
 (after! mu4e
-  (setq +mu4e-backend 'mbsync
-        mu4e-get-mail-command "mbsync --all"
-        mu4e-update-interval 1200)
-  (require 'org-mu4e)
-  (setq org-mu4e-link-query-in-headers-mode nil)
   (set-email-account! "fastmail"
                       '((mu4e-sent-folder       . "/fastmail/Sent")
                         (mu4e-drafts-folder     . "/fastmail/Drafts")
@@ -655,6 +657,13 @@
                         (smtpmail-smtp-user     . "zweihander@fastmail.com")
                         (user-mail-address      . "zweihander@fastmail.com")
                         )t)
+  (setq +mu4e-backend 'mbsync
+        mu4e-get-mail-command "mbsync --all"
+        mu4e-update-interval 1200
+        mu4e-context-policy 'pick-first
+        mu4e-compose-context-policy nil)
+  (require 'org-mu4e)
+  (setq org-mu4e-link-query-in-headers-mode nil)
 
   (defvar zwei/mu4e-memo-to-inbox-saved-excursion nil
     "Saved mark and buffer when waiting for mu4e. Nil if nothing saved.")
@@ -684,9 +693,10 @@
                                (t body))))
             (push data-to-set data-list)
             (mu4e-headers-mark-for-read)))
-        (let ((marknum (hash-table-count mu4e~mark-map)))
-          (if (not (zerop marknum)) ;; Don't mark if empty
-              (mu4e-mark-execute-all t)))
+        (if mu4e~mark-map
+            (let ((marknum (hash-table-count mu4e~mark-map)))
+              (if (not (zerop marknum)) ;; Don't mark if empty
+                  (mu4e-mark-execute-all t))))
         (unless (= (length data-list) 0)
           (org-capture nil "i")
           (let (value)
@@ -709,6 +719,7 @@
 
   (add-hook 'mu4e-headers-found-hook 'zwei/mu4e-memo-to-inbox-process-found-headers)
   (add-hook 'mu4e-index-updated-hook 'zwei/mu4e-memo-to-inbox)
+  (mu4e-update-mail-and-index t)
   )
 
 
