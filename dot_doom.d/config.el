@@ -1,4 +1,5 @@
-;;; config.el --- Lives at $DOOMDIR/config.el
+;;; config.el -- ~/.doom.d/config.el
+;;; -*- lexical-binding: t; -*-
 ;;; Commentary:
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
