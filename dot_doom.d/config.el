@@ -194,7 +194,7 @@
         (save-excursion
           (end-of-line)
           (when (eq (char-before) ? )
-            (delete-backward-char 1))))))
+            (delete-char -1))))))
 
   (defun zwei/org-insert-statistics-cookies (&optional type)
     "Insert statistics cookie of optional TYPE % (default) or /."
