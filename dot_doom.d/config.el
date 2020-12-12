@@ -666,62 +666,113 @@
   (require 'org-mu4e)
   (setq org-mu4e-link-query-in-headers-mode nil)
 
-  (defvar zwei/mu4e-memo-to-inbox-saved-excursion nil
-    "Saved mark and buffer when waiting for mu4e. Nil if nothing saved.")
+  (defun zwei/save-and-restore-state (ref-name &optional action)
+    "Save point, buffer, and mark into variable defined by REF-NAME.
+
+ACTION values:
+Write: Will write values.
+Clear: Will set to nil.
+Read: Will return values in (point,buffer,mark) form.
+Restore: Will restore state and clear variable.
+
+For read, can get data using
+(setf (values point buffer mark) (zwei/save-and-restore-state nil 'read')).
+
+Intended for short term usage - not designed to survive restart."
+    (let* ((constant "_ZWEISAVEANDRESTORESTATE")
+           (var-string (concatenate 'string ref-name constant))
+           (stored-data (intern var-string)))
+      (cond ((string= action "read") stored-data)
+            (t (let ((old-point (gensym "old-point"))
+                     (old-buff (gensym "old-buff"))
+                     (old-mark (gensym "old-mark")))
+                 (cond ((string= action "restore")
+                        (when stored-data
+                          (let ((old-point (nth 0 stored-data))
+                                (old-buff (nth 1 stored-data))
+                                (old-mark (nth 2 stored-data)))
+                            (unless (eq (current-buffer) old-buff)
+                              (switch-to-buffer old-buff))
+                            (goto-char old-point)
+                            (save-mark-and-excursion--restore old-mark)
+                            (set (intern var-string) nil))))
+                       ((string= action "clear") (set (intern (var-string)) nil))
+                       (t (let ((old-point (point)) ;; default write
+                                (old-buff (current-buffer))
+                                (old-mark (save-mark-and-excursion--save)))
+                            (set (intern (concatenate 'string ref-name constant))
+                                 (list old-point old-buff old-mark))))))))))
+
 
   (defun zwei/mu4e-memo-to-inbox ()
-    "Pull in emails to memo folder and convert them to org headings in the inbox. Use the email body for content and mark the emails as read. This is the first part of the function which calls the search and saves the location to restore after the search is completed."
+    "Pull in emails to memo folder and convert them to org headings in the inbox.
+Use the email body for content and mark the emails as read. This is the first
+part of the function which calls the search and saves the location to restore
+ after the search is completed."
     (interactive)
-    (let ((old-point (gensym "old-point"))
-          (old-buff (gensym "old-buff"))
-          (old-mark (gensym "old-mark")))
-      (let ((old-point (point))
-            (old-buff (current-buffer))
-            (old-mark (save-mark-and-excursion--save)))
-        (setq zwei/mu4e-memo-to-inbox-saved-excursion (list old-point old-buff old-mark))))
+    (mu4e-context-switch nil "fastmail")
+    (zwei/save-and-restore-state "mu4e-memo-to-inbox" "write")
     (mu4e-headers-search-bookmark "flag:unread AND NOT flag:trashed AND maildir:/fastmail/memo"))
 
+  (defun zwei/mu4e-header-buffer (&optional switch)
+    "Returns true if current buffer is header buffer. Will switch to that buffer is SWITCH is non-nil."
+    (let* ((name (or mu4e~headers-buffer-name "*mu4e-headers*"))
+           (is-buffer (string= (buffer-name) name)))
+      (when (and is-buffer switch)
+        (switch-to-buffer name))
+      (is-buffer (string= (buffer-name) name))))
+
   (defun zwei/mu4e-memo-to-inbox-process-found-headers ()
-    "Hooked to call after a search for memos is completed, process the found headers and add them to the org file. Restore old buffer position from before the search."
-    (interactive)
-    (when zwei/mu4e-memo-to-inbox-saved-excursion
-      (let (data-list '())
+    "Hooked to call after a search for memos is completed,
+process the found headers and add them to the org file.
+Restore old buffer position from before the search."
+    (when (and (zwei/save-and-restore-state "mu4e-memo-to-inbox" "read") (zwei/mu4e-header-buffer t) ) ;; Only execute if in headers view and the previous function was called
+      (let ((body-list '())
+            (header-list '())
+            (marked 0))
         (while (mu4e-message-at-point t)
-          (let* ((msg (mu4e-message-at-point))
-                 (body (mu4e-body-text msg))
-                 (data-to-set (cond
-                               ((string= "" body) (mu4e-message-field msg :subject))
-                               (t body))))
-            (push data-to-set data-list)
-            (mu4e-headers-mark-for-read)))
-        (if mu4e~mark-map
-            (let ((marknum (hash-table-count mu4e~mark-map)))
-              (if (not (zerop marknum)) ;; Don't mark if empty
-                  (mu4e-mark-execute-all t))))
-        (unless (= (length data-list) 0)
+          ;; Starts in the mu4e-headers
+          (let ((msg (mu4e-message-at-point)))
+            (mu4e-headers-view-message)
+            ;; This all happens in the mu4e-view
+            (let* ((body (string-trim (mu4e-body-text msg)))
+                   (subject (string-trim (mu4e-message-field msg :subject)))
+                   (body-to-set (cond
+                                 ((string= "" body) nil)
+                                 ((string= subject body) nil)
+                                 ((string= "" subject) (mapconcat 'identity (cdr (split-string body "\\n" nil " ")) "\n"))
+                                 (t (string-trim body))))
+                   (header-to-set (cond
+                                   ((string= "" subject) (car (split-string body "\\n" nil " ")))
+                                   (t subject))))
+              (push header-to-set header-list)
+              (push body-to-set body-list)
+              (mu4e-view-mark-for-read)
+              (setq marked (+ marked 1))
+              (zwei/mu4e-header-buffer t))))
+        (if (> marked 0)
+            (mu4e-mark-execute-all t))
+        (unless (= (length header-list) 0)
           (org-capture nil "i")
-          (let (value)
-            (while data-list
-              (setq value (car data-list))
-              (setq data-list (cdr data-list))
-              (message value)
-              (funcall-interactively 'org-edit-headline value)
-              (if data-list ;;has more so create a newheadline for them
+          (let ((value-header)(value-body))
+            (while header-list
+              (setq value-header (car header-list))
+              (setq value-body (cdr body-list))
+              (setq header-list (cdr header-list))
+              (setq body-list (cdr body-list))
+              (funcall-interactively 'org-edit-headline value-header)
+              (when (value-body)
+                (call-interactively #'org-add-note)
+                (insert value-body)
+                (org-ctrl-c-ctrl-c))
+              (if header-list ;;has more so create a newheadline for them
                   (call-interactively #'+org/insert-item-below))))
-          (org-capture-finalize)))
-      (let ((old-point (nth 0 zwei/mu4e-memo-to-inbox-saved-excursion))
-            (old-buff (nth 1 zwei/mu4e-memo-to-inbox-saved-excursion))
-            (old-mark (nth 2 zwei/mu4e-memo-to-inbox-saved-excursion)))
-        (unless (eq (current-buffer) old-buff)
-          (switch-to-buffer old-buff))
-        (goto-char old-point)
-        (save-mark-and-excursion--restore old-mark))
-      (setq zwei/mu4e-memo-to-inbox-saved-excursion nil)))
+          (org-capture-finalize)))))
 
   (add-hook 'mu4e-headers-found-hook 'zwei/mu4e-memo-to-inbox-process-found-headers)
   (add-hook 'mu4e-index-updated-hook 'zwei/mu4e-memo-to-inbox)
-  (mu4e-update-mail-and-index t)
-  )
+  (zwei/save-and-restore-state "mu4e-memo-to-inbox" "clear") ;; To stop misbehaviour on repeated buffer evaluations
+  (mu4e-update-mail-and-index t))
 
 
 ;; ================
