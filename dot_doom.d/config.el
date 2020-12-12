@@ -574,7 +574,7 @@
   :defer t
   :config
   (setq anki-editor-anki-connect-listening-port 38040)
-  (defun filter-out-p (str _ _)
+  (defun filter-out-p (str backend comm)
     "Filter out <p> tags from STR when exporting Anki notes."
     (replace-regexp-in-string "\n<p>\\|</p>\n\\|<p>\\|</p>"
                               "" str))
