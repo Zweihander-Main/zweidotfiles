@@ -679,9 +679,9 @@ For read, can get data using
 (setf (values point buffer mark) (zwei/save-and-restore-state nil 'read')).
 
 Intended for short term usage - not designed to survive restart."
-    (let* ((constant "_ZWEISAVEANDRESTORESTATE")
-           (var-string (concatenate 'string ref-name constant))
-           (stored-data (intern var-string)))
+    (let* ((constant "ZWEISAVEANDRESTORESTATE_")
+           (var-string (concatenate 'string constant ref-name))
+           (stored-data (ignore-errors (symbol-value (intern var-string)))))
       (cond ((string= action "read") stored-data)
             (t (let ((old-point (gensym "old-point"))
                      (old-buff (gensym "old-buff"))
@@ -696,11 +696,11 @@ Intended for short term usage - not designed to survive restart."
                             (goto-char old-point)
                             (save-mark-and-excursion--restore old-mark)
                             (set (intern var-string) nil))))
-                       ((string= action "clear") (set (intern (var-string)) nil))
+                       ((string= action "clear") (set (intern var-string) nil))
                        (t (let ((old-point (point)) ;; default write
                                 (old-buff (current-buffer))
                                 (old-mark (save-mark-and-excursion--save)))
-                            (set (intern (concatenate 'string ref-name constant))
+                            (set (intern var-string)
                                  (list old-point old-buff old-mark))))))))))
 
 
