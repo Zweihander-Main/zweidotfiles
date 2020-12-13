@@ -718,9 +718,9 @@ part of the function which calls the search and saves the location to restore
     "Returns true if current buffer is header buffer. Will switch to that buffer is SWITCH is non-nil."
     (let* ((name (or mu4e~headers-buffer-name "*mu4e-headers*"))
            (is-buffer (string= (buffer-name) name)))
-      (when (and is-buffer switch)
+      (when (and (not is-buffer) switch)
         (switch-to-buffer name))
-      (is-buffer (string= (buffer-name) name))))
+      (setq is-buffer (string= (buffer-name) name))))
 
   (defun zwei/mu4e-memo-to-inbox-process-found-headers ()
     "Hooked to call after a search for memos is completed,
