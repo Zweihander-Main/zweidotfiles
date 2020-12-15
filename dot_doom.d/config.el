@@ -1,12 +1,9 @@
 ;;; config.el -- ~/.doom.d/config.el
-;;; -*- lexical-binding: t; -*-
+;;;
 ;;; Commentary:
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
+;;; -*- lexical-binding: t; -*-
+;;;
 ;;; Code:
-
 
 
 ;; ===========
@@ -15,6 +12,7 @@
 
 ;;Fix issues with emacs 27 warnings
 (setq byte-compile-warnings '(cl-functions))
+
 (defun zwei/which-linux-distro ()
   "Info from lsb_release."
   (interactive)
@@ -24,7 +22,6 @@
 (when (string= (zwei/which-linux-distro) "Debian")
   (add-to-list 'load-path "/usr/share/emacs/site-lisp"))
 (load! "lisp/org-variable-pitch.el")
-
 
 
 ;; ======================
@@ -42,7 +39,9 @@
       org-ellipsis "▼"
       display-line-numbers-type t
       line-spacing 0.1
-      garbage-collection-messages nil)
+      garbage-collection-messages nil
+      split-height-threshold nil ;; Prefer vertical split
+      split-width-threshold 0)
 
 (doom-themes-org-config)
 (doom-init-extra-fonts-h)
@@ -269,8 +268,8 @@
   (map! :after org
         :map org-mode-map
         :localleader
-        (:prefix ("r" . "refile")
-         :desc "Archive all done tasks" "a" #'zwei/org-archive-done-tasks)))
+        :prefix "r"
+        :desc "Archive all done tasks" "a" #'zwei/org-archive-done-tasks))
 
 ;; Org-journal
 (after! org-journal
@@ -702,7 +701,8 @@ Intended for short term usage - not designed to survive restart."
             (t (progn (unless (eq (current-buffer) old-buff)
                         (switch-to-buffer old-buff))
                       (goto-char old-point)
-                      (save-mark-and-excursion--restore old-mark))))))
+                      (save-mark-and-excursion--restore old-mark)
+                      (set (intern var-string) nil))))))
 
   (defun zwei/mu4e-memo-to-inbox ()
     "Pull in emails to memo folder and convert them to org headings in the inbox.
@@ -731,32 +731,42 @@ Will switch to that buffer is SWITCH is non-nil."
     "Hooked to call after a search for memos is completed,
 process the found headers and add them to the org file.
 Restore old buffer position from before the search."
-    (when (and (zwei/save-and-restore-state "mu4e-memo-to-inbox" "read") (zwei/mu4e-header-buffer t) ) ;; Only execute if in headers view and the previous function was called
+    (when (and ;; Only execute if in headers view and the previous function was called
+           (zwei/save-and-restore-state "mu4e-memo-to-inbox" "read")
+           (zwei/mu4e-buffer-manage "headers" t))
       (let ((body-list '())
             (header-list '())
-            (marked 0))
-        (while (mu4e-message-at-point t)
-          ;; Starts in the mu4e-headers
-          (let ((msg (mu4e-message-at-point)))
-            (mu4e-headers-view-message)
-            ;; This all happens in the mu4e-view
-            (let* ((body (string-trim (mu4e-body-text msg)))
-                   (subject (string-trim (mu4e-message-field msg :subject)))
-                   (body-to-set (cond
-                                 ((string= "" body) nil)
-                                 ((string= subject body) nil)
-                                 ((string= "" subject) (mapconcat 'identity (cdr (split-string body "\\n" nil " ")) "\n"))
-                                 (t (string-trim body))))
-                   (header-to-set (cond
-                                   ((string= "" subject) (car (split-string body "\\n" nil " ")))
-                                   (t subject))))
-              (push header-to-set header-list)
-              (push body-to-set body-list)
-              (mu4e-view-mark-for-read)
-              (setq marked (+ marked 1))
-              (zwei/mu4e-header-buffer t))))
-        (if (> marked 0)
-            (mu4e-mark-execute-all t))
+            (marked 0)
+            (msg (mu4e-message-at-point t)))
+        (when msg
+          (mu4e-headers-view-message))
+        (while msg
+          (sleep-for 1)
+          (unless (zwei/mu4e-buffer-manage "view")
+            (mu4e-select-other-view))
+          (let* ((body (string-trim (mu4e-body-text msg)))
+                 (subject (string-trim (mu4e-message-field msg :subject)))
+                 (body-to-set (cond
+                               ((string= "" body) nil)
+                               ((string= subject body) nil)
+                               ((string= "" subject) (mapconcat 'identity (cdr (split-string body "\\n" nil " ")) "\n"))
+                               (t (string-trim body))))
+                 (header-to-set (cond
+                                 ((string= "" subject) (car (split-string body "\\n" nil " ")))
+                                 (t (string-trim subject)))))
+            (push header-to-set header-list)
+            (push body-to-set body-list)
+            (unless (zwei/mu4e-buffer-manage "headers")
+              (mu4e-select-other-view))
+            (mu4e-headers-mark-for-read)
+            (setq marked (+ marked 1))
+            (unless (zwei/mu4e-buffer-manage "headers")
+              (mu4e-select-other-view))
+            (setq msg (mu4e-message-at-point t))))
+        (when (> marked 0)
+          (unless (zwei/mu4e-buffer-manage "headers" t)
+            (mu4e-select-other-view))
+          (mu4e-mark-execute-all t))
         (unless (= (length header-list) 0)
           (org-capture nil "i")
           (let ((value-header)(value-body))
@@ -772,11 +782,12 @@ Restore old buffer position from before the search."
                 (org-ctrl-c-ctrl-c))
               (if header-list ;;has more so create a newheadline for them
                   (call-interactively #'+org/insert-item-below))))
-          (org-capture-finalize)))))
+          (org-capture-finalize))))
+    (zwei/save-and-restore-state "mu4e-memo-to-inbox" "restore"))
 
   (add-hook 'mu4e-headers-found-hook 'zwei/mu4e-memo-to-inbox-process-found-headers)
   (add-hook 'mu4e-index-updated-hook 'zwei/mu4e-memo-to-inbox)
-  (zwei/save-and-restore-state "mu4e-memo-to-inbox" "clear") ;; To stop misbehaviour on repeated buffer evaluations
+
   (mu4e-update-mail-and-index t))
 
 
@@ -788,5 +799,9 @@ Restore old buffer position from before the search."
 ;; Note that formatters should be loaded on PATH
 (use-package! format-all
   :defer t)
+
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
 
 ;;; config.el ends here
