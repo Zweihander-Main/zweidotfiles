@@ -508,8 +508,8 @@
   (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2")))
 
   (map! :leader
-        (:prefix-map ("n" . "notes")
-         :desc "Inbox entry" "i" #'zwei/org-inbox-capture))
+        :prefix "n"
+        :desc "Inbox entry" "i" #'zwei/org-inbox-capture)
 
   (map! :after org-agenda
         :map org-agenda-mode-map
@@ -678,31 +678,31 @@ Restore: Will restore state and clear variable.
 For read, can get data using
 (setf (values point buffer mark) (zwei/save-and-restore-state nil 'read')).
 
+Will clear data on non-write if old buffer doesn't exist anymore.
+
 Intended for short term usage - not designed to survive restart."
     (let* ((constant "ZWEISAVEANDRESTORESTATE_")
-           (var-string (concatenate 'string constant ref-name))
-           (stored-data (ignore-errors (symbol-value (intern var-string)))))
-      (cond ((string= action "read") stored-data)
-            (t (let ((old-point (gensym "old-point"))
-                     (old-buff (gensym "old-buff"))
-                     (old-mark (gensym "old-mark")))
-                 (cond ((string= action "restore")
-                        (when stored-data
-                          (let ((old-point (nth 0 stored-data))
-                                (old-buff (nth 1 stored-data))
-                                (old-mark (nth 2 stored-data)))
-                            (unless (eq (current-buffer) old-buff)
-                              (switch-to-buffer old-buff))
-                            (goto-char old-point)
-                            (save-mark-and-excursion--restore old-mark)
-                            (set (intern var-string) nil))))
-                       ((string= action "clear") (set (intern var-string) nil))
-                       (t (let ((old-point (point)) ;; default write
-                                (old-buff (current-buffer))
-                                (old-mark (save-mark-and-excursion--save)))
-                            (set (intern var-string)
-                                 (list old-point old-buff old-mark))))))))))
-
+           (var-string (concat constant ref-name))
+           (stored-data (ignore-errors (symbol-value (intern var-string))))
+           (old-point (gensym "old-point"))
+           (old-buff) (gensym "old-buff")
+           (old-mark) (gensym "old-mark"))
+      (when stored-data
+        (setq old-point (nth 0 stored-data))
+        (setq old-buff (nth 1 stored-data))
+        (setq old-mark (nth 2 stored-data)))
+      (cond ((string= action "write")
+             (let ((old-point (point))
+                   (old-buff (current-buffer))
+                   (old-mark (save-mark-and-excursion--save)))
+               (set (intern var-string) (list old-point old-buff old-mark))))
+            ((or (string= action "clear") (not (buffer-live-p old-buff)) (not stored-data))
+             (set (intern var-string) nil))
+            ((string= action "read") stored-data)
+            (t (progn (unless (eq (current-buffer) old-buff)
+                        (switch-to-buffer old-buff))
+                      (goto-char old-point)
+                      (save-mark-and-excursion--restore old-mark))))))
 
   (defun zwei/mu4e-memo-to-inbox ()
     "Pull in emails to memo folder and convert them to org headings in the inbox.
