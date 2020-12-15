@@ -714,13 +714,18 @@ part of the function which calls the search and saves the location to restore
     (zwei/save-and-restore-state "mu4e-memo-to-inbox" "write")
     (mu4e-headers-search-bookmark "flag:unread AND NOT flag:trashed AND maildir:/fastmail/memo"))
 
-  (defun zwei/mu4e-header-buffer (&optional switch)
-    "Returns true if current buffer is header buffer. Will switch to that buffer is SWITCH is non-nil."
-    (let* ((name (or mu4e~headers-buffer-name "*mu4e-headers*"))
-           (is-buffer (string= (buffer-name) name)))
-      (when (and (not is-buffer) switch)
-        (switch-to-buffer name))
-      (setq is-buffer (string= (buffer-name) name))))
+  (defun zwei/mu4e-buffer-manage (buffer &optional switch)
+    "BUFFER can be 'view' or 'headers'.
+Returns true if current buffer is specified buffer.
+Will switch to that buffer is SWITCH is non-nil."
+    (let* ((target-buffer (cond ((string= buffer "view") (mu4e-get-view-buffer))
+                                ((string= buffer "headers") (mu4e-get-headers-buffer))
+                                (t (progn (user-error "BUFFER should be 'view' or 'headers'")
+                                          (current-buffer)))))
+           (is-buffer (eq (current-buffer) target-buffer)))
+      (when (and target-buffer (not is-buffer) switch)
+        (switch-to-buffer target-buffer))
+      (setq is-buffer (eq (current-buffer) target-buffer))))
 
   (defun zwei/mu4e-memo-to-inbox-process-found-headers ()
     "Hooked to call after a search for memos is completed,
