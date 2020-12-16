@@ -124,7 +124,7 @@ This face is used to keep them in monospace when using
 
 
 (defvar org-variable-pitch--cookies nil
-  "Face remappings to restore when the minor mode is deactivated")
+  "Face remappings to restore when the minor mode is deactivated.")
 
 ;;;###autoload
 (define-minor-mode org-variable-pitch-minor-mode
@@ -145,7 +145,7 @@ Keeps some elements in fixed pitch in order to keep layout."
         (when org-variable-pitch-fontify-headline-prefix
           (font-lock-add-keywords nil org-variable-pitch-headline-font-lock-keywords)))
     (variable-pitch-mode -1)
-    (mapc #'face-remap-remove-relative org-variable-pitch--cookies)
+    (mapc 'face-remap-remove-relative org-variable-pitch--cookies)
     (setq org-variable-pitch--cookies nil)
     (font-lock-remove-keywords nil org-variable-pitch-font-lock-keywords)
     (font-lock-remove-keywords nil org-variable-pitch-headline-font-lock-keywords))
