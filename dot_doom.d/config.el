@@ -343,7 +343,8 @@
           ("2" "Inbox"
            ((todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
-                   (org-agenda-files '(,zwei/org-agenda-todo-file))))))))
+                   (org-agenda-files '(,zwei/org-agenda-todo-file))
+                   (org-agenda-entry-text-mode "on")))))))
 
   (defun zwei/org-agenda-bulk-mark-regexp-category (regexp)
     "Mark entries whose category matches REGEXP for future agenda bulk action."
@@ -520,7 +521,7 @@
 
   ;; Key mapping for org-agenda
   (map! :g "<f1>" (lambda () (interactive) (org-agenda nil "1")))
-  (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2")))
+  (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2") (org-agenda-entry-text-show)))
 
   (map! :leader
         :prefix "n"
