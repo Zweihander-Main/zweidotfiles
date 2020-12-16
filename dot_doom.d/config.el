@@ -41,7 +41,9 @@
       line-spacing 0.1
       garbage-collection-messages nil
       split-height-threshold nil ;; Prefer vertical split
-      split-width-threshold 0)
+      split-width-threshold 0
+      window-min-width 2
+      window-min-height 1)
 
 (doom-themes-org-config)
 (doom-init-extra-fonts-h)
@@ -117,6 +119,20 @@
 
 ;; Set search to ignore archives
 (setq counsel-find-file-ignore-regexp "\\(?:^[#.]\\)\\|\\(?:[#~]$\\)\\|\\(?:^Icon?\\)\\|\\.org_archive")
+
+
+;; ================
+;;  Message Buffer
+;; ================
+
+(defadvice message (after message-tail activate)
+  "Goto point max after a new message."
+  (with-current-buffer "*Messages*"
+    (goto-char (point-max))
+    (let ((windows (get-buffer-window-list (current-buffer) nil t)))
+      (while windows
+        (set-window-point (car windows) (point-max))
+        (setq windows (cdr windows))))))
 
 
 ;; ===============
@@ -704,6 +720,15 @@ Intended for short term usage - not designed to survive restart."
                       (save-mark-and-excursion--restore old-mark)
                       (set (intern var-string) nil))))))
 
+  (defun zwei/mu4e-script-mode (&optional disable)
+    "Will enable script mode unless DISABLE is non-nil."
+    (if disable
+        (progn
+          (setq mu4e-split-view 'vertical)
+          (zwei/save-and-restore-state "mu4e-memo-to-inbox" "clear"))
+      (progn
+        (setq mu4e-split-view nil))))
+
   (defun zwei/mu4e-memo-to-inbox ()
     "Pull in emails to memo folder and convert them to org headings in the inbox.
 Use the email body for content and mark the emails as read. This is the first
@@ -712,6 +737,7 @@ part of the function which calls the search and saves the location to restore
     (interactive)
     (mu4e-context-switch nil "fastmail")
     (zwei/save-and-restore-state "mu4e-memo-to-inbox" "write")
+    (zwei/mu4e-script-mode)
     (mu4e-headers-search-bookmark "flag:unread AND NOT flag:trashed AND maildir:/fastmail/memo"))
 
   (defun zwei/mu4e-buffer-manage (buffer &optional switch)
@@ -727,67 +753,62 @@ Will switch to that buffer is SWITCH is non-nil."
         (switch-to-buffer target-buffer))
       (setq is-buffer (eq (current-buffer) target-buffer))))
 
-  (defun zwei/mu4e-memo-to-inbox-process-found-headers ()
-    "Hooked to call after a search for memos is completed,
-process the found headers and add them to the org file.
-Restore old buffer position from before the search."
-    (when (and ;; Only execute if in headers view and the previous function was called
+  (defun zwei/mu4e-memo-to-inbox-view-message-and-process ()
+    "Process the message, add to the org inbox file, and restore the original
+state if it's the last message."
+    (when (and ;; Only execute if in view and we're processing the inbox
            (zwei/save-and-restore-state "mu4e-memo-to-inbox" "read")
-           (zwei/mu4e-buffer-manage "headers" t))
-      (let ((body-list '())
-            (header-list '())
-            (marked 0)
-            (msg (mu4e-message-at-point t)))
+           (zwei/mu4e-buffer-manage "view"))
+      (princ (mu4e-message-at-point t))
+      (let ((msg (mu4e-message-at-point t)))
         (when msg
-          (mu4e-headers-view-message))
-        (while msg
-          (sleep-for 1)
-          (unless (zwei/mu4e-buffer-manage "view")
-            (mu4e-select-other-view))
           (let* ((body (string-trim (mu4e-body-text msg)))
                  (subject (string-trim (mu4e-message-field msg :subject)))
                  (body-to-set (cond
                                ((string= "" body) nil)
                                ((string= subject body) nil)
-                               ((string= "" subject) (mapconcat 'identity (cdr (split-string body "\\n" nil " ")) "\n"))
+                               ;; ((string= "" subject) (mapconcat 'identity (cdr (split-string body "\\n" nil " ")) "\n"))
                                (t (string-trim body))))
                  (header-to-set (cond
                                  ((string= "" subject) (car (split-string body "\\n" nil " ")))
                                  (t (string-trim subject)))))
-            (push header-to-set header-list)
-            (push body-to-set body-list)
-            (unless (zwei/mu4e-buffer-manage "headers")
-              (mu4e-select-other-view))
-            (mu4e-headers-mark-for-read)
-            (setq marked (+ marked 1))
-            (unless (zwei/mu4e-buffer-manage "headers")
-              (mu4e-select-other-view))
-            (setq msg (mu4e-message-at-point t))))
-        (when (> marked 0)
-          (unless (zwei/mu4e-buffer-manage "headers" t)
-            (mu4e-select-other-view))
-          (mu4e-mark-execute-all t))
-        (unless (= (length header-list) 0)
-          (org-capture nil "i")
-          (let ((value-header)(value-body))
-            (while header-list
-              (setq value-header (car header-list))
-              (setq value-body (cdr body-list))
-              (setq header-list (cdr header-list))
-              (setq body-list (cdr body-list))
-              (funcall-interactively 'org-edit-headline value-header)
-              (when (value-body)
-                (call-interactively #'org-add-note)
-                (insert value-body)
-                (org-ctrl-c-ctrl-c))
-              (if header-list ;;has more so create a newheadline for them
-                  (call-interactively #'+org/insert-item-below))))
-          (org-capture-finalize))))
-    (zwei/save-and-restore-state "mu4e-memo-to-inbox" "restore"))
+            (org-capture nil "i")
+            (funcall-interactively 'org-edit-headline header-to-set)
+            (when body-to-set
+              (insert "\n")
+              (insert body-to-set))
+            (org-capture-finalize)
+            (zwei/mu4e-buffer-manage "headers" t)
+            (mu4e-mark-set 'read)
+            (let ((next (mu4e-headers-next)))
+              (if next
+                  (mu4e-headers-view-message)
+                (progn
+                  (when (buffer-live-p (mu4e-get-view-buffer))
+                    (kill-buffer (mu4e-get-view-buffer)))
+                  (mu4e-mark-execute-all t) ;; Execute all marks, there should be at least one from this call
+                  (zwei/save-and-restore-state "mu4e-memo-to-inbox" "restore") ;; Done with memo-to-inbox
+                  (zwei/mu4e-script-mode t)))))))))
 
+  (defun zwei/mu4e-memo-to-inbox-process-found-headers ()
+    "Hooked to call after a search for memos is completed.
+Will setup the mu4e-view which is then hooked into the process function."
+    (when (and ;; Only execute if in headers view and the previous function was called
+           (zwei/save-and-restore-state "mu4e-memo-to-inbox" "read")
+           (zwei/mu4e-buffer-manage "headers" t))
+      (when (buffer-live-p (mu4e-get-view-buffer))
+        (kill-buffer (mu4e-get-view-buffer)))
+      (if (mu4e-message-at-point t)
+          (progn (append-to-file "\n" nil zwei/org-agenda-todo-file)
+                 (mu4e-headers-view-message))
+        (progn (zwei/save-and-restore-state "mu4e-memo-to-inbox" "restore") ;; no messages, reset it right out the gate
+               (zwei/mu4e-script-mode t)))))
+
+  (add-hook 'mu4e-view-mode-hook 'zwei/mu4e-memo-to-inbox-view-message-and-process)
   (add-hook 'mu4e-headers-found-hook 'zwei/mu4e-memo-to-inbox-process-found-headers)
   (add-hook 'mu4e-index-updated-hook 'zwei/mu4e-memo-to-inbox)
 
+  (zwei/mu4e-script-mode t)
   (mu4e-update-mail-and-index t))
 
 
