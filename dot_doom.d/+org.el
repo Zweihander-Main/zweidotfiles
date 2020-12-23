@@ -384,18 +384,18 @@
   ;; Mappings
 
   (map! :g "<f1>" (lambda () (interactive) (org-agenda nil "1")))
-  (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2") (org-agenda-entry-text-show)))
+  (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2")))
 
   (map! :leader
         :prefix "n"
         :desc "Inbox entry" "i" #'zwei/org-inbox-capture)
 
-  (map! :after org-agenda
-        :map org-agenda-mode-map
+  (map! :map org-agenda-mode-map
         :localleader
         :desc "Process inbox items" "p" #'zwei/org-agenda-process-inbox
         :desc "Process marked items" "P" #'zwei/org-agenda-bulk-process-entries
         :desc "Edit headline" "e" #'zwei/org-agenda-edit-headline
+        :desc "Toggle entry text mode" "E" #'org-agenda-entry-text-mode
         :desc "Break into child tasks" "b" #'zwei/org-agenda-break-into-child)
 
   ;; Config
@@ -436,8 +436,7 @@
           ("2" "Inbox"
            ((todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
-                   (org-agenda-files '(,zwei/org-agenda-todo-file))
-                   (org-agenda-entry-text-mode "on"))))))))
+                   (org-agenda-files '(,zwei/org-agenda-todo-file)))))))))
 
 ;; Org-clock-convenience for agenda
 (use-package! org-clock-convenience
