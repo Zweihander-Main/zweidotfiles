@@ -264,6 +264,18 @@
   (defun zwei/org-agenda-process-inbox-item ()
     "Process a single item in the agenda."
     (org-with-wide-buffer
+     ;; Question -- edit headline, add note, open link and done, enter to move on
+     ;; Some way to sort knowledge vs tasks
+     ;; Convert to info -- entirely different way to do it -- convert to next has no refile
+     (let ((answer nil)
+           (continue nil))
+       (while (not continue)
+         (setq answer
+               (read-answer "Item options: [e]dit/[RET]:Continue "
+                            '(("edit" ?e "Edit the headline of the item")
+                              ("continue" ?\r "Continue processing"))))
+         (cond ((string= answer "continue") (setq continue t))
+               ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline)))))
      (org-agenda-set-tags)
      (org-agenda-priority)
      (call-interactively 'zwei/org-agenda-set-effort)
