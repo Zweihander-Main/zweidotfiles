@@ -272,11 +272,12 @@
            (type "todo"))
        (while (not continue)
          (setq answer
-               (read-answer "Item options: [e]dit/[t]odo/[n]ote/[l]ink/[RET]:Continue "
+               (read-answer "Item options: [e]dit/[t]odo/[n]ote/[l]ink/[n]ext/[RET]:Continue "
                             '(("edit" ?e "Edit the headline of the item")
                               ("todo" ?t "Change TODO state of item")
                               ("note" ?n "Add a note to the item")
                               ("link" ?l "Open link and mark done")
+                              ("next" ?n "Put in next file")
                               ("continue" ?\r "Continue processing"))))
          (cond ((string= answer "continue") (setq continue t))
                ((string= answer "link")
@@ -286,6 +287,14 @@
                     (org-agenda-todo "DONE")
                     (setq type "done"
                           continue t))))
+               ((string= answer "next")
+                (progn
+                  (setq type "next")
+                  (org-agenda-todo "NEXT")
+                  (org-agenda-refile nil
+                                     (list (concat (car (last (split-string zwei/org-agenda-next-file "/"))) "/")
+                                           zwei/org-agenda-next-file nil nil) t)
+                  (setq continue t)))
                ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline))
                ((string= answer "todo") (org-agenda-todo))
                ((string= answer "note") (call-interactively #'org-agenda-add-note))))
