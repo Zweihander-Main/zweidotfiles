@@ -272,8 +272,9 @@
            (type "todo"))
        (while (not continue)
          (setq answer
-               (read-answer "Item options: [e]dit/[n]ote/[l]ink/[RET]:Continue "
+               (read-answer "Item options: [e]dit/[t]odo/[n]ote/[l]ink/[RET]:Continue "
                             '(("edit" ?e "Edit the headline of the item")
+                              ("todo" ?t "Change TODO state of item")
                               ("note" ?n "Add a note to the item")
                               ("link" ?l "Open link and mark done")
                               ("continue" ?\r "Continue processing"))))
@@ -286,6 +287,7 @@
                     (setq type "done"
                           continue t))))
                ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline))
+               ((string= answer "todo") (org-agenda-todo))
                ((string= answer "note") (call-interactively #'org-agenda-add-note))))
        (when (string= type "todo")
          (org-agenda-set-tags)
@@ -404,7 +406,6 @@
   ;; Hooks
 
   (add-hook! 'org-clock-in-hook :append #'zwei/set-todo-state-next)
-  (add-hook! '(org-after-todo-state-change-hook org-capture-after-finalize-hook) :append #'zwei/org-agenda-redo-all-buffers)
 
   ;; Mappings
 
