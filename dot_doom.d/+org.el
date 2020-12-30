@@ -268,48 +268,61 @@
      ;; Some way to sort knowledge vs tasks
      ;; Convert to info -- entirely different way to do it -- convert to next has no refile
      (let ((answer nil)
-           (continue nil))
+           (continue nil)
+           (type "todo"))
        (while (not continue)
          (setq answer
-               (read-answer "Item options: [e]dit/[RET]:Continue "
+               (read-answer "Item options: [e]dit/[n]ote/[l]ink/[RET]:Continue "
                             '(("edit" ?e "Edit the headline of the item")
+                              ("note" ?n "Add a note to the item")
+                              ("link" ?l "Open link and mark done")
                               ("continue" ?\r "Continue processing"))))
          (cond ((string= answer "continue") (setq continue t))
-               ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline)))))
-     (org-agenda-set-tags)
-     (org-agenda-priority)
-     (call-interactively 'zwei/org-agenda-set-effort)
-     (org-agenda-refile nil nil t)))
+               ((string= answer "link")
+                (let ((ret-msg ""))
+                  (setq ret-msg (org-agenda-open-link))
+                  (unless (and (stringp ret-msg )(string= ret-msg "No link to open here"))
+                    (org-agenda-todo "DONE")
+                    (setq type "done"
+                          continue t))))
+               ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline))
+               ((string= answer "note") (call-interactively #'org-agenda-add-note))))
+       (when (string= type "todo")
+         (org-agenda-set-tags)
+         (org-agenda-priority)
+         (call-interactively 'zwei/org-agenda-set-effort)
+         (org-agenda-refile nil nil t)))))
 
   (defun zwei/org-agenda-bulk-process-entries ()
     "Bulk process entries in agenda."
     (interactive)
-    (if (not (null org-agenda-bulk-marked-entries))
-        (let ((entries (reverse org-agenda-bulk-marked-entries))
-              (processed 0)
-              (skipped 0))
-          (dolist (e entries)
-            (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
-              (if (not pos)
-                  (progn (message "Skipping removed entry at %s" e)
-                         (cl-incf skipped))
-                (goto-char pos)
-                (let (org-loop-over-headlines-in-active-region) (funcall 'zwei/org-agenda-process-inbox-item))
-                ;; `post-command-hook' is not run yet.  We make sure any
-                ;; pending log note is processed.
-                (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
-                          (memq 'org-add-log-note post-command-hook))
-                  (org-add-log-note))
-                (cl-incf processed))))
-          (org-agenda-redo t)
-          (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
-          (message "Acted on %d entries%s%s"
-                   processed
-                   (if (= skipped 0)
-                       ""
-                     (format ", skipped %d (disappeared before their turn)"
-                             skipped))
-                   (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
+    ;; Set temporary variable lookup -- set hl-line-face from hl-line to hl-line-active
+    (when (not (null org-agenda-bulk-marked-entries))
+      (let ((entries (reverse org-agenda-bulk-marked-entries))
+            (processed 0)
+            (skipped 0))
+        (dolist (e entries)
+          (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
+            (if (not pos)
+                (progn (message "Skipping removed entry at %s" e)
+                       (cl-incf skipped))
+              (goto-char pos)
+              (let (org-loop-over-headlines-in-active-region) (funcall 'zwei/org-agenda-process-inbox-item))
+              ;; `post-command-hook' is not run yet.  We make sure any
+              ;; pending log note is processed.
+              (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
+                        (memq 'org-add-log-note post-command-hook))
+                (org-add-log-note))
+              (cl-incf processed))))
+        (org-agenda-redo t)
+        (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
+        (message "Acted on %d entries%s%s"
+                 processed
+                 (if (= skipped 0)
+                     ""
+                   (format ", skipped %d (disappeared before their turn)"
+                           skipped))
+                 (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
 
   (defun zwei/set-todo-state-next ()
     "Visit each parent task and change NEXT states to TODO."
@@ -448,6 +461,7 @@
           ("2" "Inbox"
            ((todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
+                   (org-agenda-prefix-format " |%e|")
                    (org-agenda-files '(,zwei/org-agenda-todo-file)))))))))
 
 ;; Org-clock-convenience for agenda
