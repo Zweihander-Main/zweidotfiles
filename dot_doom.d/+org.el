@@ -264,20 +264,18 @@
   (defun zwei/org-agenda-process-inbox-item ()
     "Process a single item in the agenda."
     (org-with-wide-buffer
-     ;; Question -- edit headline, add note, open link and done, enter to move on
-     ;; Some way to sort knowledge vs tasks
-     ;; Convert to info -- entirely different way to do it -- convert to next has no refile
      (let ((answer nil)
            (continue nil)
            (type "todo"))
        (while (not continue)
          (setq answer
-               (read-answer "Item options: [e]dit/[t]odo/[n]ote/[l]ink/[n]ext/[RET]:Continue "
+               (read-answer "Item options: [e]dit/[t]odo/[n]ote/[l]ink/[n]ext/[i]nfo/[RET]:Continue "
                             '(("edit" ?e "Edit the headline of the item")
                               ("todo" ?t "Change TODO state of item")
                               ("note" ?n "Add a note to the item")
                               ("link" ?l "Open link and mark done")
                               ("next" ?n "Put in next file")
+                              ("info" ?i "Conver to list item and refile under item")
                               ("continue" ?\r "Continue processing"))))
          (cond ((string= answer "continue") (setq continue t))
                ((string= answer "link")
@@ -292,17 +290,35 @@
                   (setq type "next")
                   (org-agenda-todo "NEXT")
                   (org-agenda-refile nil
-                                     (list (concat (car (last (split-string zwei/org-agenda-next-file "/"))) "/")
+                                     (list (concat (car (last (split-string zwei/org-agenda-next-file "/"))) "/") ;; should be "next.org/"
                                            zwei/org-agenda-next-file nil nil) t)
                   (setq continue t)))
+               ((string= answer "info") (setq type "info"
+                                              continue t))
                ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline))
                ((string= answer "todo") (org-agenda-todo))
                ((string= answer "note") (call-interactively #'org-agenda-add-note))))
-       (when (string= type "todo")
-         (org-agenda-set-tags)
-         (org-agenda-priority)
-         (call-interactively 'zwei/org-agenda-set-effort)
-         (org-agenda-refile nil nil t)))))
+       (cond ((string= type "todo")
+              (progn
+                (org-agenda-set-tags)
+                (org-agenda-priority)
+                (call-interactively 'zwei/org-agenda-set-effort)
+                (org-agenda-refile nil nil t)))
+             ((string= type "info")
+              (let ((org-refile-target-verify-function))
+                (org-agenda-refile nil nil t) ;; You can create a local var for org-refile-targets -- add to the existing list if possible -- see top level for how to use find-files for everything -- also create interactive version of this and bind
+                (let* ((bookmark (plist-get org-bookmark-names-plist :last-refile))
+                       (pos (bookmark-get-position bookmark))
+                       (filename (bookmark-get-filename bookmark))
+                       (buffer (get-file-buffer filename))
+                       (inhibit-read-only t))
+                  (org-with-remote-undo buffer
+                    (with-current-buffer buffer
+                      (widen)
+                      (goto-char pos)
+                      (debug)
+                      (org-todo "")
+                      (org-toggle-item t))))))))))
 
   (defun zwei/org-agenda-bulk-process-entries ()
     "Bulk process entries in agenda."
