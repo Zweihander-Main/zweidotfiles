@@ -287,13 +287,8 @@
                     (setq type "done"
                           continue t))))
                ((string= answer "next")
-                (progn
-                  (setq type "next")
-                  (org-agenda-todo "NEXT")
-                  (org-agenda-refile nil
-                                     (list (concat (car (last (split-string zwei/org-agenda-next-file "/"))) "/") ;; should be "next.org/"
-                                           zwei/org-agenda-next-file nil nil) t)
-                  (setq continue t)))
+                (setq type "next"
+                      continue t))
                ((string= answer "info") (setq type "info"
                                               continue t))
                ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline))
@@ -305,6 +300,15 @@
                 (org-agenda-priority)
                 (call-interactively 'zwei/org-agenda-set-effort)
                 (org-agenda-refile nil nil t)))
+             ((string= type "next")
+              (progn
+                (org-agenda-todo "NEXT")
+                (org-agenda-set-tags)
+                (org-agenda-priority)
+                (call-interactively 'zwei/org-agenda-set-effort)
+                (org-agenda-refile nil
+                                   (list (concat (car (last (split-string zwei/org-agenda-next-file "/"))) "/") ;; should be "next.org/"
+                                         zwei/org-agenda-next-file nil nil) t)))
              ((string= type "info")
               (let ((org-refile-target-verify-function))
                 (org-agenda-refile nil nil t)
@@ -335,6 +339,8 @@
                 (progn (message "Skipping removed entry at %s" e)
                        (cl-incf skipped))
               (goto-char pos)
+              (hl-line-highlight)
+              (highlight-lines-matching-regexp (string-trim (thing-at-point 'line t)) 'highlight)
               (let (org-loop-over-headlines-in-active-region) (funcall 'zwei/org-agenda-process-inbox-item))
               ;; `post-command-hook' is not run yet.  We make sure any
               ;; pending log note is processed.
