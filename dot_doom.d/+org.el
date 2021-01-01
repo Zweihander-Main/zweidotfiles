@@ -229,7 +229,7 @@
   (defun zwei/org-agenda-process-inbox ()
     "Called in org-agenda-mode, processes all inbox items."
     (interactive)
-    (zwei/org-agenda-bulk-mark-regexp-category "inbox")
+    (zwei/org-agenda-bulk-mark-regexp-category "")
     (zwei/org-agenda-bulk-process-entries))
 
   (defun zwei/org-inbox-capture ()
