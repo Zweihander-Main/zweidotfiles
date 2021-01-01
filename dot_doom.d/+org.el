@@ -263,6 +263,7 @@
 
   (defun zwei/org-agenda-process-inbox-item ()
     "Process a single item in the agenda."
+    (interactive)
     (org-with-wide-buffer
      (let ((answer nil)
            (continue nil)
@@ -306,7 +307,7 @@
                 (org-agenda-refile nil nil t)))
              ((string= type "info")
               (let ((org-refile-target-verify-function))
-                (org-agenda-refile nil nil t) ;; You can create a local var for org-refile-targets -- add to the existing list if possible -- see top level for how to use find-files for everything -- also create interactive version of this and bind
+                (org-agenda-refile nil nil t)
                 (let* ((bookmark (plist-get org-bookmark-names-plist :last-refile))
                        (pos (bookmark-get-position bookmark))
                        (filename (bookmark-get-filename bookmark))
@@ -445,6 +446,7 @@
         :localleader
         :desc "Process inbox items" "p" #'zwei/org-agenda-process-inbox
         :desc "Process marked items" "P" #'zwei/org-agenda-bulk-process-entries
+        :desc "Process current item" "i" #'zwei/org-agenda-process-inbox-item
         :desc "Edit headline" "e" #'zwei/org-agenda-edit-headline
         :desc "Toggle entry text mode" "E" #'org-agenda-entry-text-mode
         :desc "Break into child tasks" "b" #'zwei/org-agenda-break-into-child)
