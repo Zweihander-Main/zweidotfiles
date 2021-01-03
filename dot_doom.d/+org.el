@@ -107,72 +107,74 @@
         :map org-mode-map
         :localleader
         :prefix "r"
-        :desc "Archive all done tasks" "a" #'zwei/org-archive-done-tasks))
+        :desc "Archive all done tasks" "a" #'zwei/org-archive-done-tasks)
 
-;; General config
+  ;; General config
 
-(setq org-hide-emphasis-markers t
-      org-hierarchical-todo-statistics nil
-      org-todo-keywords
-      '((sequence
-         "TODO(t)"  ; A task that needs doing & is ready to do
-         "NEXT(n)"  ; A task that is in progress
-         "WAIT(w)"  ; Something external is holding up this task
-         "HOLD(h)"  ; This task is paused/on hold because of me
-         "|"
-         "DONE(d)"  ; Task successfully completed
-         "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
-        (sequence
-         "[ ](T)"   ; A checklist that needs doing
-         "[-](N)"   ; Checklist is in progress
-         "[?](W)"   ; Checklist is being held up or paused
-         "|"
-         "[X](D)")) ; Checklist was completed
-      org-todo-keyword-faces
-      '(("[-]"  . +org-todo-active)
-        ("NEXT" . +org-todo-active)
-        ("[?]"  . +org-todo-onhold)
-        ("WAIT" . +org-todo-onhold)
-        ("HOLD" . +org-todo-onhold)))
+  (setq org-hide-emphasis-markers t
+        org-hierarchical-todo-statistics nil
+        org-todo-keywords
+        '((sequence
+           "TODO(t)"  ; A task that needs doing & is ready to do
+           "NEXT(n)"  ; A task that is in progress
+           "WAIT(w)"  ; Something external is holding up this task
+           "HOLD(h)"  ; This task is paused/on hold because of me
+           "|"
+           "DONE(d)"  ; Task successfully completed
+           "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
+          (sequence
+           "[ ](T)"   ; A checklist that needs doing
+           "[-](N)"   ; Checklist is in progress
+           "[?](W)"   ; Checklist is being held up or paused
+           "|"
+           "[X](D)")) ; Checklist was completed
+        org-todo-keyword-faces
+        '(("[-]"  . +org-todo-active)
+          ("NEXT" . +org-todo-active)
+          ("[?]"  . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("HOLD" . +org-todo-onhold)))
 
-
-;; Logging
-(setq org-log-done 'time
-      org-log-into-drawer t)
+  (add-to-list 'org-modules 'org-habit)
 
 
-;; Tagging -- currently used for place and goal
-(setq org-tag-persistent-alist '((:startgroup . "place")
-                                 ("@work" . ?w)
-                                 ("@play" . ?p)
-                                 ("@down" . ?d)
-                                 ("@end" . ?e)
-                                 (:endgroup . "place")
-                                 (:startgroup "goal")
-                                 ("1#PHYSICAL" . ?1)
-                                 ("2#MENTAL" . ?2)
-                                 ("3#CODING" . ?3)
-                                 ("4#AUTOMATION" . ?4)
-                                 ("5#BUSINESS" . ?5)
-                                 ("6#WANKER" . ?6)
-                                 (:endgroup "goal"))
-      org-fast-tag-selection-single-key nil
-      org-use-tag-inheritance t
-      org-tags-exclude-from-inheritance '("crypt" "@work" "@play" "@down" "@end")
-      org-tag-faces
-      '(("1#PHYSICAL"   . (:foreground "#CC2200" :weight bold))
-        ("2#MENTAL"     . (:foreground "#00886D" :weight bold))
-        ("3#CODING"     . (:foreground "#00441F" :weight bold))
-        ("4#AUTOMATION" . (:foreground "#00FF33" :weight bold))
-        ("5#BUSINESS"   . (:foreground "#886D00" :weight bold))
-        ("6#WANKER"     . (:foreground "#6A3B9F" :weight bold))))
+  ;; Logging
+  (setq org-log-done 'time
+        org-log-into-drawer t)
 
 
-;; Filing
-(setq org-refile-allow-creating-parent-nodes 'confirm
-      org-refile-targets '((zwei/org-agenda-projects-file :maxlevel . 1)
-                           (zwei/org-agenda-tickler-file :maxlevel . 1)
-                           (zwei/org-agenda-next-file :level . 0 )))
+  ;; Tagging -- currently used for place and goal
+  (setq org-tag-persistent-alist '((:startgroup . "place")
+                                   ("@work" . ?w)
+                                   ("@play" . ?p)
+                                   ("@down" . ?d)
+                                   ("@end" . ?e)
+                                   (:endgroup . "place")
+                                   (:startgroup "goal")
+                                   ("1#PHYSICAL" . ?1)
+                                   ("2#MENTAL" . ?2)
+                                   ("3#CODING" . ?3)
+                                   ("4#AUTOMATION" . ?4)
+                                   ("5#BUSINESS" . ?5)
+                                   ("6#WANKER" . ?6)
+                                   (:endgroup "goal"))
+        org-fast-tag-selection-single-key nil
+        org-use-tag-inheritance t
+        org-tags-exclude-from-inheritance '("crypt" "@work" "@play" "@down" "@end")
+        org-tag-faces
+        '(("1#PHYSICAL"   . (:foreground "#CC2200" :weight bold))
+          ("2#MENTAL"     . (:foreground "#00886D" :weight bold))
+          ("3#CODING"     . (:foreground "#00441F" :weight bold))
+          ("4#AUTOMATION" . (:foreground "#00FF33" :weight bold))
+          ("5#BUSINESS"   . (:foreground "#886D00" :weight bold))
+          ("6#WANKER"     . (:foreground "#6A3B9F" :weight bold))))
+
+
+  ;; Filing
+  (setq org-refile-allow-creating-parent-nodes 'confirm
+        org-refile-targets '((zwei/org-agenda-projects-file :maxlevel . 1)
+                             (zwei/org-agenda-tickler-file :maxlevel . 1)
+                             (zwei/org-agenda-next-file :level . 0 ))))
 
 
 ;; Disable fancy-priorities for now
@@ -270,26 +272,29 @@
            (type "todo"))
        (while (not continue)
          (setq answer
-               (read-answer "Item options: [e]dit/[t]odo/[n]ote/[l]ink/[n]ext/[i]nfo/[RET]:Continue "
-                            '(("edit" ?e "Edit the headline of the item")
+               (read-answer "Item options: [v]iew/[e]dit/[t]odo/[d]one/[a]:note/[l]ink/[k]ill/[n]ext/[i]nfo/[RET]:Continue "
+                            '(("view" ?v "View in minibuffer")
+                              ("edit" ?e "Edit the headline of the item")
                               ("todo" ?t "Change TODO state of item")
-                              ("note" ?n "Add a note to the item")
+                              ("done" ?d "Mark done and archive")
+                              ("note" ?a "Add a note to the item")
                               ("link" ?l "Open link and mark done")
+                              ("kill" ?k "Kill current line")
                               ("next" ?n "Put in next file")
                               ("info" ?i "Conver to list item and refile under item")
                               ("continue" ?\r "Continue processing"))))
          (cond ((string= answer "continue") (setq continue t))
-               ((string= answer "link")
-                (let ((ret-msg ""))
-                  (setq ret-msg (org-agenda-open-link))
-                  (unless (and (stringp ret-msg )(string= ret-msg "No link to open here"))
-                    (org-agenda-todo "DONE")
-                    (setq type "done"
-                          continue t))))
-               ((string= answer "next")
-                (setq type "next"
-                      continue t))
+               ((string= answer "view") (org-agenda-tree-to-indirect-buffer 1)  )
+               ((string= answer "link") (setq type "link"
+                                              continue t)
+                )
+               ((string= answer "next") (setq type "next"
+                                              continue t))
+               ((string= answer "done") (setq type "done"
+                                              continue t))
                ((string= answer "info") (setq type "info"
+                                              continue t))
+               ((string= answer "kill") (setq type "kill"
                                               continue t))
                ((string= answer "edit") (call-interactively #'zwei/org-agenda-edit-headline))
                ((string= answer "todo") (org-agenda-todo))
@@ -300,6 +305,14 @@
                 (org-agenda-priority)
                 (call-interactively 'zwei/org-agenda-set-effort)
                 (org-agenda-refile nil nil t)))
+             ((string= type "kill")
+              (progn
+                (org-agenda-todo "KILL")
+                (org-agenda-archive)))
+             ((string= type "done")
+              (progn
+                (org-agenda-todo "DONE")
+                (org-agenda-archive)))
              ((string= type "next")
               (progn
                 (org-agenda-todo "NEXT")
@@ -309,6 +322,12 @@
                 (org-agenda-refile nil
                                    (list (concat (car (last (split-string zwei/org-agenda-next-file "/"))) "/") ;; should be "next.org/"
                                          zwei/org-agenda-next-file nil nil) t)))
+             ((string= type "link")
+              (let ((ret-msg ""))
+                (setq ret-msg (org-agenda-open-link))
+                (unless (and (stringp ret-msg )(string= ret-msg "No link to open here"))
+                  (org-agenda-todo "DONE")
+                  (org-agenda-archive))))
              ((string= type "info")
               (let ((org-refile-target-verify-function))
                 (org-agenda-refile nil nil t)
