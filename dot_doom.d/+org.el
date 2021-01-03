@@ -135,7 +135,7 @@
           ("WAIT" . +org-todo-onhold)
           ("HOLD" . +org-todo-onhold)))
 
-  (add-to-list 'org-modules 'org-habit)
+  (add-to-list 'org-modules 'org-habit-plus)
 
 
   ;; Logging
