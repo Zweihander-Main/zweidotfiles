@@ -26,6 +26,10 @@
            entry
            (file ,zwei/org-agenda-todo-file)
            "* TODO %?")
+          ("n" "next"
+           entry
+           (file ,zwei/org-agenda-next-file)
+           "* NEXT %? %^g:@work: %^{Effort}p ")
           ("c" "org-protocol-capture"
            entry
            (file ,zwei/org-agenda-todo-file)
