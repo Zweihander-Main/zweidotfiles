@@ -170,7 +170,7 @@
           ("2#MENTAL"     . (:foreground "#00886D" :weight bold))
           ("3#CODING"     . (:foreground "#00441F" :weight bold))
           ("4#AUTOMATION" . (:foreground "#00FF33" :weight bold))
-          ("5#BUSINESS"   . (:foreground "#886D00" :weight bold))
+          ("5#BUSINESS"   . (:foreground "#F5C400" :weight bold))
           ("6#WANKER"     . (:foreground "#6A3B9F" :weight bold))))
 
 
