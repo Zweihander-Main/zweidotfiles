@@ -167,7 +167,7 @@
         org-tags-exclude-from-inheritance '("crypt" "@work" "@play" "@down" "@end")
         org-tag-faces
         '(("1#PHYSICAL"   . (:foreground "#CC2200" :weight bold))
-          ("2#MENTAL"     . (:foreground "#00886D" :weight bold))
+          ("2#MENTAL"     . (:foreground "#008F40" :weight bold))
           ("3#CODING"     . (:foreground "#00441F" :weight bold))
           ("4#AUTOMATION" . (:foreground "#00FF33" :weight bold))
           ("5#BUSINESS"   . (:foreground "#F5C400" :weight bold))
@@ -195,6 +195,26 @@
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-date-format "%A, %d %B %Y"
         org-journal-enable-agenda-integration t))
+
+
+;; =============
+;;   Org-habit
+;; =============
+(after! org-habit-plus
+  (defcustom org-habit-scheduled-past-days nil
+    "Value to use instead of `org-scheduled-past-days', for habits only.
+
+If nil `org-scheduled-past-days' is used.
+
+Setting this to say 10000 is a way to make sure habits always show up
+as a reminder, even if you set `org-scheduled-past-days' to a
+small value because you regard scheduled items as a way of
+\"turning on\" TODO items on a particular date, rather than as a
+means of creating calendar-based reminders."
+    :group `org-habit
+    :type '(choice integer (const nil))
+    :package-version '(Org . "9.3")
+    :safe (lambda (v) (org (integerp v) (null n)))))
 
 
 ;; ===============
