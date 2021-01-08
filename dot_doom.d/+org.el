@@ -484,8 +484,8 @@ means of creating calendar-based reminders."
 
   ;; Mappings
 
-  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil "1")))
-  (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2")))
+  (map! :g "<f1>" (lambda () (interactive) (org-agenda nil "1") (evil-goto-first-line)))
+  (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2") (evil-goto-first-line)))
 
   (map! :leader
         :prefix "n"
