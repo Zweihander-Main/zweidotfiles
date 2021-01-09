@@ -127,6 +127,7 @@
 
   (setq org-hide-emphasis-markers t
         org-hierarchical-todo-statistics nil
+        org-startup-folded 'overview
         org-todo-keywords
         '((sequence
            "TODO(t)"  ; A task that needs doing & is ready to do
