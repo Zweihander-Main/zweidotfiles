@@ -97,6 +97,11 @@
             (plist-put cookie :type (if (eq (string-match-p "%" (plist-get cookie :value)) nil) '/ '%))
           cookie))))
 
+  (defun zwei/find-gtd-file ()
+    "Find a file in `zwei/org-agenda-directory'."
+    (interactive)
+    (doom-project-find-file zwei/org-agenda-directory))
+
   ;;; Archive related
 
   (defun zwei/org-archive-done-tasks ()
@@ -112,6 +117,11 @@
         :localleader
         :prefix "r"
         :desc "Archive all done tasks" "a" #'zwei/org-archive-done-tasks)
+
+  (map! :after org
+        :leader
+        :prefix "n"
+        :desc "Find in gtd" "g" #'zwei/find-gtd-file)
 
   ;; General config
 
@@ -168,7 +178,7 @@
         org-tag-faces
         '(("1#PHYSICAL"   . (:foreground "#CC2200" :weight bold))
           ("2#MENTAL"     . (:foreground "#008F40" :weight bold))
-          ("3#CODING"     . (:foreground "#00441F" :weight bold))
+          ("3#CODING"     . (:foreground "#42A5F5" :weight bold))
           ("4#AUTOMATION" . (:foreground "#00FF33" :weight bold))
           ("5#BUSINESS"   . (:foreground "#F5C400" :weight bold))
           ("6#WANKER"     . (:foreground "#6A3B9F" :weight bold))))
