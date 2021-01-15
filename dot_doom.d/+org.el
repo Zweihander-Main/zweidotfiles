@@ -320,9 +320,12 @@ means of creating calendar-based reminders."
                               ("continue" ?\r "Continue processing"))))
          (cond ((string= answer "continue") (setq continue t))
                ((string= answer "view") (org-agenda-tree-to-indirect-buffer 1)  )
-               ((string= answer "link") (setq type "link"
-                                              continue t)
-                )
+               ((string= answer "link")
+                (let ((ret-msg ""))
+                  (setq ret-msg (org-agenda-open-link))
+                  (unless (and (stringp ret-msg )(string= ret-msg "No link to open here"))
+                    (setq type "link"
+                          continue t))))
                ((string= answer "next") (setq type "next"
                                               continue t))
                ((string= answer "done") (setq type "done"
@@ -358,16 +361,15 @@ means of creating calendar-based reminders."
                                    (list (concat (car (last (split-string zwei/org-agenda-next-file "/"))) "/") ;; should be "next.org/"
                                          zwei/org-agenda-next-file nil nil) t)))
              ((string= type "link")
-              (let ((ret-msg ""))
-                (setq ret-msg (org-agenda-open-link))
-                (unless (and (stringp ret-msg )(string= ret-msg "No link to open here"))
-                  (org-agenda-todo "DONE")
-                  (org-agenda-archive))))
+              (progn
+                (org-agenda-todo "DONE")
+                (org-agenda-archive)))
              ((string= type "info")
               (let ((org-refile-target-verify-function)
                     (org-refile-targets '((zwei/org-agenda-projects-file :maxlevel . 2)
                                           (zwei/org-agenda-tickler-file :maxlevel . 2)
                                           (zwei/org-agenda-next-file :level . 1 ))))
+                ;; TODO: add in way to add to ideas, herf, english to add, ect. -- need roam refile
                 (org-agenda-refile nil nil t)
                 (let* ((bookmark (plist-get org-bookmark-names-plist :last-refile))
                        (pos (bookmark-get-position bookmark))
