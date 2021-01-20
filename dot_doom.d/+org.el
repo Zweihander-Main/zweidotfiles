@@ -539,7 +539,6 @@ means of creating calendar-based reminders."
            ((agenda ""
                     ((org-agenda-span 1)
                      (org-agenda-start-day "+0d")
-                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE")))
                      (org-deadline-warning-days 365)))
             (todo "NEXT"
                   ((org-agenda-overriding-header "In Progress")
