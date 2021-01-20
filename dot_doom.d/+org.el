@@ -370,6 +370,8 @@ means of creating calendar-based reminders."
                                           (zwei/org-agenda-tickler-file :maxlevel . 2)
                                           (zwei/org-agenda-next-file :level . 1 ))))
                 ;; TODO: add in way to add to ideas, herf, english to add, ect. -- need roam refile
+                ;; TODO: add in way to defer to bottom
+                ;; TODO: Allow for schedule
                 (org-agenda-refile nil nil t)
                 (let* ((bookmark (plist-get org-bookmark-names-plist :last-refile))
                        (pos (bookmark-get-position bookmark))
@@ -537,6 +539,7 @@ means of creating calendar-based reminders."
            ((agenda ""
                     ((org-agenda-span 1)
                      (org-agenda-start-day "+0d")
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE")))
                      (org-deadline-warning-days 365)))
             (todo "NEXT"
                   ((org-agenda-overriding-header "In Progress")
