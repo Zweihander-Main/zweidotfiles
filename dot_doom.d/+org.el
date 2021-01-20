@@ -550,7 +550,7 @@ means of creating calendar-based reminders."
             (todo "TODO"
                   ((org-agenda-overriding-header "One-offs")
                    (org-agenda-files '(,zwei/org-agenda-next-file))
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))))
           ("2" "Inbox"
            ((todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
