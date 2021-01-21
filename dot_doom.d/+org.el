@@ -544,8 +544,7 @@ means of creating calendar-based reminders."
                   ((org-agenda-overriding-header "In Progress")
                    (org-agenda-files '(,zwei/org-agenda-projects-file
                                        ,zwei/org-agenda-tickler-file
-                                       ,zwei/org-agenda-next-file))
-                   ))
+                                       ,zwei/org-agenda-next-file))))
             (todo "TODO"
                   ((org-agenda-overriding-header "Projects")
                    (org-agenda-files '(,zwei/org-agenda-projects-file))))
