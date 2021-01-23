@@ -536,6 +536,7 @@ If CHECK-FUNC is provided, will check using that too."
 
   (map! :g "<f1>" (lambda () (interactive) (org-agenda nil "1") (evil-goto-first-line)))
   (map! :g "<f2>" (lambda () (interactive) (org-agenda nil "2") (evil-goto-first-line)))
+  (map! :g "<f3>" (lambda () (interactive) (org-agenda nil "3") (evil-goto-first-line)))
 
   (map! :leader
         :prefix "n"
