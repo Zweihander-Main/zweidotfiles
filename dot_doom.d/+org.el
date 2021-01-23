@@ -579,13 +579,14 @@ If CHECK-FUNC is provided, will check using that too."
                                        ,zwei/org-agenda-tickler-file
                                        ,zwei/org-agenda-next-file))))
             (todo "TODO"
-                  ((org-agenda-overriding-header "Projects")
-                   (org-agenda-files '(,zwei/org-agenda-projects-file))))
-            (todo "TODO"
                   ((org-agenda-overriding-header "One-offs")
                    (org-agenda-files '(,zwei/org-agenda-next-file))
                    (org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))))
+                    '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Projects")
+                   (org-agenda-files '(,zwei/org-agenda-projects-file))))
+            ))
           ("2" "Inbox"
            ((todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
