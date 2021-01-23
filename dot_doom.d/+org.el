@@ -496,6 +496,38 @@ means of creating calendar-based reminders."
         (when (string-match-p child txt-at-point)
           (call-interactively 'zwei/org-agenda-set-effort)))))
 
+  (defun zwei/org-agenda-current-is-todo-esque ()
+    "Returns if current heading is a form of todo"
+    (let ((state (org-get-todo-state)))
+      (or
+       (string= "TODO" state)
+       (string= "NEXT" state))))
+
+  (defun zwei/org-agenda-skip-all-siblings-but-first (&optional check-func)
+    "Skip all but the first non-done entry.
+If CHECK-FUNC is provided, will check using that too."
+    (let ((should-skip-entry)
+          (all-checks (lambda ()
+                        (let ((pass t))
+                          (when check-func
+                            (save-excursion
+                              (when (funcall check-func)
+                                (setq pass nil))))
+                          (and pass (zwei/org-agenda-current-is-todo-esque))))))
+      (unless (funcall all-checks)
+        (setq should-skip-entry t))
+      (save-excursion
+        (while (and (not should-skip-entry) (org-goto-sibling t))
+          (when (funcall all-checks)
+            (setq should-skip-entry t))))
+      (when should-skip-entry
+        (if (funcall all-checks)
+            (condition-case nil
+                (progn (evil-org-top) (outline-forward-same-level 1) (point))
+              (error (goto-char (point-max))))
+          (or (outline-next-heading)
+              (goto-char (point-max)))))))
+
   ;; Hooks
 
   (add-hook! 'org-clock-in-hook :append #'zwei/set-todo-state-next)
@@ -551,12 +583,27 @@ means of creating calendar-based reminders."
             (todo "TODO"
                   ((org-agenda-overriding-header "One-offs")
                    (org-agenda-files '(,zwei/org-agenda-next-file))
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))))
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))))
           ("2" "Inbox"
            ((todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
                    (org-agenda-prefix-format " |%e|")
-                   (org-agenda-files '(,zwei/org-agenda-todo-file)))))))))
+                   (org-agenda-files '(,zwei/org-agenda-todo-file))))))
+          ("3" "Work"
+           ((tags "+@work+TODO=\"TODO\"|+@work+TODO=\"NEXT\""
+                  ((org-agenda-overriding-header "Work")
+                   (org-agenda-skip-function
+                    '(zwei/org-agenda-skip-all-siblings-but-first
+                      #'(lambda()
+                          (org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))
+                   (org-agenda-files '(,zwei/org-agenda-projects-file
+                                       ,zwei/org-agenda-next-file)) ; no tickler
+                   ;; something for wait and hold
+
+                   ))))
+
+          )))
 
 ;; Org-clock-convenience for agenda
 (use-package! org-clock-convenience
