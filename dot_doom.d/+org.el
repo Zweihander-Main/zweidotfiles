@@ -585,8 +585,7 @@ If CHECK-FUNC is provided, will check using that too."
                     '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))
             (todo "TODO"
                   ((org-agenda-overriding-header "Projects")
-                   (org-agenda-files '(,zwei/org-agenda-projects-file))))
-            ))
+                   (org-agenda-files '(,zwei/org-agenda-projects-file))))))
           ("2" "Inbox"
            ((todo "TODO"
                   ((org-agenda-overriding-header "To Refile")
