@@ -600,12 +600,13 @@ If CHECK-FUNC is provided, will check using that too."
                       #'(lambda()
                           (org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))
                    (org-agenda-files '(,zwei/org-agenda-projects-file
-                                       ,zwei/org-agenda-next-file)) ; no tickler
-                   ;; something for wait and hold
-
-                   ))))
-
-          )))
+                                       ,zwei/org-agenda-next-file)))) ; no tickler
+            (tags "+@work+TODO=\"HOLD\"|+@work+TODO=\"WAIT\""
+                  ((org-agenda-overriding-header "\nWaiting")
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))
+                   (org-agenda-files '(,zwei/org-agenda-projects-file
+                                       ,zwei/org-agenda-next-file)))))))))
 
 ;; Org-clock-convenience for agenda
 (use-package! org-clock-convenience
