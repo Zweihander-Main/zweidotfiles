@@ -36,6 +36,9 @@
 (defvar zwei/org-agenda-weekly-review-template-file (concat zwei/org-agenda-templates-directory "/weekly_review.org")
   "Template file for weekly review.")
 
+(defvar zwei/org-agenda-daily-review-template-file (concat zwei/org-agenda-templates-directory "/daily_review.org")
+  "Template file for daily review.")
+
 (defvar zwei/org-agenda-projects-file (concat zwei/org-agenda-directory "/projects.org")
   "File for all tasks that can be put into a given active project.")
 
