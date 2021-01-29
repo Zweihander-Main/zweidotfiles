@@ -43,11 +43,37 @@
         (setq windows (cdr windows))))))
 
 
+;; ==========
+;;  Flycheck
+;; =========
+(after! flycheck
+  (flycheck-define-generic-checker 'org-lint
+    "Syntax checker for org-lint."
+    :start 'flycheck-org-lint-start
+    :modes '(org-mode))
+
+  (defun flycheck-org-lint-start (checker callback)
+    "Flycheck mode for org lint"
+    (funcall
+     callback 'finished
+     (save-excursion
+       (mapcar
+        (lambda (err)
+          (goto-char (car err))
+          (flycheck-error-new-at
+           (org-current-line) (1+ (current-column))
+           'warning (cadr err) :checker checker))
+        (org-lint-link-to-local-file (org-element-parse-buffer))))))
+
+  (add-to-list 'flycheck-checkers 'org-lint)
+  (setq-default flycheck-disabled-checkers '(proselint)))
+
+
 ;; =====
 ;;  Ivy
 ;; =====
 
-; Set search to ignore archives
+                                        ; Set search to ignore archives
 (setq counsel-find-file-ignore-regexp "\\(?:^[#.]\\)\\|\\(?:[#~]$\\)\\|\\(?:^Icon?\\)\\|\\.org_archive")
 
 
@@ -102,7 +128,7 @@
 (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
       (cmd-args '("/c" "start")))
   (when (file-exists-p cmd-exe)
-;; Enable emacs to open links in Windows
+    ;; Enable emacs to open links in Windows
     (setq browse-url-generic-program cmd-exe
           browse-url-generic-args cmd-args
           browse-url-browser-function 'browse-url-generic))
