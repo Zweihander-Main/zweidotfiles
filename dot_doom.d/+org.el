@@ -600,7 +600,7 @@ If CHECK-FUNC is provided, will check using that too."
                           (org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))))
                    (org-agenda-files '(,zwei/org-agenda-projects-file
                                        ,zwei/org-agenda-next-file)))) ; no tickler
-            (tags "+@work+TODO=\"HOLD\"|+@work+TODO=\"WAIT\""
+            (tags "+@work+TODO=\"WAIT\""
                   ((org-agenda-overriding-header "\nWaiting")
                    (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))
