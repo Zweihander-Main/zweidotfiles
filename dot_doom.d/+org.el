@@ -8,15 +8,6 @@
 ;;; Code:
 
 
-;; ========
-;;  ispell
-;; ========
-(after! ispell
-  :config
-  (setq ispell-list-command "--list"
-        ispell-extra-args '("--sug-mode=fast")))
-
-
 ;; =============
 ;;  org-capture
 ;; =============
@@ -38,7 +29,12 @@
           ("w" "Weekly Review"
            entry
            (file+olp+datetree ,zwei/org-agenda-reviews-file)
-           (file ,zwei/org-agenda-weekly-review-template-file)))))
+           (file ,zwei/org-agenda-weekly-review-template-file))
+          ("d" "Daily Review"
+           entry
+           (function (lambda () (org-journal-new-entry nil)))
+           (file ,zwei/org-agenda-daily-review-template-file)
+           :jump-to-captured t))))
 
 
 ;; =====
@@ -126,6 +122,7 @@
   ;; General config
 
   (setq org-hide-emphasis-markers t
+        org-extend-today-until 4 ;; add some buffer after midnight
         org-hierarchical-todo-statistics nil
         org-startup-folded 'overview
         org-todo-keywords
@@ -553,8 +550,7 @@ If CHECK-FUNC is provided, will check using that too."
 
   ;; Config
 
-  (require 'find-lisp)
-  (setq org-agenda-files (find-lisp-find-files zwei/org-agenda-directory "\.org$")
+  (setq org-agenda-files (directory-files zwei/org-agenda-directory t "\.org$" t)
         org-agenda-start-with-log-mode t
         org-agenda-start-day "-1d"
         org-agenda-span 3
@@ -605,7 +601,58 @@ If CHECK-FUNC is provided, will check using that too."
                    (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'deadline 'scheduled 'timestamp))
                    (org-agenda-files '(,zwei/org-agenda-projects-file
-                                       ,zwei/org-agenda-next-file)))))))))
+                                       ,zwei/org-agenda-next-file))))))
+          ("x" . "utility searches")
+          ("x1" "weekly recap + plan"
+           ((agenda ""
+                    ((org-agenda-overriding-header "This Week & The Next")
+                     (org-agenda-show-all-dates t)
+                     (org-agenda-archives-mode t)
+                     (org-agenda-start-day "-6d")
+                     (org-agenda-span
+                      (quote fortnight))
+                     ))
+            )
+           )
+          ("x2" "daily review"
+           ((org-ql-block '(and (todo "DONE")
+                                (closed 1)
+                                (tags "1#PHYSICAL"))
+                          ((org-ql-block-header "1#PHYSICAL")))
+            (org-ql-block '(and (todo "DONE")
+                                (closed 1)
+                                (tags "2#MENTAL"))
+                          ((org-ql-block-header "2#MENTAL")))
+            (org-ql-block '(and (todo "DONE")
+                                (closed 1)
+                                (tags "3#CODING"))
+                          ((org-ql-block-header "3#CODING")))
+            (org-ql-block '(and (todo "DONE")
+                                (closed 1)
+                                (tags "4#AUTOMATION"))
+                          ((org-ql-block-header "4#AUTOMATION")))
+            (org-ql-block '(and (todo "DONE")
+                                (closed 1)
+                                (tags "5#BUSINESS"))
+                          ((org-ql-block-header "5#BUSINESS")))
+            (org-ql-block '(and (todo "DONE")
+                                (closed 1)
+                                (tags "6#WANKER"))
+                          ((org-ql-block-header "6#WANKER")))
+            (org-ql-block '(and (todo "DONE")
+                                (closed 1)
+                                (not (tags "1#PHYSICAL"
+                                           "2#MENTAL"
+                                           "3#CODING"
+                                           "4#AUTOMATION"
+                                           "5#BUSINESS"
+                                           "6#WANKER")))
+                          ((org-ql-block-header "OTHER")))
+            )
+           ((org-agenda-files
+             (directory-files zwei/org-agenda-directory t "\\(\.org\\)\\|\\(.org_archive\\)$" t)
+             )
+            )))))
 
 ;; Org-clock-convenience for agenda
 (use-package! org-clock-convenience

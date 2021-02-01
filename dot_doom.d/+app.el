@@ -47,11 +47,6 @@
 ;;  Flycheck
 ;; =========
 (after! flycheck
-  (flycheck-define-generic-checker 'org-lint
-    "Syntax checker for org-lint."
-    :start 'flycheck-org-lint-start
-    :modes '(org-mode))
-
   (defun flycheck-org-lint-start (checker callback)
     "Flycheck mode for org lint"
     (funcall
@@ -65,8 +60,22 @@
            'warning (cadr err) :checker checker))
         (org-lint-link-to-local-file (org-element-parse-buffer))))))
 
+  (flycheck-define-generic-checker 'org-lint
+    "Syntax checker for org-lint."
+    :start 'flycheck-org-lint-start
+    :modes '(org-mode))
+
   (add-to-list 'flycheck-checkers 'org-lint)
   (setq-default flycheck-disabled-checkers '(proselint)))
+
+
+;; ========
+;;  ispell
+;; ========
+(after! ispell
+  :config
+  (setq ispell-list-command "--list"
+        ispell-extra-args '("--sug-mode=fast")))
 
 
 ;; =====
