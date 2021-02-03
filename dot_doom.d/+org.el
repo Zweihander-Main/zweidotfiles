@@ -156,31 +156,45 @@
 
 
   ;; Tagging -- currently used for place and goal
-  (setq org-tag-persistent-alist '((:startgroup . "place")
+
+  (defvar zwei/org-tag-goal-table (make-hash-table :test 'equal)
+    "Hash table with GOALSTRING as key, plist '(numkey ?# colorstring STRING) as values.")
+  (clrhash zwei/org-tag-goal-table)
+  (puthash "1#PHYSICAL" '(numkey ?1 colorstring "#CC2200") zwei/org-tag-goal-table)
+  (puthash "2#MENTAL" '(numkey ?2 colorstring "#008F40") zwei/org-tag-goal-table)
+  (puthash "3#CODING" '(numkey ?3 colorstring "#42A5F5") zwei/org-tag-goal-table)
+  (puthash "4#AUTOMATION" '(numkey ?4 colorstring "#00FF33") zwei/org-tag-goal-table)
+  (puthash "5#BUSINESS" '(numkey ?5 colorstring "#F5C400") zwei/org-tag-goal-table)
+  (puthash "6#WANKER" '(numkey ?6 colorstring "#6A3B9F") zwei/org-tag-goal-table)
+
+  (setq org-tag-persistent-alist `((:startgroup . "place")
                                    ("@work" . ?w)
                                    ("@play" . ?p)
                                    ("@down" . ?d)
                                    ("@end" . ?e)
                                    (:endgroup . "place")
                                    (:startgroup "goal")
-                                   ("1#PHYSICAL" . ?1)
-                                   ("2#MENTAL" . ?2)
-                                   ("3#CODING" . ?3)
-                                   ("4#AUTOMATION" . ?4)
-                                   ("5#BUSINESS" . ?5)
-                                   ("6#WANKER" . ?6)
+                                   ,@(reverse
+                                      (let (result)
+                                        (maphash
+                                         (lambda (k v)
+                                           (push (cons k (plist-get v 'numkey))
+                                                 result))
+                                         zwei/org-tag-goal-table)
+                                        result))
                                    (:endgroup "goal"))
         org-fast-tag-selection-single-key nil
         org-use-tag-inheritance t
         org-tags-exclude-from-inheritance '("crypt" "@work" "@play" "@down" "@end")
         org-tag-faces
-        '(("1#PHYSICAL"   . (:foreground "#CC2200" :weight bold))
-          ("2#MENTAL"     . (:foreground "#008F40" :weight bold))
-          ("3#CODING"     . (:foreground "#42A5F5" :weight bold))
-          ("4#AUTOMATION" . (:foreground "#00FF33" :weight bold))
-          ("5#BUSINESS"   . (:foreground "#F5C400" :weight bold))
-          ("6#WANKER"     . (:foreground "#6A3B9F" :weight bold))))
-
+        (let (result)
+          (maphash
+           (lambda (k v)
+             (push
+              (cons k (list ':foreground (plist-get v 'colorstring) ':weight 'bold))
+              result))
+           zwei/org-tag-goal-table)
+          result))
 
   ;; Filing
   (setq org-refile-allow-creating-parent-nodes 'confirm
@@ -615,30 +629,12 @@ If CHECK-FUNC is provided, will check using that too."
             )
            )
           ("x2" "daily review"
-           ((org-ql-block '(and (todo "DONE")
-                                (closed 1)
-                                (tags "1#PHYSICAL"))
-                          ((org-ql-block-header "1#PHYSICAL")))
-            (org-ql-block '(and (todo "DONE")
-                                (closed 1)
-                                (tags "2#MENTAL"))
-                          ((org-ql-block-header "2#MENTAL")))
-            (org-ql-block '(and (todo "DONE")
-                                (closed 1)
-                                (tags "3#CODING"))
-                          ((org-ql-block-header "3#CODING")))
-            (org-ql-block '(and (todo "DONE")
-                                (closed 1)
-                                (tags "4#AUTOMATION"))
-                          ((org-ql-block-header "4#AUTOMATION")))
-            (org-ql-block '(and (todo "DONE")
-                                (closed 1)
-                                (tags "5#BUSINESS"))
-                          ((org-ql-block-header "5#BUSINESS")))
-            (org-ql-block '(and (todo "DONE")
-                                (closed 1)
-                                (tags "6#WANKER"))
-                          ((org-ql-block-header "6#WANKER")))
+           (,@(mapcar #'(lambda (tag)
+                          `(org-ql-block '(and (todo "DONE")
+                                               (closed 1)
+                                               (tags ,tag))
+                                         ((org-ql-block-header ,tag))))
+                      '("1#PHYSICAL" "2#MENTAL" "3#CODING" "4#AUTOMATION" "5#BUSINESS" "6#WANKER"))
             (org-ql-block '(and (todo "DONE")
                                 (closed 1)
                                 (not (tags "1#PHYSICAL"
@@ -647,8 +643,7 @@ If CHECK-FUNC is provided, will check using that too."
                                            "4#AUTOMATION"
                                            "5#BUSINESS"
                                            "6#WANKER")))
-                          ((org-ql-block-header "OTHER")))
-            )
+                          ((org-ql-block-header "OTHER"))))
            ((org-agenda-files
              (directory-files zwei/org-agenda-directory t "\\(\.org\\)\\|\\(.org_archive\\)$" t)
              )
