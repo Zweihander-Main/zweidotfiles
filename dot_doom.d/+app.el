@@ -47,6 +47,7 @@
 ;;  Flycheck
 ;; =========
 (after! flycheck
+  (require 'org-lint)
   (defun flycheck-org-lint-start (checker callback)
     "Flycheck mode for org lint"
     (funcall

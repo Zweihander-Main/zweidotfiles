@@ -634,20 +634,13 @@ If CHECK-FUNC is provided, will check using that too."
                                                (closed 1)
                                                (tags ,tag))
                                          ((org-ql-block-header ,tag))))
-                      '("1#PHYSICAL" "2#MENTAL" "3#CODING" "4#AUTOMATION" "5#BUSINESS" "6#WANKER"))
+                      (hash-table-keys zwei/org-tag-goal-table))
             (org-ql-block '(and (todo "DONE")
                                 (closed 1)
-                                (not (tags "1#PHYSICAL"
-                                           "2#MENTAL"
-                                           "3#CODING"
-                                           "4#AUTOMATION"
-                                           "5#BUSINESS"
-                                           "6#WANKER")))
+                                (not `(tags ,@(hash-table-keys zwei/org-tag-goal-table))))
                           ((org-ql-block-header "OTHER"))))
            ((org-agenda-files
-             (directory-files zwei/org-agenda-directory t "\\(\.org\\)\\|\\(.org_archive\\)$" t)
-             )
-            )))))
+             (directory-files zwei/org-agenda-directory t "\\(\.org\\)\\|\\(.org_archive\\)$" t)))))))
 
 ;; Org-clock-convenience for agenda
 (use-package! org-clock-convenience
