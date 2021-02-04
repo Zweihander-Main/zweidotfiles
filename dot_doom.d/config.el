@@ -9,6 +9,8 @@
 (load! "+app")
 (load! "+ui")
 (load! "+org")
+(load! "+org-agenda")
+(load! "+org-roam")
 (load! "+mu4e")
 (load! "+code")
 
