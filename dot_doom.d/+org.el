@@ -617,17 +617,19 @@ If CHECK-FUNC is provided, will check using that too."
                    (org-agenda-files '(,zwei/org-agenda-projects-file
                                        ,zwei/org-agenda-next-file))))))
           ("x" . "utility searches")
-          ("x1" "weekly recap + plan"
-           ((agenda ""
-                    ((org-agenda-overriding-header "This Week & The Next")
-                     (org-agenda-show-all-dates t)
-                     (org-agenda-archives-mode t)
-                     (org-agenda-start-day "-6d")
-                     (org-agenda-span
-                      (quote fortnight))
-                     ))
-            )
-           )
+          ("x1" "weekly recap"
+           (,@(mapcar #'(lambda (tag)
+                          `(org-ql-block '(and (or (clocked 7)
+                                                   (closed 7))
+                                               (tags ,tag))
+                                         ((org-ql-block-header (concat ,tag)))))
+                      (hash-table-keys zwei/org-tag-goal-table))
+            (org-ql-block `(and (or (closed 7)
+                                    (clocked 7))
+                                (not (tags ,@(hash-table-keys zwei/org-tag-goal-table))))
+                          ((org-ql-block-header "OTHER"))))
+           ((org-agenda-files
+             (directory-files zwei/org-agenda-directory t "\\(\.org\\)\\|\\(.org_archive\\)$" t))))
           ("x2" "daily review"
            (,@(mapcar #'(lambda (tag)
                           `(org-ql-block '(and (or (clocked 1)
