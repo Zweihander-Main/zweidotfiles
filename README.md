@@ -1,6 +1,6 @@
 ## zweidotfiles
 
-> My personal dotfiles across *nix/Win
+> My personal dotfiles across *nix/Win. [See here for my Doom Emacs config](https://github.com/Zweihander-Main/zweidoom).
 
 ## Usage
 
