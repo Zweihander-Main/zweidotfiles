@@ -22,7 +22,7 @@ README.org
 # import any ssh?
 {{- if ne .enablessh "true" }}
 /.ssh
-{{- end }} 
+{{- end }} # End enablessh true
 
 # =================
 #     Symlink
@@ -43,13 +43,16 @@ Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-
 .bashrc
 /.doom.d
 .envvars
+.mbsyncrc
+.mbsync-pw-failmail.gpg
 .profile
 .zprofile
 .zshrc
-.mbsyncrc
-.mbsync-pw-failmail.gpg
-{{- end }}
+{{- end }} # End Windows only
 
+{{ if ne .chezmoi.osRelease.name "Arch Linux" -}}
+.xinitrc
+{{- end }} # End Arch only
 
 # Ignore files inside *nix from Win
 {{- if ne .chezmoi.os "windows" }}
@@ -60,9 +63,9 @@ synergy.sgc
 
 # Ignore files inside WSL
 {{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}
-{{- end }}
+{{- end }} # End WSL
 
-{{- end }}
+{{- end }} # End Non-Windows
 
 # =================
 #   Comp Specific
@@ -72,7 +75,7 @@ synergy.sgc
 {{- if eq .chezmoi.hostname "Aethelweard" }}
 AppData/Roaming/Sublime Text 3
 AppData/Roaming/VSCodium
-{{- end }}
+{{- end }} # End Aethelweard
 
 
 # ==========
