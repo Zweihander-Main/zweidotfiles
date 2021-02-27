@@ -66,6 +66,7 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
+		"A File Icon",
 		"Quokka",
 		"TypeScriptDev"
 	],

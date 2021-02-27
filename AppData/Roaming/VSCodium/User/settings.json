@@ -1,25 +1,55 @@
 {
-    "emmet.triggerExpansionOnTab": true,
-    "editor.fontFamily": "Source Code Pro, Consolas, 'Courier New', monospace",
-    "editor.insertSpaces": false,
-    "workbench.editor.highlightModifiedTabs": true,
-    "editor.rulers": [
-    80
-    ],
-    "editor.overviewRulerBorder": false,
-    "editor.hideCursorInOverviewRuler": true,
-    "editor.scrollbar.horizontalScrollbarSize": 10,
-    "editor.scrollbar.verticalScrollbarSize": 0,
-    "files.trimTrailingWhitespace": true,
-    "window.zoomLevel": 0.2,
-    "editor.minimap.showSlider": "always",
-    "editor.minimap.maxColumn": 80,
-    "editor.minimap.enabled": true,
-    "editor.fontSize": 15,
-    "workbench.activityBar.visible": true,
-    "workbench.colorTheme": "Monokai",
-"workbench.fontAliasing": "antialiased",
-"git.autofetch": true,
-"update.enableWindowsBackgroundUpdates": false,
-"update.mode": "none"
+  "emmet.triggerExpansionOnTab": true,
+  "editor.fontFamily": "Source Code Pro, Consolas, 'Courier New', monospace",
+  "editor.insertSpaces": false,
+  "workbench.editor.highlightModifiedTabs": true,
+  "editor.rulers": [80],
+  "editor.overviewRulerBorder": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.scrollbar.horizontalScrollbarSize": 10,
+  "editor.scrollbar.verticalScrollbarSize": 0,
+  "files.trimTrailingWhitespace": true,
+  "window.zoomLevel": 0,
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.maxColumn": 80,
+  "editor.minimap.enabled": true,
+  "editor.fontSize": 15,
+  "workbench.activityBar.visible": true,
+  "workbench.colorTheme": "Monokai",
+  "workbench.fontAliasing": "antialiased",
+  "git.autofetch": true,
+  "update.enableWindowsBackgroundUpdates": false,
+  "update.mode": "none",
+  "todo-tree.tree.showScanModeButton": false,
+  "cSpell.logLevel": "Information",
+  "postcssSorting.config": {
+    "properties-order": "alphabetical"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vim.leader": "<space>",
+  "vim.overrideCopy": false,
+  "editor.renameOnType": true,
+  "vim.easymotion": true,
+  "editor.multiCursorModifier": "alt",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "debug.inlineValues": true,
+  "editor.suggest.showStatusBar": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+        "before": ["<leader>", "f", "s"],
+        "commands": [
+            "workbench.action.files.save"
+        ]
+    }
+  ],
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.decorations.colors": true,
+  "workbench.editor.decorations.badges": true
 }

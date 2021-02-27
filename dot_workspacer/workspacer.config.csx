@@ -76,10 +76,10 @@ Action<IConfigContext> doConfig = (context) =>
     context.Keybinds.UnsubscribeAll();
 
     // Monitor bindings to store
-    var Mon1NumPad = Keys.NumPad6;
+    var Mon1NumPad = Keys.NumPad8;
     var Mon2NumPad = Keys.NumPad5;
-    var Mon3NumPad = Keys.NumPad8;
-    var Mon4Numpad = Keys.NumPad4;
+    var Mon3NumPad = Keys.NumPad4;
+    var Mon4Numpad = Keys.NumPad6;
     var MainModKey = KeyModifiers.LAlt;
     var SubModKey = KeyModifiers.LWin;
 
