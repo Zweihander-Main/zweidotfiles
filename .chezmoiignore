@@ -28,9 +28,6 @@ README.org
 #     Symlink
 # =================
 
-/doom.d/init.el
-/doom.d/packages.el
-/doom.d/config.el
 Roaming/VSCodium/User/settings.json
 Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-build,sublime-snippet}
 
@@ -49,6 +46,8 @@ Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-
 .profile
 .zprofile
 .zshrc
+.mbsyncrc
+.mbsync-pw-failmail.gpg
 {{- end }}
 
 

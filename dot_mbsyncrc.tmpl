@@ -1,0 +1,25 @@
+# These settings can also go under an "Account" section, but then the
+# "IMAPStore" section needs to reference the account. This is not
+# needed for just one store per account.
+IMAPStore fastmail-remote
+Host imap.fastmail.com
+Port 993
+User zweihander@fastmail.com
+PassCmd "secret-tool lookup user zweihander@fastmail.com"
+SSLType IMAPS
+SSLVersions TLSv1.2
+
+MaildirStore fastmail-local
+Path ~/.mail/fastmail/
+Inbox ~/.mail/fastmail/INBOX
+SubFolders Verbatim
+
+Channel fastmail
+Master :fastmail-remote:
+Slave :fastmail-local:
+Patterns Memo
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Slave
+SyncState *
