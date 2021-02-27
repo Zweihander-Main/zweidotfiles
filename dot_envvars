@@ -10,3 +10,5 @@ export SSH_AUTH_SOCK="/mnt/c/dev/utils/wsl-ssh-pageant/ssh-agent.sock"
 export DISPLAY=:0
 export LIBGL_ALWAYS_INDIRECT=1
 
+# oh-my-zsh
+export VSH="~/.oh-my-zsh"
