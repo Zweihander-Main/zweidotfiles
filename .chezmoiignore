@@ -30,6 +30,7 @@ README.org
 
 Roaming/VSCodium/User/settings.json
 Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-build,sublime-snippet}
+Apparix
 
 # =================
 #   OS Specific 
@@ -37,11 +38,14 @@ Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-
 
 # Ignore files inside Win from *nix
 {{- if eq .chezmoi.os "windows" }}
+/.doom.d
 /.oh-my-zsh
 .aliases
+.apparixrc
+.apparixexpand
 .bash_profile
 .bashrc
-/.doom.d
+.bourne-apparish
 .envvars
 .mbsyncrc
 .mbsync-pw-failmail.gpg
