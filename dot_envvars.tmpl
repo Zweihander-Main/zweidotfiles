@@ -1,3 +1,5 @@
+# If WSL
+{{ if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" -}}
 # Android development
 export USE_CCACHE=1
 export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4096m"
@@ -9,4 +11,4 @@ export SSH_AUTH_SOCK="/mnt/c/dev/utils/wsl-ssh-pageant/ssh-agent.sock"
 # vcxsrv
 export DISPLAY=:0
 export LIBGL_ALWAYS_INDIRECT=1
-
+{{ end -}} # End WSL
