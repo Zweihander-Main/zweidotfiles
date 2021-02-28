@@ -5,3 +5,4 @@ alias ohmyzshupdate='cd /tmp;curl -s -L -o oh-my-zsh-master.tar.gz https://githu
 alias cdorg='cd /mnt/c/Users/Zweihander/Documents/Org'
 alias ls='ls --color=auto'
 alias doomredo='doom upgrade;doom sync;doom clean;doom compile'
+alias gsudo='sudo git -c "include.path='"${XDG_CONFIG_DIR:-$HOME/.config}/git/config\" -c \"include.path=$HOME/.gitconfig\""
