@@ -32,6 +32,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+# make sure DISPLAY is set right
+systemctl --user import-environment DISPLAY
+
 # start user programs 
-startdwm
+dunst &
 udiskie  &
+startdwm
