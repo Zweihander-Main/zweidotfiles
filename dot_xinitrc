@@ -32,8 +32,17 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+# Set typematic delay [rate] -- default 660ms held, 25Hz repeat rate
+xset r rate 300 50
+
 # make sure DISPLAY is set right
 systemctl --user import-environment DISPLAY
+
+# statusbar loop
+while true; do
+   xsetroot -name "$(date +"%a, %D | %I:%M %p")"
+   sleep 2s
+done &
 
 # start user programs 
 dunst &
