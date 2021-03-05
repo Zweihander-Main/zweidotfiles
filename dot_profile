@@ -37,3 +37,8 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin":$PATH
 fi
 
+# add cask if it exists
+if [ -d "$HOME/.cask/bin" ] ; then
+    PATH="$HOME/.cask/bin:$PATH"
+fi
+

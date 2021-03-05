@@ -1,4 +1,5 @@
 {{ if eq .chezmoi.osRelease.name "Debian GNU/Linux" -}}
 #!/bin/sh
-sudo apt install ripgrep graphviz fd-find libsqlite3-0 isync maildir-utils
+sudo apt install ripgrep graphviz fd-find libsqlite3-0 isync maildir-utils elpa-buttercup
+# git clone https://github.com/cask/cask.git ~/.cask 
 {{ end -}}
