@@ -30,7 +30,6 @@ README.org
 
 Roaming/VSCodium/User/settings.json
 Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-build,sublime-snippet}
-Apparix
 /symlink
 
 # =================
@@ -42,6 +41,7 @@ Apparix
 /.doom.d
 /.oh-my-zsh
 /.config
+/.local
 .aliases
 .apparixrc
 .apparixexpand

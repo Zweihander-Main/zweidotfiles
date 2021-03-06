@@ -12,6 +12,9 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# Home directory cleaning	
+alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
+
 # Misc
 alias ohmyzshupdate='cd /tmp;curl -s -L -o oh-my-zsh-master.tar.gz https://github.com/robbyrussell/oh-my-zsh/archive/master.tar.gz;chezmoi import --strip-components 1 --destination ${HOME}/.oh-my-zsh oh-my-zsh-master.tar.gz;cd;compaudit | xargs chmod g-w,o-w'
 alias doomredo='doom upgrade;doom sync;doom clean;doom compile'
