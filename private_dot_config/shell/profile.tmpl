@@ -30,7 +30,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 #export XINITRC="${XDG_CONFIG_HOME}/x11/xinitrc"
 #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
 export GNUPGHOME="${XDG_DATA_HOME}/gnupg"
-#export HISTFILE="${XDG_DATA_HOME}/history"
+export HISTFILE="${XDG_DATA_HOME}/shell/history"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export WGETRC="${XDG_CONFIG_HOME}/wgetrc"
@@ -94,7 +94,7 @@ export LIBGL_ALWAYS_INDIRECT=1
 {{ else -}} # Not WSL
 # Automatic login
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-  exec startx # exec forces it back out when x session dies
+  exec startx -- -keeptty &> "${XDG_DATA_HOME}/xorg/xorg.tty.log" # exec forces it back out when x session dies
 fi
 {{ end -}} # End templating
 

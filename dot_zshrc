@@ -55,6 +55,9 @@ DISABLE_AUTO_UPDATE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=()
 
+# Change dir of dumps
+ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration

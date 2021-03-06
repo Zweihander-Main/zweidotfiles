@@ -22,6 +22,7 @@ README.org
 # import any ssh?
 {{- if ne .enablessh "true" }}
 /.ssh
+/.local/share/gnupg
 {{- end }} # End enablessh true
 
 # =================
