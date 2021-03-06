@@ -47,7 +47,10 @@ done &
 # screen locking
 xset s on
 xset s 60
-xss-lock lock &
+xss-lock -- lock +resetsaver &
+
+# hotkeys
+sxhkd &
 
 # start user programs 
 copyq &

@@ -1,0 +1,2 @@
+super + alt + l
+    loginctl lock-session
