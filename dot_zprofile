@@ -1,3 +1,0 @@
-emulate sh
-. ~/.config/shell/profile
-emulate zsh

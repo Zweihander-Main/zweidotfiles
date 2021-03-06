@@ -45,8 +45,9 @@ while true; do
 done &
 
 # screen locking
-xset dpms 180 &
-xss-lock -- dlock &
+xset s on
+xset s 60
+xss-lock lock &
 
 # start user programs 
 copyq &
