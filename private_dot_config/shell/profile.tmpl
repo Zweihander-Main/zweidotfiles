@@ -45,9 +45,9 @@ export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # PATH updates:
-[ -d "$HOME/bin"] && PATH="$HOME/bin:$PATH"
-[ -d "$HOME/.emacs.d/bin"] && PATH="$HOME/.emacs.d/bin:$PATH"
-[ -d "$HOME/.local/bin"] && PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/.emacs.d/bin" ] && PATH="$HOME/.emacs.d/bin:$PATH"
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 
 # NVM
 [ -z "$NVM_DIR" ] && export NVM_DIR="$XDG_DATA_HOME/nvm"
