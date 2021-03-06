@@ -65,7 +65,3 @@ source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile"
 # Aliases
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases"
 
-# Apparish (bookmarks)
-source $HOME/.bourne-apparish
-
-

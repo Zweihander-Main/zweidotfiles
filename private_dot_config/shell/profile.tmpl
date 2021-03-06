@@ -59,6 +59,14 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
 HISTSIZE=50000
 
+# Apparish (bookmarks)
+APPARIXHOME="${XDG_DATA_HOME}/apparish"
+APPARIXRC="${APPARIXHOME}/apparixrc"
+APPARIXEXPAND="${APPARIXHOME}/apparixexpand"
+APPARIXLOG="${APPARIXHOME}/apparixlog"
+source "${XDG_DATA_HOME}/apparish/bourne-apparish"
+
+
 # If WSL
 {{ if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" -}}
 # add Android SDK platform tools to path
