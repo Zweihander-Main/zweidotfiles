@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if pgrep ^fsearch$ > /dev/null
+then
+    pkill ^fsearch$ & > /dev/null
+else
+    fsearch & &> /dev/null
+fi
+

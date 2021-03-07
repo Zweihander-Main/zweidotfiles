@@ -1,2 +1,4 @@
 super + alt + l
     loginctl lock-session
+ctrl + alt + shift + 2
+    toggle-fsearch
