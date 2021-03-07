@@ -35,6 +35,9 @@ fi
 # Set typematic delay [rate] -- default 660ms held, 25Hz repeat rate
 xset r rate 300 50
 
+# Set xkbmap settings
+setxkbmap -option terminate:ctrl_alt_bksp # allow terminate, should be ok with locking
+
 # make sure DISPLAY is set right
 systemctl --user import-environment DISPLAY
 
