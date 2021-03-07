@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+# Generic shellrc file, runs for interactive shells.
+
+# History settings
+HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
+HISTSIZE=50000
+
+source "${XDG_DATA_HOME}/apparish/bourne-apparish"
+source "${XDG_CONFIG_HOME}/shell/aliases"

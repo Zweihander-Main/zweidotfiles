@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+# zsh configuration. Runs for interactive shells.
+
+# ZSH settings
+ZSH_THEME="zeta"
+DISABLE_AUTO_UPDATE="true"
+ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
+plugin=()
+
+# Source ZSH frameworks
+source $ZSH/oh-my-zsh.sh
+
+# Source regular shellrc file
+source "${XDG_CONFIG_HOME}/shell/shellrc"
