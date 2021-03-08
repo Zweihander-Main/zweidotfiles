@@ -25,9 +25,19 @@ alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
 alias cl='clear'
 
 # Misc
-alias ohmyzshupdate='cd /tmp;curl -s -L -o oh-my-zsh-master.tar.gz https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz;chezmoi import --strip-components 1 --destination "${XDG_CONFIG_HOME}/zsh/oh-my-zsh" oh-my-zsh-master.tar.gz;cd;compaudit | xargs chmod g-w,o-w'
-alias doomredo='doom upgrade;doom sync;doom clean;doom compile'
+alias ohmyzshupdate='cd /tmp; \
+		    curl -s -L -o oh-my-zsh-master.tar.gz https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz; \
+		    chezmoi import --strip-components 1 --destination "${XDG_CONFIG_HOME}/zsh/oh-my-zsh" oh-my-zsh-master.tar.gz; \
+		    cd; \
+		    compaudit | xargs chmod g-w,o-w';
+alias doomredo='doom upgrade; \
+	       doom sync; \
+	       doom clean; \
+	       doom compile';
 alias sudogit='sudo git -c "include.path='"${XDG_CONFIG_HOME}/git/config\""
+alias zshsourdce='source "${XDG_CONFIG_HOME}/shell/env"; \
+		 source "${XDG_CONFIG_HOME}/shell/profile"; \
+		 source "${XDG_CONFIG_HOME}/zsh/.zshrc"';
 
 # If WSL
 {{ if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" -}}
