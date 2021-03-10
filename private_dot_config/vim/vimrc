@@ -57,3 +57,6 @@ augroup END
 if has('syntax') && has('eval')
   packadd! matchit
 endif
+
+" Line numbers by default
+set number
