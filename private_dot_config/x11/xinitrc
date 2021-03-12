@@ -52,11 +52,11 @@ xset s on
 xset s 120 # second timeout
 
 # start user programs 
-dunst & # notifications
-xss-lock -- start_i3lock +resetsaver & # locking manager
-sxhkd & #hotkeys
-# redshift -c "${XDG_CONFIG_HOME}/redshift/redshift.conf" # screen color
-copyq & # clipboard manager
-timekprc & # session locking notifications
-udiskie  & # udisk/usb manager
-start_dwm # window manager
+dunst &                                                   # notifications
+xss-lock -- start_i3lock +resetsaver &                    # locking manager
+sxhkd &                                                   # hotkeys
+redshift -c "${XDG_CONFIG_HOME}/redshift/redshift.conf" & # screen color
+copyq &                                                   # clipboard manager
+timekprc &                                                # session locking notifications
+udiskie  &                                                # udisk/usb manager
+start_dwm                                                 # window manager
