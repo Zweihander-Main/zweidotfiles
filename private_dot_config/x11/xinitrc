@@ -49,14 +49,14 @@ done &
 
 # screen locking
 xset s on
-xset s 60
-xss-lock -- lock +resetsaver &
-
-# hotkeys
-sxhkd &
+xset s 120 # second timeout
 
 # start user programs 
-copyq &
-dunst &
-udiskie  &
-startdwm
+dunst & # notifications
+xss-lock -- start_i3lock +resetsaver & # locking manager
+sxhkd & #hotkeys
+# redshift -c "${XDG_CONFIG_HOME}/redshift/redshift.conf" # screen color
+copyq & # clipboard manager
+timekprc & # session locking notifications
+udiskie  & # udisk/usb manager
+start_dwm # window manager
