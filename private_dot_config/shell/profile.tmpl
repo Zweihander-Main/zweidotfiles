@@ -21,11 +21,6 @@ fi
 [ -s "/usr/share/nvm/bash_completion" ] && source /usr/share/nvm/bash_completion
 [ -s "/usr/share/nvm/install-nvm-exec" ] && source /usr/share/nvm/install-nvm-exec
 
-chedit() {
-    # chezmoi edit and apply all in one go
-    chezmoi edit "$1" && chezmoi apply
-}
-
 # If not WSL
 {{ if not (.chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$") -}}
 # Start X
