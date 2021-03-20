@@ -59,6 +59,7 @@ redshift &                              # screen color
 copyq &                                 # clipboard manager
 timekprc &                              # session locking notifications
 udiskie  &                              # udisk/usb manager
-keepassxc &
+start_stalonetray &
+keepassxc &                             # secrets
 start_dwm                               # window manager
 
