@@ -59,7 +59,9 @@ redshift &                              # screen color
 copyq &                                 # clipboard manager
 timekprc &                              # session locking notifications
 udiskie  &                              # udisk/usb manager
-start_stalonetray &
+start_stalonetray &                     # tray
 keepassxc &                             # secrets
+element-desktop --hiden &               # matrix
+start_mumble &                          # local voip
 start_dwm                               # window manager
 

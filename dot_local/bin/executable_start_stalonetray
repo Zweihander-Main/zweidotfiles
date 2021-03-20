@@ -1,3 +1,3 @@
 #!/bin/bash
 
-talonetray -c "${XDG_CONFIG_HOME}/stalonetray/stalonetrayrc" &>"${XDG_DATA_HOME}/stalonetray/stalonetray.log"
+stalonetray -c "${XDG_CONFIG_HOME}/stalonetray/stalonetrayrc" &>"${XDG_DATA_HOME}/stalonetray/stalonetray.log"
