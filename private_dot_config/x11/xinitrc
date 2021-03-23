@@ -60,8 +60,9 @@ copyq &                                 # clipboard manager
 timekprc &                              # session locking notifications
 udiskie  &                              # udisk/usb manager
 start_stalonetray &                     # tray
-keepassxc &                             # secrets
-element-desktop --hiden &               # matrix
+opensnitch-ui &                         # application firewall
+element-desktop --hidden &              # matrix
 start_mumble &                          # local voip
+keepassxc &                             # secrets
 start_dwm                               # window manager
 

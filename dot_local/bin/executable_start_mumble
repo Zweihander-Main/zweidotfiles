@@ -1,5 +1,5 @@
 #!/bin/bash
 
 mumble &
-sleep 5
-xdotool search --sync --class mumble windowactivate windowfocus key --delay 150 --clearmodifiers --repeat 2 alt+e+h
+sleep 10
+xdotool search --sync --class mumble windowactivate windowfocus key --delay 150 --clearmodifiers --repeat 3 alt+e+h
