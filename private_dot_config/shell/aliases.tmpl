@@ -30,12 +30,15 @@ alias redshifttoggle='pkill -USR1 redshift'
 alias redshiftinfo='redshift -p'
 alias emacsbreak='pkill -SIGUSR2 emacs'
 
-# Misc
+# Chezmoi related
+alias chedit='chezmoi edit --apply'
 alias ohmyzshupdate='cd /tmp; \
 		    curl -s -L -o oh-my-zsh-master.tar.gz https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz; \
 		    chezmoi import --strip-components 1 --destination "${XDG_CONFIG_HOME}/zsh/oh-my-zsh" oh-my-zsh-master.tar.gz; \
 		    cd; \
 		    compaudit | xargs chmod g-w,o-w';
+
+# Misc
 alias doomredo='doom upgrade; \
 	       doom sync; \
 	       doom clean; \
