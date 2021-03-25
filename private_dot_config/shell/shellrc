@@ -8,3 +8,9 @@ HISTSIZE=50000
 
 source "${XDG_DATA_HOME}/apparish/bourne-apparish"
 source "${XDG_CONFIG_HOME}/shell/aliases"
+
+# Override bm to allow for encrypted chezmoi file
+function  bm() {
+	apparishbm "$1"
+	chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
+}

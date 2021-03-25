@@ -14,7 +14,7 @@
 #                               Quick Guide:
 #  -  save this file in $HOME/.bourne-apparish
 #  -  issue 'source $HOME/.bourne-apparish'
-#  -  go to a directory and issue 'bm foo'
+#  -  go to a directory and issue 'apparishbm foo'
 #  -  you can now go to that directory by issuing 'to foo'
 #  -  try tab completion and command substitution, see the examples below.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -31,12 +31,12 @@
 #  implementations and the function definitions are very similar.  The apparix
 #  shell functions invoke a C executable. Apparish uses another shell funtion
 #  to mimic this C program and apparish provides two additional funcctions,
-#  apparix-list. The pivotal commands however are 'bm' (bookmark) and 'to' (go
+#  apparix-list. The pivotal commands however are 'apparishbm' (bookmark) and 'to' (go
 #  to mark). You can change from apparix to apparish and vice versa, as they use
 #  the same resource files.
 #
 #  ---
-#     bm <tag>                create bookmark <tag> for current directory
+#     apparishbm <tag>                create bookmark <tag> for current directory
 #  ---
 #     to <tag>                jump to the directory marked <tag>
 #     to <tag> <TAB>          tab-complete on subdirectories of <tag>
@@ -73,8 +73,8 @@
 #
 #  as I use it in command substitution, e.g.
 #
-#     echo cp myfile $(a bm)
-#     cp myfile $(a bm)
+#     echo cp myfile $(a apparishbm)
+#     cp myfile $(a apparishbm)
 #
 #  This is a big decision from a Huffman point of view.  If you want to remove
 #  it, go to all the places in the lines below where the name Huffman is
@@ -176,7 +176,7 @@ function apparix-list() {
     command grep -F ",$mark," -- "$APPARIXRC" "$APPARIXEXPAND" | cut -f 3 -d ','
 }
 
-function bm() {
+function apparishbm() {
     if [[ 0 == "$#" ]]; then
         >&2 echo Need mark
         return 1
@@ -361,7 +361,7 @@ function ae() {
 
 function apparish_ls() {
     cat <<EOH
-  bm MARK                 Bookmark current directory as mark
+  apparishbm MARK                 Bookmark current directory as mark
   to MARK [SUBDIR]        Jump to mark or a subdirectory of mark
   ald MARK [SUBDIR]       List subdirectories of mark directory or subdir
   als MARK [SUBDIR]       List mark directory or subdir
