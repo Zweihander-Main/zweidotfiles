@@ -19,11 +19,14 @@ README.org
 # .ssh related files
 /.ssh/environment
 
-# import any ssh?
-{{- if ne .enablessh "true" }}
+# Encrypted files
+{{- if ne .enablecrypt "true" }}
 /.ssh
 /.local/share/gnupg
-{{- end }} # End enablessh true
+/.local/share/apparish
+/.config/rclone
+/.config/isync
+{{- end }} #End encrypted files
 
 # =================
 #     Symlink
@@ -90,4 +93,4 @@ AppData/Roaming/VSCodium
 # ==========
 
 # Archived files -- no longer used
-synergy.sgc
+archive

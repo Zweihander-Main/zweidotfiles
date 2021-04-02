@@ -1,9 +1,9 @@
 {{- $gpgrecipient := promptString "gpg recipient" }}
-{{- $enablessh := promptString "true/false to enable ssh?" }}
+{{- $enablecrypt := promptString "true/false to enable encrypted files?" }}
 {{- $org_directory := promptString "directory for org files" }}
 {
     "data": {
-        "enablessh": "{{ $enablessh }}",
+        "enablecrypt": "{{ $enablecrypt }}",
         "org_directory": "{{ $org_directory }}"
     },
     "encryption": "gpg",
