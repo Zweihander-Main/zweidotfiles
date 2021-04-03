@@ -52,5 +52,6 @@
   "workbench.editor.wrapTabs": true,
   "workbench.editor.decorations.colors": true,
   "workbench.editor.decorations.badges": true,
-  "sync.gist": "3f20f9eae18b93cc2fee68e0f1ba08f5"
+  "sync.gist": "3f20f9eae18b93cc2fee68e0f1ba08f5",
+  "window.menuBarVisibility": "toggle"
 }
