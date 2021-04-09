@@ -134,5 +134,5 @@ load-module module-filter-heuristics
 load-module module-filter-apply
 
 ### Make some devices default
-set-default-sink alsa_output.usb-FIIO_FIIO_USB_DAC_E17K-01.iec958-stereo
+set-default-sink alsa_output.usb-FIIO_FIIO_USB_DAC_E17K-01.iec958-stereo.monitor
 set-default-source alsa_input.usb-046d_0821_B4DCC0F0-00.analog-stereo
