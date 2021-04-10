@@ -3,7 +3,9 @@
   "editor.fontFamily": "Source Code Pro, Consolas, 'Courier New', monospace",
   "editor.insertSpaces": false,
   "workbench.editor.highlightModifiedTabs": true,
-  "editor.rulers": [80],
+  "editor.rulers": [
+    80
+  ],
   "editor.overviewRulerBorder": false,
   "editor.hideCursorInOverviewRuler": true,
   "editor.scrollbar.horizontalScrollbarSize": 10,
@@ -43,10 +45,24 @@
   "editor.suggest.showStatusBar": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-        "before": ["<leader>", "f", "s"],
-        "commands": [
-            "workbench.action.files.save"
-        ]
+      "before": [
+        "<leader>",
+        "f",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.save"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "o",
+        "p"
+      ],
+      "commands": [
+        "workbench.action.toggleSidebarVisibility"
+      ]
     }
   ],
   "workbench.editor.wrapTabs": true,
