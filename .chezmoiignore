@@ -26,6 +26,7 @@ README.org
 /.local/share/apparish
 /.config/rclone
 /.config/isync
+/.config/npm
 {{- end }} #End encrypted files
 
 # =================
