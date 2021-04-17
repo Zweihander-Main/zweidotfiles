@@ -34,7 +34,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "vim.leader": "<space>",
-  "vim.overrideCopy": false,
   "editor.renameOnType": true,
   "vim.easymotion": true,
   "editor.multiCursorModifier": "alt",
@@ -69,5 +68,8 @@
   "workbench.editor.decorations.colors": true,
   "workbench.editor.decorations.badges": true,
   "sync.gist": "3f20f9eae18b93cc2fee68e0f1ba08f5",
-  "window.menuBarVisibility": "toggle"
+  "window.menuBarVisibility": "toggle",
+  "editor.linkedEditing": true,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
 }
