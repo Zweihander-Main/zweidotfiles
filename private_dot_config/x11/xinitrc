@@ -1,68 +1,10 @@
 #!/bin/sh
 
-# Set xkbmap settings before xmodmap
-setxkbmap -option terminate:ctrl_alt_bksp # allow terminate, should be ok with locking
+# Pre-graphical environment commands
 
-userresources="${XDG_CONFIG_HOME}/x11/Xresources"
-usermodmap="${XDG_CONFIG_HOME}/x11/Xmodmap"
-sysresources=/etc/X11/xinit/.Xresources
-sysmodmap=/etc/X11/xinit/.Xmodmap
 
-# merge in defaults and keymaps
-
-if [ -f $sysresources ]; then
-    xrdb -merge $sysresources
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
+	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
 fi
 
-if [ -f $sysmodmap ]; then
-    xmodmap $sysmodmap
-fi
-
-if [ -f "$userresources" ]; then
-    xrdb -merge "$userresources"
-fi
-
-if [ -f "$usermodmap" ]; then
-    xmodmap "$usermodmap"
-fi
-
-# source config files
-
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
- for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-  [ -x "$f" ] && . "$f"
- done
- unset f
-fi
-
-# Set typematic delay [rate] -- default 660ms held, 25Hz repeat rate
-xset r rate 300 50
-
-# make sure DISPLAY is set right
-systemctl --user import-environment DISPLAY
-
-# statusbar loop
-while true; do
-   xsetroot -name "$(date +"%a, %D | %I:%M %p")"
-   sleep 2s
-done &
-
-# screen locking
-xset s on
-xset s 120 # second timeout
-
-# start user programs 
-dunst &                                 # notifications
-xss-lock -- start_i3lock +resetsaver &  # locking manager
-sxhkd &                                 # hotkeys
-redshift &                              # screen color
-copyq &                                 # clipboard manager
-timekprc &                              # session locking notifications
-udiskie  &                              # udisk/usb manager
-start_stalonetray &                     # tray
-opensnitch-ui &                         # application firewall
-element-desktop --hidden &              # matrix
-start_mumble &                          # local voip
-keepassxc &                             # secrets
 start_dwm                               # window manager
-
