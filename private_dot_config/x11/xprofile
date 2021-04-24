@@ -65,4 +65,5 @@ start_stalonetray &                     # tray
 opensnitch-ui &                         # application firewall
 element-desktop --hidden &              # matrix
 start_mumble &                          # local voip
+start_gpg &                             # gpg-connect-agent
 keepassxc &                             # secrets

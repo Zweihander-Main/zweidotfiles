@@ -27,6 +27,4 @@ fi
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
     exec startx "${XDG_CONFIG_HOME}/x11/xinitrc" -- -keeptty &> "${XDG_DATA_HOME}/xorg/xorg.tty.log" # exec forces it back out when x session dies
 fi
-export GPG_TTY=$(tty)
-gpg-connect-agent updatestartuptty /bye >/dev/null
 {{ end -}} # End non-WSL
