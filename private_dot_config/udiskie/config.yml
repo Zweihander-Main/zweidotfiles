@@ -1,0 +1,4 @@
+---
+device_config:               # don't automount external
+  - id_uuid: 9d53-13ba       # [filter] match by device UUID
+    ignore: true            # [action] never ignore this device (even if fs=FAT)
