@@ -27,3 +27,6 @@ XF86AudioPrev
 
 XF86AudioNext
     playerctl next
+
+alt + shift + F12
+    toggle_sink

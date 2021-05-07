@@ -1,0 +1,32 @@
+#!/bin/bash 
+
+# Usage: toggle_sink [sink number]
+
+SINK_FIIO=0
+SINK_SPDIF=3
+
+if [ -z "$1" ]; then
+    CURRENT_SINK="$(echo -n "$(pacmd list-sinks | grep -e '\* index: [0-9]')" | tail -c 1)"
+    if [ "$CURRENT_SINK" -eq $SINK_FIIO ]; then
+        TARGET_SINK=$SINK_SPDIF
+    else
+        TARGET_SINK=$SINK_FIIO
+    fi
+else
+    TARGET_SINK="$1";
+fi
+
+if [ "$TARGET_SINK" -eq $SINK_SPDIF ]; then
+    SINK_STRING="S/PDIF"
+elif [ "$TARGET_SINK" -eq $SINK_FIIO ]; then
+    SINK_STRING="Fiio E17K"
+else
+    SINK_STRING="Other Device"
+fi
+
+pacmd set-default-sink "$TARGET_SINK"
+pacmd list-sink-inputs | grep index | while read -r line
+do
+pacmd move-sink-input "$(echo $line | cut -f2 -d' ')" "$TARGET_SINK"
+dunstify -a "toggle_sink" -i media-playlist-shuffle "Audio Sink: $SINK_STRING"
+done
