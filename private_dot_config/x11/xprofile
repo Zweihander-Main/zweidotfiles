@@ -55,6 +55,7 @@ xset s 120 # second timeout
 
 # start user programs
 dunst &                                 # notifications
+volnoti-dbus &                          # volume notifications
 xss-lock -- start_i3lock +resetsaver &  # locking manager
 sxhkd &                                 # hotkeys
 redshift &                              # screen color
