@@ -71,5 +71,6 @@
   "window.menuBarVisibility": "toggle",
   "editor.linkedEditing": true,
   "editor.suggestSelection": "first",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "vim.hlsearch": true
 }
