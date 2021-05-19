@@ -1,0 +1,12 @@
+[Unit]
+Description=Volnoti-dbus volume notification daemon
+Requires=pulseaudio.service
+
+[Service]
+Restart=on-failure
+RestartSec=10s
+ExecStartPre=/usr/bin/sleep 5
+ExecStart=/usr/bin/volnoti-dbus
+
+[Install]
+WantedBy=default.target
