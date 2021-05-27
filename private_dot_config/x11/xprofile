@@ -65,5 +65,5 @@ start_stalonetray &                     # tray
 opensnitch-ui &                         # application firewall
 element-desktop --hidden &              # matrix
 start_gpg &                             # gpg-connect-agent
-unclutter --timout 1 &                  # hide mouse
+unclutter --timeout 1 &                  # hide mouse
 keepassxc &                             # secrets
