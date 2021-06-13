@@ -62,6 +62,16 @@
       "commands": [
         "workbench.action.toggleSidebarVisibility"
       ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "g",
+        "S"
+      ],
+      "commands": [
+        "git.stage"
+      ]
     }
   ],
   "workbench.editor.wrapTabs": true,
@@ -73,5 +83,5 @@
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "vim.hlsearch": true,
-  "vim.useSystemClipboard": true
+  "vim.useSystemClipboard": true,
 }
