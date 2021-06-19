@@ -34,7 +34,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "vim.leader": "<space>",
-  "editor.renameOnType": true,
   "vim.easymotion": true,
   "editor.multiCursorModifier": "alt",
   "[typescript]": {
@@ -44,34 +43,24 @@
   "editor.suggest.showStatusBar": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": [
-        "<leader>",
-        "f",
-        "s"
-      ],
-      "commands": [
-        "workbench.action.files.save"
-      ]
+      "before": [ "<leader>", "b", "k" ],
+      "commands": [ "workbench.action.closeActiveEditor" ]
     },
     {
-      "before": [
-        "<leader>",
-        "o",
-        "p"
-      ],
-      "commands": [
-        "workbench.action.toggleSidebarVisibility"
-      ]
+      "before": [ "<leader>", "f", "s" ],
+      "commands": [ "workbench.action.files.save" ]
     },
     {
-      "before": [
-        "<leader>",
-        "g",
-        "S"
-      ],
-      "commands": [
-        "git.stage"
-      ]
+      "before": [ "<leader>", "g", "S" ],
+      "commands": [ "git.stage" ]
+    },
+    {
+      "before": [ "<leader>", "o", "p" ],
+      "commands": [ "workbench.action.toggleSidebarVisibility" ]
+    },
+    {
+      "before": [ "<leader>", "s", "l" ],
+      "commands": [ "editor.action.openLink" ]
     }
   ],
   "workbench.editor.wrapTabs": true,
