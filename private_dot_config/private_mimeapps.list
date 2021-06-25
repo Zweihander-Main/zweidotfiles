@@ -11,6 +11,7 @@ application/x-cb7=org.pwmt.zathura-cb.desktop;
 application/x-cbr=org.pwmt.zathura-cb.desktop;
 application/x-cbt=org.pwmt.zathura-cb.desktop;
 application/x-cbz=org.pwmt.zathura-cb.desktop;
+application/x-desktop=exec_desktop.desktop;
 application/x-eps=org.pwmt.zathura-ps.desktop;
 application/x-fictionbook=org.pwmt.zathura-pdf-mupdf.desktop;
 application/x-rar=org.pwmt.zathura-cb.desktop;
