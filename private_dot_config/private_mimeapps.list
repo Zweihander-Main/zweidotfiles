@@ -64,12 +64,13 @@ video/x-theora=smplayer.desktop;
 x-scheme-handler/ftp=chromium.desktop;
 x-scheme-handler/http=chromium.desktop;
 x-scheme-handler/https=chromium.desktop;
-x-scheme-handler/news=userapp-Thunderbird-WQJK00.desktop
-x-scheme-handler/snews=userapp-Thunderbird-WQJK00.desktop
-x-scheme-handler/nntp=userapp-Thunderbird-WQJK00.desktop
-
-[Added Associations]
 x-scheme-handler/news=userapp-Thunderbird-WQJK00.desktop;
-x-scheme-handler/snews=userapp-Thunderbird-WQJK00.desktop;
 x-scheme-handler/nntp=userapp-Thunderbird-WQJK00.desktop;
+x-scheme-handler/snews=userapp-Thunderbird-WQJK00.desktop;
+[Added Associations]
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+x-scheme-handler/news=userapp-Thunderbird-WQJK00.desktop;
+x-scheme-handler/nntp=userapp-Thunderbird-WQJK00.desktop;
+x-scheme-handler/org-protocol=org-protocol.desktop;
+x-scheme-handler/snews=userapp-Thunderbird-WQJK00.desktop;
+
