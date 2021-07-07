@@ -19,6 +19,7 @@ alias ll='ls -lhv --group-directories-first'
 alias la='ls -lAhv --group-directories-first'
 alias ldir="ls -lAhdv --color=always */ | sed 's/\///'"
 alias ldur="exiftool -q -p '\$Duration | \$Filename' ./*"
+alias space='free -h; df -h'
 
 # Home directory cleaning	
 alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
@@ -28,7 +29,7 @@ alias cl='clear'
 alias start='xdg-open'
 alias open='xdg-open'
 alias ropen='xdg-open "$(shuf -n1 -e ./*)"' # Open random file in c.dir
-alias rt='trash-put'
+alias rb='trash-put'
 
 # User programs
 alias redshifttoggle='pkill -USR1 redshift'
