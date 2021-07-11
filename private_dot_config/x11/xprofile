@@ -4,6 +4,7 @@
 
 # Set xkbmap settings before xmodmap
 setxkbmap -option terminate:ctrl_alt_bksp # allow terminate, should be ok with locking
+setxkbmap -option compose:ralt # allow compose
 
 userresources="${XDG_CONFIG_HOME}/x11/Xresources"
 usermodmap="${XDG_CONFIG_HOME}/x11/Xmodmap"
