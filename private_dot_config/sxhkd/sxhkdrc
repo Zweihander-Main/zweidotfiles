@@ -1,12 +1,12 @@
-super + alt + l
-    loginctl lock-session
-
-ctrl + alt + shift + 2
-    toggle_fsearch
-
+# Restart sxhkd
 super + Escape
     pkill sxhkd && sxhkd &
 
+# Session management
+super + alt + l
+    loginctl lock-session
+
+# Audio
 XF86AudioLowerVolume
     pactl set-sink-volume @DEFAULT_SINK@ -5%
 
@@ -30,3 +30,16 @@ XF86AudioNext
 
 alt + shift + F12
     toggle_sink
+
+# User programs
+ctrl + alt + shift + 2
+    toggle_fsearch
+
+ctrl + alt + shift + c
+    chromium
+
+ctrl + alt + shift + e
+    emacs
+
+ctrl + alt + shift + t
+    thunderbird
