@@ -61,7 +61,6 @@ sxhkd &                                 # hotkeys
 redshift &                              # screen color
 copyq &                                 # clipboard manager
 udiskie  &                              # udisk/usb manager
-start_stalonetray &                     # tray
 opensnitch-ui &                         # application firewall
 element-desktop --hidden &              # matrix
 start_gpg &                             # gpg-connect-agent
