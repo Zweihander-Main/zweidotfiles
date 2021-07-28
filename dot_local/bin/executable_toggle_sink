@@ -3,7 +3,7 @@
 # Usage: toggle_sink [sink number]
 
 SINK_FIIO=0
-SINK_SPDIF=3
+SINK_SPDIF=2
 
 if [ -z "$1" ]; then
     CURRENT_SINK="$(echo -n "$(pacmd list-sinks | grep -e '\* index: [0-9]')" | tail -c 1)"

@@ -112,11 +112,11 @@ load-module module-intended-roles
 # load-module module-suspend-on-idle
 
 # Stop suspend-on-idle, screws with mumble/spdif
-.ifexists module-suspend-on-idle.so
-.nofail
-unload-module module-suspend-on-idle
-.fail
-.endif
+#.ifexists module-suspend-on-idle.so
+#.nofail
+#unload-module module-suspend-on-idle
+#.fail
+#.endif
 
 ### If autoexit on idle is enabled we want to make sure we only quit
 ### when no local session needs us anymore.
@@ -145,7 +145,7 @@ load-module module-alsa-sink device=hw:5,1
 
 ### Make some devices default
 # set-default-sink alsa_output.usb-FIIO_FIIO_USB_DAC_E17K-01.iec958-stereo.monitor
-set-default-sink 3
+set-default-sink 2
 set-default-source alsa_input.usb-046d_0821_B4DCC0F0-00.analog-stereo
 
 # Audible bell
