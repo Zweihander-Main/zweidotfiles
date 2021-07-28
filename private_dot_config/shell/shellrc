@@ -14,3 +14,7 @@ function  bm() {
 	apparishbm "$1"
 	chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
 }
+
+# fzf
+[ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
+[ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
