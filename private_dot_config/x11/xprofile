@@ -64,5 +64,5 @@ udiskie  &                              # udisk/usb manager
 opensnitch-ui &                         # application firewall
 element-desktop --hidden &              # matrix
 start_gpg &                             # gpg-connect-agent
-dex -a                                  # autostarts
+dex -a &                                # autostarts
 unclutter --timeout 1 &                 # hide mouse
