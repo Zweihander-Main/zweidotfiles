@@ -2,26 +2,55 @@
 	name = Zweihänder
 	email = zweidev@zweihander.me
 	signingkey = 978432F9C4407D27744A5C9E36BFA8D74A79DAD0
+
 [init]
 	defaultBranch = master	
+
 [credential]
+
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+
 {{- if eq .chezmoi.os "windows" }}
 [core]
 	autocrlf = true
 	editor = vim
+
 [gpg]
 	program = C:/Program Files (x86)/GnuPG/bin/gpg.exe
+
 {{- end }}
 {{- if eq .chezmoi.os "linux" }}
 [merge]
 	tool = emerge
-{{- end }}
+
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+
+[delta]
+	line-numbers = true	
+	side-by-side= true
+	navigate = true
+	features = decorations
+
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul	
+	file-decoration-style = none	
+	hunk-header-decoration-style = yellow box
+
+[interactive]
+	diffFilter = delta 
+
+{{ end -}}
 [color]
 	ui = auto
+
 [alias]
 	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
