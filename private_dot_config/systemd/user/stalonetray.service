@@ -1,7 +1,6 @@
 [Unit]
 Description=Stalonetray system tray
 PartOf=graphical-session.target
-Requires=
 
 [Service]
 Type=simple
