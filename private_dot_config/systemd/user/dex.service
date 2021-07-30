@@ -1,0 +1,12 @@
+[Unit]
+Description=Dex desktop entries autostart
+PartOf=graphical-session.target
+Requires=stalonetray.service
+After=stalonetray.service
+
+[Service]
+Type=oneshot
+ExecStart=dex -a
+
+[Install]
+WantedBy=default.target
