@@ -21,3 +21,6 @@ function  bm() {
 
 # broot
 [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ] && source "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
+
+# mcfly
+[ -f "/usr/share/doc/mcfly/mcfly.zsh" ] && eval "$(mcfly init zsh)"
