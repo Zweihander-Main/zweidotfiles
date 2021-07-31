@@ -1,7 +1,6 @@
 [Unit]
 Description=Dex desktop entries autostart
-PartOf=graphical-session.target
-Requires=stalonetray.service
+Wants=stalonetray.service
 After=stalonetray.service
 
 [Service]
