@@ -4,8 +4,9 @@ Wants=stalonetray.service
 After=stalonetray.service
 
 [Service]
-Type=oneshot
-ExecStart=dex -a
+Type=simple
+Restart=no
+ExecStart=dex -aw
 
 [Install]
 WantedBy=default.target
