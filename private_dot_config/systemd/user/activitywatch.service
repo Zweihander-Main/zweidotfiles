@@ -1,12 +1,13 @@
 [Unit]
-Description=Dex desktop entries autostart
+Description=Activity Watch server and interface
 Wants=stalonetray.service
 After=stalonetray.service
 
 [Service]
 Type=simple
-Restart=no
-ExecStart=dex -aw
+Restart=always
+RestartSec=10s
+ExecStart=/usr/bin/aw-qt
 
 [Install]
 WantedBy=default.target

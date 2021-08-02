@@ -1,6 +1,8 @@
 [Unit]
 Description=Volnoti-dbus volume notification daemon
 Requires=pulseaudio.service
+Wants=dunst.service
+After=dunst.service
 
 [Service]
 Restart=on-failure

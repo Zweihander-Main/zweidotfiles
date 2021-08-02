@@ -1,0 +1,13 @@
+[Unit]
+Description=KeepassXC Password Manager
+Wants=stalonetray.service
+After=stalonetray.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10s
+ExecStart=/usr/bin/keepassxc
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=Dunst notification manager
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/bin/dunst
+# Make sure notifications aren't paused on start
+ExecStartPost=/usr/bin/sleep 5
+ExecStartPost=/usr/bin/dunstctl set-paused false
+
+[Install]
+WantedBy=default.target
