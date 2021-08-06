@@ -31,6 +31,10 @@ i3lock                                   \
 	--blur 5                             \
 	--clock                              \
 	--indicator                          \
-	--time-str="%H:%M:%S"                 \
-	--date-str="%A, %m %Y"                \
-	--keylayout 1                        \
+	--time-str="%H:%M:%S"                \
+	--date-str="%A, %m %Y"               \
+	--keylayout 1                        
+
+# turn monitor off 
+xset dpms force off
+
