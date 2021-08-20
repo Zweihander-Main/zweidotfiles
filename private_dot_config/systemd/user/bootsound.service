@@ -8,4 +8,4 @@ RemainAfterExit=no
 ExecStart=/usr/bin/paplay --device=2 /usr/share/sounds/bootsounds/windows_95-boot.wav
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
