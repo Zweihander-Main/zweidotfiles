@@ -1,0 +1,10 @@
+[Unit]
+Description=boot sound on spidf to possibly fix issues, alsa version
+
+[Service]
+Type=oneshot
+RemainAfterExit=no
+ExecStart=/usr/bin/aplay -D plughw:5,1  /usr/share/sounds/bootsounds/windows_95-boot.wav
+
+[Install]
+WantedBy=default.target
