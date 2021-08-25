@@ -62,6 +62,11 @@ alias zsource='source "${XDG_CONFIG_HOME}/shell/env"; \
 		 source "${XDG_CONFIG_HOME}/shell/profile"; \
 		 source "${XDG_CONFIG_HOME}/zsh/.zshrc"';
 
+# If Arch
+{{ if eq .chezmoi.osRelease.name "Arch Linux" -}}
+alias cpio='bsdcpio'
+{{ end -}} # End Arch-only
+
 # If WSL
 {{ if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" -}}
 alias start='cmd.exe /c start ""'
