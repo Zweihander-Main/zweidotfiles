@@ -54,13 +54,13 @@ alias sdocker='sudo docker'
 
 # Misc
 alias doomredo='doom upgrade; \
-	       doom sync; \
-	       doom clean; \
-           doom build; \
-	       doom compile';
+	        doom sync; \
+	        doom clean; \
+	        doom build; \
+	        doom compile';
 alias zsource='source "${XDG_CONFIG_HOME}/shell/env"; \
-		 source "${XDG_CONFIG_HOME}/shell/profile"; \
-		 source "${XDG_CONFIG_HOME}/zsh/.zshrc"';
+	       source "${XDG_CONFIG_HOME}/shell/profile"; \
+	       source "${XDG_CONFIG_HOME}/zsh/.zshrc"';
 
 # If Arch
 {{ if eq .chezmoi.osRelease.name "Arch Linux" -}}

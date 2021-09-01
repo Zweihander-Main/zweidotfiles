@@ -10,10 +10,13 @@ source "${XDG_DATA_HOME}/apparish/bourne-apparish"
 source "${XDG_CONFIG_HOME}/shell/aliases"
 
 # Override bm to allow for encrypted chezmoi file
-function  bm() {
+function bm() {
 	apparishbm "$1"
 	chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
 }
+
+# Mkdir and move in one command
+function md() { mkdir -p "$1" && cd "$1" ; }
 
 # fzf
 [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
