@@ -1,0 +1,11 @@
+[Unit]
+Description=Manage opensnitch-ui once tray is available
+Requires=stalonetray.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/sleep 5
+ExecStart=/usr/bin/xdotool search --sync --class opensnitch-ui windowactivate windowfocus windowclose --delay 150
+
+[Install]
+WantedBy=default.target

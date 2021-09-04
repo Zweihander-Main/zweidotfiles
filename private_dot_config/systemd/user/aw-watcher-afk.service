@@ -1,0 +1,13 @@
+[Unit]
+Description=Activity Watch watcher for mouse/keyboard activity
+PartOf=graphical-session.target
+After=aw-server.service
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=10s
+ExecStart=/usr/bin/aw-watcher-afk
+
+[Install]
+WantedBy=default.target

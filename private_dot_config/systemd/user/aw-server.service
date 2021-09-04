@@ -1,13 +1,15 @@
 [Unit]
-Description=Activity Watch server and interface
+Description=Activity Watch server
+PartOf=graphical-session.target
 After=network.target
 Wants=stalonetray.service
 After=stalonetray.service
 
 [Service]
 Type=simple
-RemainAfterExit=yes
-ExecStart=/usr/bin/aw-qt
+Restart=on-failure
+RestartSec=10s
+ExecStart=/usr/bin/aw-server
 
 [Install]
 WantedBy=default.target
