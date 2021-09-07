@@ -17,7 +17,7 @@
   "editor.minimap.enabled": true,
   "editor.fontSize": 15,
   "workbench.activityBar.visible": true,
-  "workbench.colorTheme": "Monokai",
+  "workbench.colorTheme": "Monokai Night",
   "workbench.fontAliasing": "antialiased",
   "git.autofetch": true,
   "update.enableWindowsBackgroundUpdates": false,
@@ -73,4 +73,12 @@
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "vim.hlsearch": true,
   "vim.useSystemClipboard": true,
+  "editor.bracketPairColorization.enabled": true,
+  "workbench.iconTheme": "Monokai Pro Icons",
+  "workbench.colorCustomizations": {
+    "tab.activeBackground": "#303030",
+    "tab.activeBorder": "#32A8E3",
+    "tab.hoverBackground": "#161616",
+    "tab.border": "#303030"
+  }
 }
