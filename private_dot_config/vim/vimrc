@@ -60,3 +60,9 @@ endif
 
 " Line numbers by default
 set number
+
+" Cursor shape
+if &term =~ '^xterm\\|rxvt\|alacritty\|xterm-256color'
+  let &t_SI .= "\<Esc>[5 q"
+  let &t_EI .= "\<Esc>[2 q"
+endif

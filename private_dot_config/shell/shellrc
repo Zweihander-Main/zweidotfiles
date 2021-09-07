@@ -18,6 +18,9 @@ function bm() {
 # Mkdir and move in one command
 function md() { mkdir -p "$1" && cd "$1" ; }
 
+# vi
+set -o vi
+
 # fzf
 [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
 [ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
