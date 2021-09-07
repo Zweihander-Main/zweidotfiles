@@ -1725,7 +1725,7 @@ schemes:
       blue:    '#81a2be'
       magenta: '#b294bb'
       cyan:    '#70c0ba'
-      white:   '#373b41'
+      white:   '#c5c8c6'
     bright:
       black:   '#666666'
       red:     '#ff3334'
