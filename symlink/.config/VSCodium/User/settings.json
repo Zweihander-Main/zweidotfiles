@@ -73,7 +73,7 @@
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "vim.hlsearch": true,
   "vim.useSystemClipboard": true,
-  "editor.bracketPairColorization.enabled": true,
+  "editor.bracketPairColorization.enabled": false,
   "workbench.iconTheme": "Monokai Pro Icons",
   "workbench.colorCustomizations": {
     "tab.activeBackground": "#303030",
