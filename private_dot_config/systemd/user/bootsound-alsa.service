@@ -5,7 +5,7 @@ Before=pulseaudio.service
 [Service]
 Type=oneshot
 RemainAfterExit=no
-ExecStart=/usr/bin/aplay -D plughw:5,1  /usr/share/sounds/bootsounds/windows_95-boot.wav
+ExecStart=/usr/bin/aplay -D plughw:5,1  /usr/share/sounds/bootsounds/indy-boot.wav
 
 [Install]
 WantedBy=default.target

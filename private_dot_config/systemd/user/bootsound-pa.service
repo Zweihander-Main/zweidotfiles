@@ -6,7 +6,7 @@ After=bootsound-alsa.service
 [Service]
 Type=oneshot
 RemainAfterExit=no
-ExecStart=/usr/bin/paplay --device=2 /usr/share/sounds/bootsounds/windows_95-boot.wav
+ExecStart=/usr/bin/paplay --device=2 /usr/share/sounds/bootsounds/indy-boot.wav
 
 [Install]
 WantedBy=default.target
