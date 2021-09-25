@@ -98,7 +98,6 @@ function get_space {
 # > command
 function print_prompt_head {
     local left_prompt="\
-%{$blue%}# \
 %{$green_bold%}$(get_usr_name)\
 %{$blue%}@\
 %{$cyan_bold%}$(get_box_name): \
