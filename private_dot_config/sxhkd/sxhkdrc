@@ -39,7 +39,7 @@ ctrl + alt + shift + c
     chromium
 
 ctrl + alt + shift + e
-    emacs
+    XMODIFIERS=@im=none emacs
 
 ctrl + alt + shift + t
     thunderbird
