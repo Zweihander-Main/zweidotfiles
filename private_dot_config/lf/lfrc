@@ -52,7 +52,7 @@ set shell zsh
 
 # move current file or selected files to trash folder
 # (also see 'man mv' for backup/overwrite options)
-# cmd trash %set -f; mv $fx ~/.trash
+cmd trash %set -f; trash-put $fx 
 
 # define a custom 'delete' command
 # cmd delete ${{
@@ -64,7 +64,7 @@ set shell zsh
 # }}
 
 # use '<delete>' key for either 'trash' or 'delete' command
-# map <delete> trash
+map <delete> trash
 # map <delete> delete
 
 # extract the current file with the right command
