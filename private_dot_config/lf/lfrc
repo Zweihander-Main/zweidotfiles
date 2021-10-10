@@ -65,7 +65,7 @@ cmd trash %set -f; trash-put $fx
 
 # use '<delete>' key for either 'trash' or 'delete' command
 map <delete> trash
-# map <delete> delete
+map g<delete> delete
 
 # extract the current file with the right command
 cmd extract ${{
