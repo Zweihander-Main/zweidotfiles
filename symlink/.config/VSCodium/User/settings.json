@@ -61,7 +61,15 @@
     {
       "before": [ "<leader>", "s", "l" ],
       "commands": [ "editor.action.openLink" ]
-    }
+    },
+    {
+      "before": [ "g", "s", "<leader>" ],
+      "after": [ "<leader>", "<leader>", "/" ]
+    },
+    {
+      "before": [ "g", "s" ],
+      "after": [ "<leader>", "<leader>" ]
+    },
   ],
   "workbench.editor.wrapTabs": true,
   "workbench.editor.decorations.colors": true,
@@ -80,5 +88,15 @@
     "tab.activeBorder": "#32A8E3",
     "tab.hoverBackground": "#161616",
     "tab.border": "#303030"
-  }
+  },
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]"
+  ],
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)"
 }
