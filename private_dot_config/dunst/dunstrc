@@ -61,7 +61,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 3
+    frame_width = 0
 
     # Defines color of the frame around the notification window.
     frame_color = "#aaaaaa"
@@ -86,7 +86,7 @@
 
     ### Text ###
 
-    font = Monospace 12
+    font = Source Code Pro 12
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -275,38 +275,38 @@
     # Xev might be helpful to find names for keys.
 
     # Close notification.
-    close = ctrl+space
+    close = mod4+q
 
     # Close all notifications.
-    close_all = ctrl+shift+space
+    close_all = mod4+shift+q
 
     # Redisplay last message(s).
     # On the US keyboard layout "grave" is normally above TAB and left
     # of "1". Make sure this key actually exists on your keyboard layout,
     # e.g. check output of 'xmodmap -pke'
-    history = ctrl+grave
+    history = mod4+grave
 
     # Context menu.
-    context = ctrl+shift+period
+    context = mod4+semicolon
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#222222"
-    foreground = "#888888"
+    background = "#191b1d"
+    foreground = "#aaaaaa"
     timeout = 30
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#285577"
+    background = "#81a2be"
     foreground = "#ffffff"
     timeout = 30
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_critical]
-    background = "#900000"
+    background = "#cc6666"
     foreground = "#ffffff"
     frame_color = "#ff0000"
     timeout = 0
@@ -428,12 +428,29 @@
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
 #
-# vim: ft=cfg
 
 [ignore-timekpra-screensaver]
     body = "Feature \"screensaver\", which is used to detect idle time, cannot be enabled!*"
     format = ""
 
 [log-all-notifications]
+    summary = "*"
     script = log_dunst
 
+[volnoti-dbus]
+    appname = Volume
+    set_stack_tag = "volume"
+    urgency = low
+    background = "#191b1d"
+
+[volnoti-dbus-muted]
+    appname = Volume
+    body = "muted"
+    new_icon = "audio-volume-muted"
+
+[volnoti-dbus-unmuted]
+    appname = Volume
+    body = "unmuted"
+    new_icon = "audio-volume-high"
+
+# vim: ft=cfg
