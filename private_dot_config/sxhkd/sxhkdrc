@@ -30,6 +30,19 @@ XF86AudioNext
 
 alt + shift + F12
     toggle_sink
+# Dunst
+
+super + q
+    dunstctl close
+
+super + shift + q 
+    dunstctl close-all
+
+super + grave 
+    dunstctl history-pop
+
+super + semicolon
+    dunstctl context
 
 # User programs
 ctrl + alt + shift + 2
