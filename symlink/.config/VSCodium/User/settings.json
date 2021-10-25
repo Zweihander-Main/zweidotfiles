@@ -47,6 +47,10 @@
       "commands": [ "workbench.action.closeActiveEditor" ]
     },
     {
+      "before": [ "<leader>", "c", "D" ],
+      "commands": [ "editor.action.goToReferences" ]
+    },
+    {
       "before": [ "<leader>", "f", "s" ],
       "commands": [ "workbench.action.files.save" ]
     },
@@ -75,7 +79,6 @@
   "workbench.editor.decorations.colors": true,
   "workbench.editor.decorations.badges": true,
   "sync.gist": "3f20f9eae18b93cc2fee68e0f1ba08f5",
-  "window.menuBarVisibility": "toggle",
   "editor.linkedEditing": true,
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
