@@ -51,6 +51,10 @@
       "commands": [ "editor.action.goToReferences" ]
     },
     {
+      "before": [ "<leader>", "c", "f" ],
+      "commands": [ "editor.action.formatDocument" ]
+    },
+    {
       "before": [ "<leader>", "f", "s" ],
       "commands": [ "workbench.action.files.save" ]
     },
@@ -103,5 +107,8 @@
   ],
   "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
   "workbench.enableExperiments": false,
-  "workbench.settings.enableNaturalLanguageSearch": false
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "window.menuBarVisibility": "toggle",
+  "inline-parameters.enabled": false,
+  "liveServer.settings.donotShowInfoMsg": true
 }
