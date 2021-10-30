@@ -110,5 +110,10 @@
   "workbench.settings.enableNaturalLanguageSearch": false,
   "window.menuBarVisibility": "toggle",
   "inline-parameters.enabled": false,
-  "liveServer.settings.donotShowInfoMsg": true
+  "liveServer.settings.donotShowInfoMsg": true,
+  "todo-tree.filtering.excludeGlobs": [
+    "**/node_modules",
+    "/node_modules",
+    "node_modules"
+  ]
 }
