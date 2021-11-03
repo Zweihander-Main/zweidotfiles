@@ -4,3 +4,9 @@
 [submodule "zsh/plugins/zsh-syntax-highlighting"]
 	path = private_dot_config/zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "private_dot_config/bat/syntaxes/Sublime-GenericConfig"]
+	path = private_dot_config/bat/syntaxes/Sublime-GenericConfig
+	url = https://github.com/skozlovf/Sublime-GenericConfig
+[submodule "private_dot_config/bat/themes/sublime-tomorrow-theme"]
+	path = private_dot_config/bat/themes/sublime-tomorrow-theme
+	url = https://github.com/theymaybecoders/sublime-tomorrow-theme
