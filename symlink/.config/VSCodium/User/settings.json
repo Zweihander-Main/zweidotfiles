@@ -59,6 +59,18 @@
       "commands": [ "workbench.action.files.save" ]
     },
     {
+      "before": [ "<leader>", "g", "g", "c", "c" ],
+      "commands": [ "git.commitStaged" ]
+    },
+    {
+      "before": [ "<leader>", "g", "g", "p", "p" ],
+      "commands": [ "git.push" ]
+    },
+    {
+      "before": [ "<leader>", "g", "s" ],
+      "commands": [ "git.stageSelectedRanges" ]
+    },
+    {
       "before": [ "<leader>", "g", "S" ],
       "commands": [ "git.stage" ]
     },
@@ -115,5 +127,7 @@
     "**/node_modules",
     "/node_modules",
     "node_modules"
-  ]
+  ],
+  "redhat.telemetry.enabled": false,
+  "python.languageServer": "Pylance"
 }
