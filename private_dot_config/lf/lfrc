@@ -1,6 +1,11 @@
 # interpreter for shell commands
 set shell zsh
 
+# Debug help:
+# log_file="$HOME/lf-reflink-log-$(date +'%Y-%m-%d_%H-%M-%S')"
+# [ -f "$log_file" ] || touch "$log_file"
+# exec 1>> $log_file 2>&1
+
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
 # exit on error and option '-u' is used to give error for unset variables.
@@ -97,6 +102,25 @@ cmd zip ${{
     zip -r $1.zip $1
     rm -rf $1
 }}
+
+# Custom paste, use rsync
+cmd paste-special %{{
+    load=$(cat ~/.local/share/lf/files)
+    mode=$(echo "$load" | sed -n '1p')
+    list=$(echo "$load" | sed '1d')
+    l=$(echo "$list" | sed ':a;N;$!ba;s/\n/ /g')
+    echo $l
+    if [ $mode = 'copy' ]; then
+        sh -c "rsync --info=progress2 -urh $l . "
+    elif [ $mode = 'move' ]; then
+        sh -c "rsync --remove-source-files --info=progress2 -rh $l . "
+    fi
+    rm ~/.local/share/lf/files
+    lf -remote 'send load'
+    lf -remote 'send clear'
+}}
+
+map P paste-special
 
 # Previews
 set preview true
