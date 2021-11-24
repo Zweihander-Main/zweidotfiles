@@ -49,10 +49,10 @@ Print
     flameshot gui
 
 shift + Print
-    flameshot screen
+    flameshot screen -c
 
 ctrl + Print
-    flameshot full
+    flameshot full -c
 
 
 # User programs
