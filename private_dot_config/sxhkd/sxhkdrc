@@ -30,8 +30,8 @@ XF86AudioNext
 
 alt + shift + F12
     toggle_sink
-# Dunst
 
+# Dunst
 super + q
     dunstctl close
 
@@ -43,6 +43,17 @@ super + grave
 
 super + semicolon
     dunstctl context
+
+# Print screen
+Print
+    flameshot gui
+
+shift + Print
+    flameshot screen
+
+ctrl + Print
+    flameshot full
+
 
 # User programs
 ctrl + alt + shift + 2
