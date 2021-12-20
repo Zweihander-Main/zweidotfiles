@@ -35,13 +35,16 @@
   },
   "vim.leader": "<space>",
   "vim.easymotion": true,
-  "editor.multiCursorModifier": "alt",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "debug.inlineValues": true,
   "editor.suggest.showStatusBar": true,
   "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [ "<leader>", "%" ],
+      "commands": [ "editor.emmet.action.matchTag" ]
+    },
     {
       "before": [ "<leader>", "b", "k" ],
       "commands": [ "workbench.action.closeActiveEditor" ]
