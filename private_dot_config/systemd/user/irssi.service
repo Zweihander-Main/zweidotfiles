@@ -1,0 +1,25 @@
+[Unit]
+Description=Irssi in a separate tmux session
+Documentation=man:irssi(1)
+Requires=sys-subsystem-net-devices-enp68s0.device
+After=sys-subsystem-net-devices-enp68s0.device
+Wants=dunst.service
+After=dunst.service
+ConditionFileIsExecutable=/usr/bin/tmux
+
+[Service]
+Type=forking
+TimeoutSec=5
+WorkingDirectory=~
+ExecStart=/usr/bin/tmux -L irssi -2 new-session -A -d -s irssi /usr/bin/irssi --config=%h/.config/irssi/config --home=%h/.local/share/irssi
+# Send CTRL+u to clear the input line before /quit
+ExecStop=-/usr/bin/tmux -L irssi send-keys -t irssi:1 C-u
+ExecStop=-/usr/bin/tmux -L irssi send-keys -t irssi:1 "/quit" Enter
+# Sending /quit to irssi is asynchronous, so wait for irssi to exit
+# before killing the session in tmux
+ExecStop=/usr/bin/timeout 3 /usr/bin/tmux -L irssi kill-session -t irssi
+
+[Install]
+WantedBy=default.target
+
+
