@@ -1,7 +1,6 @@
 [Unit]
 Description=boot sound on spidf to possibly fix issues, pulse version
 Requires=pulseaudio.service
-After=bootsound-alsa.service
 
 [Service]
 Type=oneshot

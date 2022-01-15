@@ -1,0 +1,11 @@
+[Unit]
+Description=Wait for DNS
+Requires=sys-subsystem-net-devices-enp68s0.device
+After=sys-subsystem-net-devices-enp68s0.device
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'while ! host zweihander.me; do sleep 1; done'
+
+[Install]
+WantedBy=default.target

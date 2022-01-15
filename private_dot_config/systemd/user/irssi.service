@@ -1,10 +1,8 @@
 [Unit]
 Description=Irssi in a separate tmux session
 Documentation=man:irssi(1)
-Requires=sys-subsystem-net-devices-enp68s0.device
-After=sys-subsystem-net-devices-enp68s0.device
-Wants=dunst.service
-After=dunst.service
+Wants=wait-for-dns.service dunst.service
+After=wait-for-dns.service dunst.service
 ConditionFileIsExecutable=/usr/bin/tmux
 
 [Service]

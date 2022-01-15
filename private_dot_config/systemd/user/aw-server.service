@@ -1,7 +1,6 @@
 [Unit]
 Description=Activity Watch server
 PartOf=graphical-session.target
-After=network.target
 Wants=stalonetray.service
 After=stalonetray.service
 
