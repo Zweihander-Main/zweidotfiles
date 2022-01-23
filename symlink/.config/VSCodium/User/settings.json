@@ -138,5 +138,13 @@
     "less",
     "postcss",
     "scss"
-  ]
+  ],
+  "windowColors.🌈 Theme": "remove",
+  "codemetrics.basics.CodeLensHiddenUnder": 10,
+  "problems.sortOrder": "position",
+  "problems.showCurrentInStatus": true,
+  "leetcode.workspaceFolder": "/home/zwei/dev/puzzles/leetcode",
+  "leetcode.defaultLanguage": "typescript",
+  "leetcode.enableStatusBar": false,
+  "leetcode.hint.configWebviewMarkdown": false,
 }
