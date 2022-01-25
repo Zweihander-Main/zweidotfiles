@@ -147,4 +147,6 @@
   "leetcode.defaultLanguage": "typescript",
   "leetcode.enableStatusBar": false,
   "leetcode.hint.configWebviewMarkdown": false,
+  "leetcode.hint.commentDescription": false,
+  "leetcode.hint.commandShortcut": false,
 }
