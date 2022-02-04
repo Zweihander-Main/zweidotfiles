@@ -1,0 +1,47 @@
+% nerd-commenter, comments, code, text, vi, vim, neovim
+
+# Toggle comment (modes: normal, visual) (preservim/nerdcommenter) 
+<leader>c<space>
+
+# Comment out the current line or text selected in visual mode. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cc |NERDCommenterComment|
+
+# Same as cc but forces nesting. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cn |NERDCommenterNested|
+
+# Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are unco# mmented and vice versa. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>c<space> |NERDCommenterToggle|
+
+# Comments the given lines using only one set of multipart delimiters. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cm |NERDCommenterMinimal|
+
+# Toggles the comment state of the selected line(s) individually. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>ci |NERDCommenterInvert|
+
+# Comments out the selected lines with a pretty block formatted layout. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cs |NERDCommenterSexy|
+
+# Same as cc except that the commented line(s) are yanked first. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cy |NERDCommenterYank|
+
+# Comments the current line from the cursor to the end of line. (modes: normal, visual) (preservim/nerdcommenter)
+<leader>c$ |NERDCommenterToEOL|
+
+# Adds comment delimiters to the end of line and goes into insert mode between them. (modes: normal, visual) (preservim/nerdcommenter)
+<leader>cA |NERDCommenterAppend|
+
+# Switches to the alternative set of delimiters (modes: normal, visual) (preservim/nerdcommenter)
+<leader>ca |NERDCommenterAltDelims|
+
+# or both sides (<lea# der>cb). (modes: normal, visual) (preservim/nerdcommenter)
+<leader>cl 
+
+# Comment out (and align left) the current line or text selected in visual mode. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cl |NERDCommenterAlignLeft 
+
+# Comment out (and align left) the current line or text selected in visual mode. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cb |NERDCommenterAlignBoth
+
+# Uncomment current line or text selected in visual mode. (modes: normal, visual) (preservim/nerdcommenter)
+[count]<leader>cu |NERDCommenterUncomment|
+

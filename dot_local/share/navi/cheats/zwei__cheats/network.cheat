@@ -1,0 +1,129 @@
+% network
+
+# Kill a process running on a given port
+lsof -i :<port> \
+   | awk '{l=$2} END {print l}' \
+   | xargs kill
+
+# Kill a process for port
+port="$(echo "<process>" | grep -Eo ':([0-9][0-9][0-9]+) ' | tr -d ':')"
+lsof -i :$port \
+   | awk '{l=$2} END {print l}' \
+   | xargs kill
+
+# List IP addresses connected on a given port
+netstat -tn 2>/dev/null \
+   | grep :<port> \
+   | awk '{print $5}' \
+   | cut -d: -f1 \
+   | sort \
+   | uniq -c \
+   | sort -nr \
+   | head
+
+# Find external, public IP address
+dig +short myip.opendns.com @resolver1.opendns.com
+
+# Find primary, local IP address
+ifconfig \
+  | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' \
+  | grep -Eo '([0-9]*\.){3}[0-9]*' \
+  | grep -v '127.0.0.1' \
+  | tail -n1
+
+# Get certificates for a service
+openssl s_client -showcerts -connect <url>
+
+# Launch a container with network utils
+docker run -it --entrypoint /bin/sh nicolaka/netshoot
+
+# Map ports
+sudo nmap -sS -sV -0 "<target>"
+
+# Port owner
+lsof -n -i4TCP:<port> | grep LISTEN
+
+# List open ports
+lsof -Pn -i4
+
+$ self_global_ip: dig +short myip.opendns.com @resolver1.opendns.com
+$ process: lsof -iTCP -sTCP:LISTEN -n -P | sed -E "s/:([0-9][0-9][0-9]+) /:$(tput setaf 3)\1$(tput sgr0) /g" --- --header-lines 1
+
+% curl
+
+# send a get http request
+curl <url>
+
+# send a http request
+curl -X <method> <url>
+
+# send a http request and write the output to a file
+curl -X <method> <url> -o <filename>
+
+# send a get http request and follow redirects
+curl -L <url>
+
+# send a get http request exit with a non-zero status code on failure
+curl --fail <url>
+
+# send an authenticated http request
+curl -u <username>:<password> -X <method> <url>
+
+# send a http request with a json body
+curl -X <method> <url>  -H 'Content-Type: application/json' -d '<json>'
+
+# send a http request with a form body
+curl <url> -d <bodykey>=<bodyvalue>
+
+# send a http request and see the request as well as the response
+curl -v <url>
+
+# send a http request wih a body from a file
+curl -X <method> <url> --data-binary "@<file>"
+
+# send a http request wih a custom header
+curl -X <method> <url> -H "<headername>: <headervalue>"
+
+# Download a file, saving the output under the filename indicated by the URL
+curl -O <http___example_com_filename>
+
+# Download a file, following [L]ocation redirects, and automatically [C]ontinuing (resuming) a previous file transfer
+curl -O -L -C - <http___example_com_filename>
+
+# Send form-encoded data (POST request of type `application/x-www-form-urlencoded`). Use `-d @file_name` or `-d @'-'` to read from STDIN
+curl -d <_name_bob_> <http___example_com_form>
+
+# Send a request with an extra header, using a custom HTTP method
+curl -H {{'<header-key>: <header-value>'}} -X <PUT> <http___example_com>
+
+# Send data in JSON format, specifying the appropriate content-type header
+curl -d {{'<data-in-json>'}} -H {{'Content-Type: application/json'}} <http___example_com_users_1234>
+
+# Pass client certificate and key for a resource, skipping certificate validation
+curl --cert <client_pem> --key <key_pem> --insecure <https___example_com>
+
+$ file: ls
+$ method: echo -e 'GET\nPOST\nPUT\nDELETE\nPATCH'
+
+
+% external service, curl
+
+# Lookup cheatsheet from cht.sh
+curl "cht.sh/<tool>"
+
+# Show weather info for current location
+curl -s "wttr.in" \
+   | grep -v "New feature" \
+   | grep -v Follow
+
+# Create a QR code with some content
+echo <content> | curl -F-=\<- qrenco.de
+
+# Shorten a URL
+curl -s "http://tinyurl.com/api-create.php?url=<url>"
+
+# Geolocation data given an IP
+curl -sL "ipinfo.io/<ip>" | jq
+
+# Geolocation data for own IP
+curl -sL "ipinfo.io/<self_global_ip>" | jq

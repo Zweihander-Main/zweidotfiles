@@ -1,0 +1,101 @@
+% fs, filesystem
+
+# Delete all broken symlinks in the current directory
+find -L . -name . -o -type d -prune -o -type l -exec rm {} +
+
+# Current folder size
+du -sh
+
+# Size of all folders in current directory
+du -sch ./*
+
+# List the sizes of a directory and any subdirectories, in the given unit (B/KB/MB)
+du -<b_k_m> <path_to_directory>
+
+# List the sizes of a directory and any subdirectories, in human-readable form (i.e. auto-selecting the appropriate unit for each size)
+du -h <path_to_directory>
+
+# List the human-readable sizes of a directory and of all the files and directories within it
+du -ah <path_to_directory>
+
+# List the human-readable sizes of a directory and any subdirectories, up to N levels deep
+du -h --max-depth=N <path_to_directory>
+
+# List the human-readable size of all .jpg files in subdirectories of the current directory, and show a cumulative total at the end
+du -ch */*.jpg
+
+# Display all file systems and their disk usage
+df
+
+# Display all file systems and their disk usage in human readable form
+df -h
+
+# Display the file system and its disk usage containing the given file or directory
+df <path_to_file_or_directory>
+
+# Display statistics on the number of free inodes
+df -i
+
+# Display file systems but exclude the specified type
+df -x <squashfs> -x <tmpfs>
+
+# Make (empty) directory
+mkdir <dirname>
+
+# Remove (empty) directory
+rmdir <dirname>
+
+# Remove directory with all contents without prompt
+rm -rf <dirname>
+
+# Remove directory contents and keep directory
+rm -rf *
+
+# Change directory
+cd <dirname>
+
+% shell Symlinks
+
+# Create symlink
+ln -s <source-dirname> <destination-dirname>
+
+# Update symlink
+ln -sfn <source-dirname> <destination-dirname>
+
+# Remove symlink
+unlink <sample-dirname>
+
+% Shell Files
+
+# Make (empty) file
+touch <filename-txt>
+
+# Duplicate file
+cp <filename> <file-copyname>
+
+# Copy/Page folder with content
+cp -a <old-folder>/ <new-folder>
+
+# Move/Rename file
+mv <current-filename-path> <new-filename-path>
+
+# Move/Rename file and prompt before overwriting an existing file
+mv -i <current-filename> <new-filename>
+
+# Remove file
+rm <filename-txt>
+
+# Write to file (will overwrite existing content)
+cat > <filename-txt> 
+
+# MD5 hash for files
+md5 <filename-txt>
+
+# MD5 hash for folders
+tar c <folder> | md5sum
+
+# Use -R option to change permissions recursively.
+ps -ef | grep apache | grep -v grep
+
+# Change group
+chgrp <group-name-from> <group-name-to>

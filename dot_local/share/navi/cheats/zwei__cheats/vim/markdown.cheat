@@ -1,0 +1,33 @@
+% markdown, navigation, text, neovim, vim, vi
+
+# Open linked file under cursor in vim 
+
+ge
+
+# Open linked url under cursor in browser
+
+gx
+
+# Goto current header
+
+c
+
+# Goto parent header
+
+u
+
+# Goto next header
+
+]]
+
+# Goto previous header
+
+[[
+
+# Goto next sibling header, if any
+
+][
+
+# Goto previous sibling header, if any
+
+[]

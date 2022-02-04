@@ -1,0 +1,30 @@
+% multi-cursor, multi, cursors, neovim, vim, vi
+
+# Begin selection. repeat to add
+
+<ctrl>n
+
+# Create cursors
+
+<ctrl>Up OR <ctrl>Down
+
+# Jump to next/previous occurrence
+
+n OR N 
+
+# Select next/previous cursor
+
+[ OR ]
+
+# Skip and get next occurrence
+
+q
+
+# Remove current cursor
+
+Q
+
+# Switch to `extend` mode
+
+<tab>
+

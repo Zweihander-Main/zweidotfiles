@@ -1,0 +1,17 @@
+% sorting, text, neovim, vim, vi
+
+# Sort lines beginning at cursor "go sort"
+
+gs
+
+# Sort "2" lines down "j" beginning at cursor "go sort"
+
+gs2j
+
+# Sort lines/text inside "i" parens "("
+
+gsi(
+
+# Sort lines inside "i" paragraph "p"
+
+gsip

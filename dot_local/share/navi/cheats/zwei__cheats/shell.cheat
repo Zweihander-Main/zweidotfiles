@@ -1,0 +1,70 @@
+% shell
+
+# Re-call last input with sudo
+sudo !!
+
+# Finding Help
+apropos <command>
+
+# Get the current path
+pwd
+
+# Get the current hostname
+hostname
+
+# Get the current users
+users
+
+# Show calendar
+cal
+
+# Show today's date
+date
+
+# Exit terminal
+exit
+
+# List directory contents
+ls
+
+# List all directory contents
+ll
+
+# List all directory contents sorted by time edited
+ls -alt
+
+# List directory (wildcard matching)
+ls *.<txt>
+
+# Go back to previous directory
+cd -
+
+# Start appliction
+xdg-open <program> 
+
+# Register variable
+export <TESTING>=<Variable-text>
+
+# Echo variable
+echo $<Variable>
+
+# Unset variable
+unset <Variable>
+
+# Write to file
+echo <Hello> > <hello-txt>
+
+# Append content from a file to another file
+cat <file1-txt> >> <file2-txt>
+
+# Add the amount of lines, words, and characters to <file2-txt>
+cat <file1-txt> | <word-count> | cat > <file2-txt>
+
+# Sort the content of a file (like cat)
+sort <hello-txt>
+
+# Save to sorted content to a new file
+cat <file1-txt> | sort > <sorted-file1-txt>
+
+# Sort and remove duplicates and save to a new file
+sort <file1-txt> | uniq > <uniq-file1-txt>

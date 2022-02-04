@@ -1,0 +1,36 @@
+% ssh
+
+# Start ssh agent
+eval "$(ssh-agent -s)"; ssh-add
+
+# Access via ssh
+ssh <username_remote>
+
+# Copy file from server to local
+scp <username_remote>:<file-to-send-path> <path-to-recieve> 
+
+# Copy file from local to server
+scp <file-to-send> <username_remote>:<where-to-put>
+
+# Escape files with spaces in name like this
+<path-to-file>\\\ <name-png>
+
+$ username_remote: cat ~/.ssh/config | grep -i "host "|sed 's/^[ \t]*//g' | awk '{print $2}'
+
+% rsync
+
+# files from server (accepts * and regular expressions)
+rsync -avzPs '<user>@<server>:<folder>/*' .
+
+# files from server with special port (accepts * and regular expressions)
+rsync -e 'ssh -p <port>' -avzPs '<user>@<server>:<folder>/*' .
+
+# files from server with special port and special key (accepts * and regular expressions)
+rsync -e 'ssh -p <port> -i <sshkey>' -avzPs '<user>@<server>:<folder>/*' .
+
+# files from server with special key (accepts * and regular expressions)
+rsync -e 'ssh -i <sshkey>' -avzPs '<user>@<server>:<folder>/*' .
+
+$ user : echo -e "$(whoami)\nroot"
+$ sshkey : ls ~/.ssh | grep -v known_hosts | grep -v config
+$ server : cat /etc/hosts | cut -f2 -d' '

@@ -1,0 +1,14 @@
+% page, navigation, vi, vim, neovim
+
+# Move cursor to the top of the page
+
+H
+
+# Move cursor to the middle of the page
+
+M
+
+# Move cursor to the bottom of the page
+
+L
+

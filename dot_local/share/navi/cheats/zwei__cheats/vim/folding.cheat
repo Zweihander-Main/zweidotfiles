@@ -1,0 +1,35 @@
+% folding, code, text, vi, vim, neovim
+
+# Reduces fold level throughout the buffer
+
+zr 
+
+# Opens all folds
+
+zR 
+
+# Increases fold level throughout the buffer
+
+zm 
+
+# Fold everything all the way
+
+M 
+
+# Open the fold your cursor is on
+
+za 
+
+# Open the fold your cursor is on recursively
+
+zA 
+
+# Close the fold your cursor is on
+
+zc 
+
+# Close the fold your cursor is on recursively
+
+zC 
+
+

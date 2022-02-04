@@ -1,0 +1,57 @@
+% vim-surround, surround, wrap, text, neovim, vim, vi
+
+# Surround text under cursor with double-quote
+
+ysiw<char>	example -> ysiw" -> "example"
+
+# Surround text under cursor with single-quote
+
+ysiw<char>	example -> ysiw' -> 'example' 
+
+# Surround text under cursor with html/xml brackets
+
+ysiw<p>	example -> <p>example</q>
+
+# Surround text under cursor with other text
+ysiw*	example -> *example*
+
+# Change surrounding delimiters
+
+cs<char><char> 'example' cs'" -> "example"
+
+# Delete surrounding delimiters
+
+ds<char>	"example" -> ds" -> example
+
+# Surround text under cursor with () [] or {} without space or padding
+
+ysiw(	example -> (example)
+
+# Surround text under cursor with () [] or {} with space or padding
+
+ysiw)	example -> ( example )
+
+# Change surrounding () [] or {} to include space
+
+cs)(	(example) -> ( example )
+
+# Change surrounding () [] or {} to include space and change delimiter
+
+cs]{	[example] -> { example }
+
+# Surround the entire current line under cursor with parens () without space or padding
+
+yssb OR yss)	example line -> (example line)
+
+# Surround the entire current line under cursor with parens () with space or padding
+
+yss<space>b OR yss(	example line -> (example line)
+
+# Surround the entire current line under cursor with curly braces {} without space or padding
+
+yssB OR yss}	example line -> (example line)
+
+# Surround the entire current line under cursor with curly braces {} with space or padding
+
+yss<space>B OR yss{	example line -> { example line }
+

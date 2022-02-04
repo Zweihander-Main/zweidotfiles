@@ -1,0 +1,42 @@
+% movement, navigation, vi, vim, neovim
+
+# Move cursor forward to the end of the next word segment
+
+b OR <num>b  (Requires 5b to jump across the following " merry-go-round ")
+
+# Move cursor forward to the end of the next word boundary
+
+B OR <num>B  (Requires B (1 step) to jump across the following " merry-go-round ")
+
+# Move cursor to Nth occurrence of {char} 
+# Move cursor forward to the end of the next word segment
+
+e OR <num>e  (Requires 5e to jump across the following " merry-go-round ")
+
+# Move cursor forward to the end of the next word boundary
+
+E OR <num>E  (Requires E (1 step) to jump across the following " merry-go-round ")
+
+# Move cursor to Nth occurrence of {char} 
+
+f<char> OR <num>f<char>
+
+# Move cursor before Nth occurrence of {char} to the right
+
+t<char> OR <num>f<char>
+
+# Move cursor N paragraphs backward
+
+{ OR <num>{
+
+# Move cursor N Paragraphs forward
+
+} OR <num>}
+
+# Move cursor to column first column on the current line
+
+| OR ^
+
+# Move cursor to column Nth column on the current line
+
+<num>|

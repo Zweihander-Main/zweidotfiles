@@ -1,0 +1,26 @@
+% htop, process
+
+# show process with current users
+htop -u <user>
+ps -u <user> ux
+
+# Show running processes of name
+ps aux | grep <name>
+
+# Monitor error log (stream as file grows)
+tail error.log -f -n 0
+
+# kill process
+kill <pid>
+
+# Run a script as background process
+<process> &
+
+#List all running processes
+ps -A
+
+# Kill a running process
+killall <Process-name>
+
+$ user: echo "$USER"
+$ pid: ps -u $USER --no-headers ux | awk '{print $2}'

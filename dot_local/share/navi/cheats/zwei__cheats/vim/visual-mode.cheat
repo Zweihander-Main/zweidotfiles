@@ -1,0 +1,93 @@
+% visual, visual-mode, neovim, vim, vi
+
+# surround visual selection with []
+
+v$jS]
+
+# Select from cursor up to end of current paragraph 
+
+v}
+
+# Select from cursor up to end of current paragraph 
+
+v)
+
+# Select from cursor back to start of previous paragraph 
+
+v{
+
+# Select from cursor back to start of current paragraph 
+
+v(
+
+# Select current line | select current to N lines
+
+V*
+
+# Select text inside parens ()
+
+vib or vi)
+
+# Delete text inside parens ()
+
+dib or di)
+
+# Change text inside parens ()
+
+cib or ci)
+
+# Extend highlighted area with a () block
+
+ab
+
+# Extend highlighted area with a paragraph
+
+ap
+
+# Extend highlighted area with a sentence
+
+as
+
+# Extend highlighted area with a tag block
+
+at
+
+# Extend highlighted area with 'a word'
+
+aw
+
+# Format the highlighted lines
+
+gq
+
+# Extend highlighted area with inner () block
+
+ib
+
+# Extend highlighted area with inner paragraph
+
+ip
+
+# Extend highlighted area with inner sentence
+
+is
+
+# Extend highlighted area with inner tag block
+
+it
+
+# Extend highlighted area with 'inner word'
+
+iw
+
+# Select a <> block
+
+a<
+
+# Select a single-quoted string
+
+a'
+
+# Select a double-quoted string
+
+a"

@@ -1,0 +1,13 @@
+% formatting, code, text, pretty, neovim, vim, vi
+
+# Format text object for outermost JSON object
+
+aj
+
+# Format text object for innermost JSON object
+
+ij
+
+# Format (pretty print) JSON under the cursor
+
+gqaj

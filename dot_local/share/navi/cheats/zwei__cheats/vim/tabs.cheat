@@ -1,0 +1,18 @@
+% tabs, workspace, buffers, window, neovim, vim, vi
+
+# Open file in a new tab
+
+:tabnew <file>
+
+# Go to the next tab
+
+:tabn OR :tabnext
+
+# Go to the previous tab
+
+:tabp OR :tabprevious
+
+# Close all other tabs
+
+:tabo OR :tabonly
+

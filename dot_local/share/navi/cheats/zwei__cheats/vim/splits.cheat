@@ -1,0 +1,57 @@
+
+# Open new horizontal split
+
+:sp <file>
+
+# Open new vertical split
+
+:vsp <file>
+
+# Move between open split buffers
+
+<ctrl>w [hjkl]
+
+# Resize current horizontal split
+
+:resize <num> OR :res <num>
+
+# Resize current horizontal split by a relative amount
+
+:res +<num> OR :res -<num> (num can be + or -)
+
+# Resize current vertical split
+
+:vertical resize <num> OR :vertical res <num>
+
+# Resize current vertical split by a relative amount
+
+:vertical res +<num> OR :vertical res -<num>
+
+# Resize current horizontal split by one line
+
+<ctrl>w + OR <ctrl>w -
+
+# Resize current horizontal split by <num> lines
+
+<ctrl>w <num> + OR <ctrl>w <num> -
+
+# Resize current vertical split by one line
+
+<ctrl>w > OR <ctrl>w <
+
+# Resize current vertical split by <num> lines
+
+<ctrl>w <num> > OR <ctrl>w <num> <
+
+# Resize all windows to equal dimensions
+
+<ctrl>w =
+
+# Resize a window to maximum height
+
+<ctrl>w _
+
+# Resize a window to maximum width
+
+<ctrl>w |
+

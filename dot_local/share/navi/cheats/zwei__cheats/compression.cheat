@@ -1,0 +1,212 @@
+% compression
+
+# Create a tar containing files
+tar cf <name>.tar <files>
+
+# create a `.tar.gz` file excluding a pattern
+tar --exclude="<pattern>" -cvf <archive_fname>.tar.gz <fnames>
+
+# Create a tar with Gzip compression
+tar czf <name>.tar.gz <files>
+
+# Create a gzipped archive from a directory using relative paths
+tar czf <target_tar_gz> -C <path_to_directory> .
+
+# Create a compressed archive, using archive suffix to determine the compression program
+tar caf <target_tar_xz> <file1> <file2> <file3>
+
+# Extract the files from a tar
+tar xf <tar_file>
+
+# Extract a tar using Gzip
+tar xzf <targz_file>
+
+# Extract files matching a pattern
+tar xf <source_tar> --wildcards {{"*.html"}}
+
+# Extract a specific file without preserving the folder structure
+tar xf <source_tar> <source_tar_path_to_extract> --strip-components=<depth_to_strip>
+
+# List the contents of a tar file
+tar tvf <source_tar>
+
+# Compress file and appends .gz to its name
+gzip <path>
+
+# Decompress compressed file
+gzip -d <gz_file>
+
+# Compress a file, replacing it with a gzipped compressed version
+gzip <file_ext>
+
+# Decompress a file, replacing it with the original uncompressed version
+gzip -d <file_ext>.gz
+
+# Compress a file specifying the output filename
+gzip -c <file_ext> > <compressed_file_ext_gz>
+
+# Decompress a gzipped file specifying the output filename
+gzip -c -d <file_ext>.gz > <uncompressed_file_ext>
+
+# Specify the compression level. 1=Fastest (Worst), 9=Slowest (Best), Default level is 6
+gzip -9 -c <file_ext> > <compressed_file_ext_gz>
+
+# Compress a file into a new file with the .zst suffix
+zstd <file>
+
+# Decompress a file
+zstd -d <file>.zst
+
+# Decompress to `stdout`
+zstd -dc <file>.zst
+
+# Compress a file specifying the compression level, where 1=fastest, 19=slowest and 3=default
+zstd -<level> <file>
+
+# Unlock higher compression levels (up to 22) using more memory (both for compression and decompression)
+zstd --ultra -<level> <file>
+
+# Compress a file into a new file with the .lzo suffix
+lzop <file>
+
+# Decompress a file
+lzop -d <file>.lzo
+
+# Compress a file, while specifing the compression level. 0 = Worst, 9 = Best (Default level is 3)
+lzop -<level> <file>
+
+# Compress a file
+bzip2 <path_to_file_to_compress>
+
+# Decompress a file
+bzip2 -d <path_to_compressed_file_bz2>
+
+# Decompress a file to standard output
+bzip2 -dc <path_to_compressed_file_bz2>
+
+# Compress a file
+lz4 <file>
+
+# Decompress a file
+lz4 -d <file_lz4>
+
+# Decompress a file and write to `stdout`
+lz4 -dc <file_lz4>
+
+# Package and compress a directory and its contents
+tar cvf - <path_to_dir> | lz4 - <dir_tar_lz4>
+
+# Decompress and unpack a directory and its contents
+lz4 -d <dir_tar_lz4> | tar -xv
+
+# Compress a file using the best compression
+lz4 -9 <file>
+
+# Package and compress a directory and its contents, [r]ecursively
+zip -r <compressed_zip> <_path_to_dir>
+
+# E[x]clude unwanted files from being added to the compressed archive
+zip -r <compressed_zip> <path_to_dir> -x <path_to_exclude>
+
+# Archive a directory and its contents with the highest level [9] of compression
+zip -r -<9> <compressed_zip> <_path_to_dir>
+
+# Package and compress multiple directories and files
+zip -r <compressed_zip> {{/path/to/dir1 /path/to/dir2 /path/to/file}}
+
+# Create an encrypted archive (user will be prompted for a password)
+zip -e -r <compressed_zip> <path_to_dir>
+
+# Add files to an existing zip file
+zip <compressed_zip> <path_to_file>
+
+# Delete files from an existing zip file
+zip -d <compressed_zip> "{{foo/*.tmp}}"
+
+# Archive a directory and its contents to a multi-part [s]plit zip file (e.g. 3GB parts)
+zip -r -s <3g> <compressed_zip> <path_to_dir>
+
+# Extract a file from an archive, replacing the original file if it exists
+gunzip <archive_tar_gz>
+
+# Extract a file to a target destination
+gunzip -c <archive_tar_gz> > <archive_tar>
+
+# List the contents of a compressed file
+gunzip -l <file_txt_gz>
+
+# Extract zip file(s) (for multiple files, separate file paths by spaces)
+unzip <file_s_>
+
+# Extract zip files(s) to given path
+unzip <compressed_file_s_> -d <_path_to_put_extracted_file_s_>
+
+# List the contents of a zip file without extracting
+unzip -l <file_zip>
+
+# Extract the contents of the file(s) to `stdout` alongside the extracted file names
+unzip -c <file_zip>
+
+# Extract a zip file created in windows, containing files with non-ascii (chinese) filenames
+unzip -O <gbk> <file_zip>
+
+# Print the uncompressed contents of a gzipped file to the standard output
+zcat <file_txt_gz>
+
+# Print compression details of a gzipped file to the standard output
+zcat -l <file_txt_gz>
+
+# Take a list of file names from standard input and add them [o]nto an archive in cpio's binary format
+echo "<file1> <file2> <file3>" | cpio -o > <archive_cpio>
+
+# Copy all files and directories in a directory and add them [o]nto an archive, in [v]erbose mode
+find <path_to_directory> | cpio -ov > <archive_cpio>
+
+# P[i]ck all files from an archive, generating [d]irectories where needed, in [v]erbose mode
+cpio -idv < <archive_cpio>
+
+# Archive a file or directory
+7za a <archived_7z> <path_to_file_or_directory>
+
+# Extract an existing 7z file with original directory structure
+7za x <archived>
+
+# Archive using a specific archive type
+7za a -t<zip_gzip_bzip2_tar> <archived> <path_to_file_or_directory>
+
+# List available archive types
+7za i
+
+# List the contents of an archive file
+7za l <archived>
+
+# Archive a file or directory
+7zr a <archived_7z> <path_to_file_or_directory>
+
+# Extract an existing 7z file with original directory structure
+7zr x <archived_7z>
+
+# List the contents of an archive file
+7zr l <archived_7z>
+
+# Extract all members from an archive
+ar -x <libfoo_a>
+
+# List the members of an archive
+ar -t <libfoo_a>
+
+# Replace or add files to an archive
+ar -r <libfoo_a> <foo_o> <bar_o> <baz_o>
+
+# Insert an object file index (equivalent to using `ranlib`)
+ar -s <libfoo_a>
+
+# Create an archive with files and an accompanying object file index
+ar -rs <libfoo_a> <foo_o> <bar_o> <baz_o>
+
+$ path: ls
+$ tar_file: ls *.tar
+$ targz_file: ls *.tar.gz
+$ gz_file: ls *.gz
+$ fnames: echo "`ls | xargs`"; ls -t
+$ archive_fname: basename $(pwd); ls -t
