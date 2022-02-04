@@ -30,3 +30,6 @@ set -o vi
 
 # mcfly
 [ -f "/usr/share/doc/mcfly/mcfly.zsh" ] && eval "$(mcfly init zsh)"
+
+# navi
+[ -x "/usr/bin/navi" ] && eval "$(navi widget zsh)"
