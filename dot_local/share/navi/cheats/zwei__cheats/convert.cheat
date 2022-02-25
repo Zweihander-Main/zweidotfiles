@@ -1,6 +1,9 @@
-% json
+% convert
 
 # convert JSON to YAML
 cat <json_file> | ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))'
+
+# convert OPML to org
+pandoc <opml_file> -o <org_file> --wrap=none
 
 $ json_file: find . -name '*.json'

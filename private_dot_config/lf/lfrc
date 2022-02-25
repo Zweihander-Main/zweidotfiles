@@ -127,6 +127,9 @@ set cleaner stpvimgclr
 &stpvimg --listen $id
 # $lf -remote "send $id set previewer ${XDG_CONFIG_HOME:-$HOME/.config}/lf/previewer"
 
+# Misc settings
+set hidden
+
 # Icons
 # set icons
 
