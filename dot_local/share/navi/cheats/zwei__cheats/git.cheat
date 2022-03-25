@@ -128,6 +128,9 @@ git reset --hard HEAD~<number_of_commits>
 # Remove commits from local repository (keep changes)
 git reset --soft HEAD~<number_of_commits>
 
+# Show diff and ignore whitespace
+git diff -w
+
 $ branch: git branch | awk '{print $NF}'
 $ toplevel_directory: git rev-parse --show-toplevel
 $ unstaged_files: git status --untracked-files=no -s --porcelain | awk '{print $NF}' --- --multi true
