@@ -69,7 +69,7 @@ ctrl + alt + shift + t
     thunderbird
 
 ctrl + alt + shift + a
-    anki
+    anki --no-sandbox
 
 ctrl + alt + shift + v
     vscodium
