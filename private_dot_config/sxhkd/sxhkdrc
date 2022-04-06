@@ -41,7 +41,7 @@ super + shift + q
 super + grave 
     dunstctl history-pop
 
-super + semicolon
+super + shift + grave
     dunstctl context
 
 # Print screen
