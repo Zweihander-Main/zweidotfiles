@@ -70,6 +70,7 @@ x-scheme-handler/nntp=userapp-Thunderbird-WQJK00.desktop;
 x-scheme-handler/snews=userapp-Thunderbird-WQJK00.desktop;
 [Added Associations]
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+text/csv=libreoffice-calc.desktop;
 application/epub+zip=calibre-ebook-viewer.desktop;
 application/x-mobipocket-ebook=calibre-ebook-viewer.desktop;
 application/vnd.amazon.ebook=calibre-ebook-viewer.desktop;
