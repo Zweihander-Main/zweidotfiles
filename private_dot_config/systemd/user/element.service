@@ -1,0 +1,13 @@
+[Unit]
+Description=Element Matrix Client
+Wants=keepassxc.service
+After=keepassxc.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+ExecStart=/usr/bin/element-desktop --hidden
+
+[Install]
+WantedBy=default.target
