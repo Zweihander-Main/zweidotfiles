@@ -33,3 +33,6 @@ set -o vi
 
 # navi
 [ -x "/usr/bin/navi" ] && eval "$(navi widget zsh)"
+
+# thefuck
+[ -x "/usr/bin/thefuck" ] && eval "$(thefuck --alias)"
