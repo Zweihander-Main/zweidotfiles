@@ -7,6 +7,7 @@ After=keepassxc.service
 Type=simple
 Restart=always
 RestartSec=5s
+ExecStartPre=/usr/bin/sleep 20
 ExecStart=/usr/bin/element-desktop --hidden
 
 [Install]
