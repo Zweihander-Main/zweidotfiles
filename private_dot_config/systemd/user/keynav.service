@@ -1,0 +1,11 @@
+[Unit]
+Description=Keynav mouse-free application
+
+[Service]
+Type=forking
+Restart=always
+RestartSec=5s
+ExecStart=/usr/bin/keynav daemonize
+
+[Install]
+WantedBy=default.target
