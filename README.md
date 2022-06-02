@@ -1,6 +1,16 @@
 ## zweidotfiles
 
-> My personal dotfiles across *nix/Win. [See here for my Doom Emacs config](https://github.com/Zweihander-Main/zweidoom).
+> My personal dotfiles across Linux/Win. 
+
+## Related
+- [Doom Emacs config](https://github.com/Zweihander-Main/zweidoom).
+- [dwm](https://github.com/Zweihander-Main/zwei_dwm)
+- [dmenu](https://github.com/Zweihander-Main/zwei_dmenu)
+- [keynav](https://github.com/Zweihander-Main/keynav)
+- [xmouseless](https://github.com/Zweihander-Main/xmouseless)
+- [(OLD) miscWinScripts](https://github.com/Zweihander-Main/miscWinScripts)
+- [(OLD) hexchat-scripts](https://github.com/Zweihander-Main/hexchat_scripts)
+
 
 ## Usage
 
