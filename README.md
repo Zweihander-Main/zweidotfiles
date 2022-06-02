@@ -3,7 +3,7 @@
 > My personal dotfiles across Linux/Win. 
 
 ## Related
-- [Doom Emacs config](https://github.com/Zweihander-Main/zweidoom).
+- [zweidoom - Doom Emacs config](https://github.com/Zweihander-Main/zweidoom)
 - [dwm](https://github.com/Zweihander-Main/zwei_dwm)
 - [dmenu](https://github.com/Zweihander-Main/zwei_dmenu)
 - [keynav](https://github.com/Zweihander-Main/keynav)
