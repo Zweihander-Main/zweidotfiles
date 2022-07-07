@@ -4,6 +4,7 @@
 
 ## Related
 - [zweidoom - Doom Emacs config](https://github.com/Zweihander-Main/zweidoom)
+- [shell\_scripts](https://github.com/Zweihander-Main/shell_scripts)
 - [dwm](https://github.com/Zweihander-Main/zwei_dwm)
 - [dmenu](https://github.com/Zweihander-Main/zwei_dmenu)
 - [keynav](https://github.com/Zweihander-Main/keynav)
