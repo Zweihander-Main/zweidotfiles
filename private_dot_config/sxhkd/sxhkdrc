@@ -31,6 +31,10 @@ XF86AudioNext
 alt + shift + F12
     toggle_sink
 
+# mouse only setup
+super + apostrophe
+    xmouseless
+
 # Dunst
 super + q
     dunstctl close
