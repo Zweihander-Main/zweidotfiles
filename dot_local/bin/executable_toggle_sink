@@ -27,6 +27,6 @@ fi
 pacmd set-default-sink "$TARGET_SINK"
 pacmd list-sink-inputs | grep index | while read -r line
 do
-pacmd move-sink-input "$(echo $line | cut -f2 -d' ')" "$TARGET_SINK"
+# pacmd move-sink-input "$(echo $line | cut -f2 -d' ')" "$TARGET_SINK"
 dunstify -a "toggle_sink" -i media-playlist-shuffle "Audio Sink: $SINK_STRING" -u low -r 991199
 done
