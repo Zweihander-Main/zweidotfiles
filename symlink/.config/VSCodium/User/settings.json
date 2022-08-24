@@ -1,4 +1,7 @@
 {
+  "telemetry.enableTelemetry": false,
+  "telemetry.enableCrashReporter": false,
+  "telemetry.telemetryLevel": "off",
   "emmet.triggerExpansionOnTab": true,
   "editor.fontFamily": "Source Code Pro, Consolas, 'Courier New', monospace",
   "editor.insertSpaces": false,
@@ -149,4 +152,5 @@
   "leetcode.hint.configWebviewMarkdown": false,
   "leetcode.hint.commentDescription": false,
   "leetcode.hint.commandShortcut": false,
+  "editor.experimental.stickyScroll.enabled": true,
 }
