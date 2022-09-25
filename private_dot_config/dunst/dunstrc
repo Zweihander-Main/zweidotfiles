@@ -428,6 +428,14 @@
     body = "Feature \"screensaver\", which is used to detect idle time, cannot be enabled!*"
     skip_display = true
 
+[ignore-irssi-reconnecting]
+    body = "IRC connection timed out.*"
+    skip_display = true
+
+[ignore-irssi-disconnected]
+    body = "Disconnected from IRC (Connection aborted).*"
+    skip_display = true
+
 [log-all-notifications]
     summary = "*"
     script = log_dunst
