@@ -70,6 +70,9 @@ cmd trash %set -f; trash-put $fx
 map <delete> trash
 map g<delete> delete
 
+# Directory manipuklation
+map gc calcdirsize
+
 # extract the current file with the right command
 cmd extract ${{
     set -f
@@ -151,6 +154,23 @@ cmd fzf_grep ${{
 }}
 
 map gs :fzf_grep
+
+cmd fzf_alt_c ${{
+    res="$(fd --hidden --follow \
+    --exclude .git --exclude node_modules --exclude .cache \
+    --type d --min-depth 1 2> /dev/null | \
+    fzf --reverse --header='Jump to directory' | \
+    sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ] ; then
+        cmd="cd"
+    elif [ -f "$res" ] ; then
+        cmd="select"
+    else
+        exit 0
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+map <a-c> :fzf_alt_c
 
 # Previews
 set preview true
