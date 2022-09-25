@@ -72,6 +72,7 @@ map g<delete> delete
 
 # Directory manipuklation
 map gc calcdirsize
+map ~ select "~"
 
 # extract the current file with the right command
 cmd extract ${{
