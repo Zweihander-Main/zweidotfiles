@@ -45,3 +45,4 @@ source "${XDG_CONFIG_HOME}/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highli
 # performance debugging end
 # end=$(date "+%s.%N")
 # date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
+
