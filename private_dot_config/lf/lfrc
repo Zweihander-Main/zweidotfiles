@@ -136,7 +136,7 @@ cmd fzf_apparish ${{
     lf -remote "send $id $cmd \"$res\""
 }}
 
-map <a-c> fzf_apparish
+map gt fzf_apparish
 
 cmd fzf_grep ${{
     res="$( \
