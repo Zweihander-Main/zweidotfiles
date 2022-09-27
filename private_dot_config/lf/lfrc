@@ -39,7 +39,7 @@ set shell zsh
 # define a custom 'open' command
 cmd open ${{
     test -L $f && f=$(readlink -f $f)
-    case $(file --mime-type $f -b) in
+    case $(mimeo -m $f | tail -n1 | tr -d "[:blank:]") in
         text/*) $EDITOR $fx;;
         audio/*) mplayer $fx;;
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
