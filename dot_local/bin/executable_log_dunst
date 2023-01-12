@@ -1,3 +1,0 @@
-#!/bin/bash
-
-printf '%s\n' "$(date):$*" >> "${XDG_DATA_HOME}/dunst/dunst.log"
