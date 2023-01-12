@@ -1,14 +1,16 @@
 [Unit]
 Description=Volnoti-dbus volume notification daemon
+PartOf=graphical-session.target
 Requires=pulseaudio.service
 Wants=dunst.service
-After=dunst.service
+After=dunst.service pulseaudio.service
 
 [Service]
-Restart=on-failure
+Type=exec
+Restart=always
 RestartSec=10s
 ExecStartPre=/usr/bin/sleep 5
 ExecStart=/usr/bin/volnoti-dbus
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

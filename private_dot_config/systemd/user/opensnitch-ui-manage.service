@@ -1,11 +1,13 @@
 [Unit]
-Description=Manage opensnitch-ui once tray is available
-Requires=stalonetray.service
+Description=Start UI of opensnitch application firewall
+Requires=tray.service
+After=tray.service
 
 [Service]
-Type=oneshot
-ExecStartPre=/usr/bin/sleep 5
-ExecStart=/usr/bin/xdotool search --sync --class opensnitch-ui windowactivate windowfocus windowclose --delay 150
+Type=exec
+Restart=always
+RestartSec=10s
+ExecStart=/usr/bin/opensnitch-ui
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

@@ -1,0 +1,22 @@
+### Editing /home/zwei/.config/systemd/user/duplicati.service.d/override.conf
+### Anything between here and the comment below will become the new contents of the file
+
+[Unit]
+Wants=tray.service
+Requires=wait-for-dns.service
+After=tray.service wait-for-dns.service
+
+### Lines below this comment will be discarded
+
+### /usr/lib/systemd/user/duplicati.service
+# [Unit]
+# Description=Duplicati
+# 
+# [Service]
+# ExecStartPre=/usr/bin/sleep 5
+# ExecStart=/usr/bin/mono /opt/duplicati-latest/Duplicati.GUI.TrayIcon.exe --webservice-port=8200
+# Restart=on-abort
+# Environment=AUTOUPDATER_Duplicati_SKIP_UPDATE=1
+# 
+# [Install]
+# WantedBy=default.target

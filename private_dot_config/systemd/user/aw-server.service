@@ -1,14 +1,11 @@
 [Unit]
 Description=Activity Watch server
-PartOf=graphical-session.target
-Wants=stalonetray.service
-After=stalonetray.service
 
 [Service]
-Type=simple
+Type=exec
 Restart=on-failure
-RestartSec=10s
+RestartSec=20s
 ExecStart=/usr/bin/aw-server
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

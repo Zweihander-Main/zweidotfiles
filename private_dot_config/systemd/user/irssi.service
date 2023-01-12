@@ -18,6 +18,4 @@ ExecStop=-/usr/bin/tmux -L irssi send-keys -t irssi:1 "/quit" Enter
 ExecStop=/usr/bin/timeout 3 /usr/bin/tmux -L irssi kill-session -t irssi
 
 [Install]
-WantedBy=default.target
-
-
+WantedBy=wm.target

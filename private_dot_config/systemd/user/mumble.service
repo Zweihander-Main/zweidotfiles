@@ -1,14 +1,17 @@
 [Unit]
 Description=Mumble Daemon
-Requires=pulseaudio.service
+Requires=pulseaudio.service wait-for-dns.service
+Wants=tray.service
+After=pulseaudio.service tray.service wait-for-dns.service
 
 [Service]
-Restart=on-failure
-RestartSec=5s
-ExecStartPre=/usr/bin/sleep 30
+Type=exec
+Restart=always
+RestartSec=10s
+ExecStartPre=/usr/bin/sleep 3
 ExecStart=/usr/bin/mumble
-ExecStartPost=/usr/bin/sleep 10
+ExecStartPost=/usr/bin/sleep 3
 ExecStartPost=/usr/bin/xdotool search --sync --class mumble windowactivate windowfocus key --delay 150 --clearmodifiers --repeat 3 alt+e+h
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

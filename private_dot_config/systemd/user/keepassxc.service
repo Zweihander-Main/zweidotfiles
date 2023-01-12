@@ -1,13 +1,16 @@
 [Unit]
 Description=KeepassXC Password Manager
-Wants=stalonetray.service
-After=stalonetray.service
+Wants=tray.service wait-for-dns.service
+After=tray.service wait-for-dns.service
 
 [Service]
-Type=simple
+Type=exec
 Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/keepassxc
+ExecStartPre=%h/.local/bin/wait-for-keepassxc-requirements
+ExecStart=%h/.local/bin/start_keepassxc
+# Make sure keepass has been given a chance to login for units dependent on it
+ExecStartPost=/usr/bin/sleep 15
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

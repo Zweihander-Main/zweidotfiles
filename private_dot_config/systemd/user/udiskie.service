@@ -1,0 +1,14 @@
+[Unit]
+Description=Auto mounting with Udiskie -- usb/udisk manager
+Documentation=man:udiskie(8)
+Wants=tray.service
+After=tray.service
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/udiskie
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=wm.target

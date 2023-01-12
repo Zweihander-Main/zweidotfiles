@@ -8,4 +8,4 @@ Type=oneshot
 ExecStart=/bin/sh -c 'while ! host zweihander.me; do sleep 1; done'
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

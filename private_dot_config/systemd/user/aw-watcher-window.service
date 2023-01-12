@@ -1,13 +1,13 @@
 [Unit]
 Description=Activity Watch watcher for active window and title
-PartOf=graphical-session.target
+Requires=aw-server.service
 After=aw-server.service
 
 [Service]
-Type=simple
+Type=exec
 Restart=on-failure
-RestartSec=10s
+RestartSec=20s
 ExecStart=/usr/bin/aw-watcher-window
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

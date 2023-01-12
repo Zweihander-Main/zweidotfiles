@@ -1,14 +1,13 @@
 [Unit]
 Description=Element Matrix Client
-Wants=keepassxc.service
-After=keepassxc.service
+Wants=keepassxc.service tray.service
+After=keepassxc.service tray.service
 
 [Service]
-Type=simple
+Type=exec
 Restart=always
-RestartSec=5s
-ExecStartPre=/usr/bin/sleep 20
+RestartSec=20s
 ExecStart=/usr/bin/element-desktop --hidden
 
 [Install]
-WantedBy=default.target
+WantedBy=wm.target

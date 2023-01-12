@@ -1,12 +1,13 @@
 [Unit]
-Description=Keynav mouse-free application
+Description=simple X hotkey daemon
+Documentation=man:sxhkd(1)
 PartOf=graphical-session.target
 
 [Service]
 Type=exec
-Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/keynav
+ExecStart=/usr/bin/sxhkd
+Restart=always
 
 [Install]
 WantedBy=wm.target

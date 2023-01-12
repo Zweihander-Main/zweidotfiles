@@ -1,12 +1,13 @@
 [Unit]
-Description=Keynav mouse-free application
+Description=Redshift display colour temperature adjustment
+Documentation=man:redshift(1)
 PartOf=graphical-session.target
 
 [Service]
 Type=exec
+ExecStart=/usr/bin/redshift
 Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/keynav
 
 [Install]
 WantedBy=wm.target

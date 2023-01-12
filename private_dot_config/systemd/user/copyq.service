@@ -1,13 +1,14 @@
 [Unit]
-Description=Timekpr-nExT client application (for notifications)
+Description=Copyq clipboard manager
+Documentation=man:copyq(1)
 Wants=tray.service
 After=tray.service
 
 [Service]
 Type=exec
-Restart=always
 RestartSec=20s
-ExecStart=/usr/bin/timekprc
+Restart=always
+ExecStart=/usr/bin/copyq
 
 [Install]
 WantedBy=wm.target
