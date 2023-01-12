@@ -60,9 +60,6 @@ ctrl + Print
 
 
 # User programs
-ctrl + alt + shift + 2
-    toggle_fsearch
-
 ctrl + alt + shift + c
     chromium
 
