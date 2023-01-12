@@ -7,4 +7,5 @@ if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
 	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
 fi
 
-start_dwm                               # window manager
+start_dwm # window manager
+
