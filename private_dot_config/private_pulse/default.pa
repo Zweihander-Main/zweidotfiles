@@ -141,11 +141,13 @@ load-module module-filter-heuristics
 load-module module-filter-apply
 
 ### Fix spdif output -- will only detect 5 (or 4 sometimes),0 but not 1 and 3, shoutouts to TRX40
-load-module module-alsa-sink device=hw:4,1
+# load-module module-alsa-sink device=hw:4,1
 
 ### Make some devices default
 # set-default-sink alsa_output.usb-FIIO_FIIO_USB_DAC_E17K-01.iec958-stereo.monitor
-set-default-sink 2
+# SPDIF
+set-default-sink alsa_output.usb-Generic_USB_Audio-00.HiFi__hw_TRX40_Main_1__sink
+# C910
 set-default-source alsa_input.usb-046d_0821_B4DCC0F0-00.analog-stereo
 
 # Audible bell
