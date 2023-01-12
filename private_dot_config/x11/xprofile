@@ -41,8 +41,10 @@ fi
 # Set typematic delay [rate] -- default 660ms held, 25Hz repeat rate
 xset r rate 300 50
 
-# make sure DISPLAY is set right
-systemctl --user import-environment DISPLAY
+# make sure DISPLAY and XAUTHORITY are set correctly (override
+# /etc/X11/xinit/xinitrc.d/50-systemd-user.sh)
+# Also add in TTY
+systemctl --user import-environment DISPLAY XAUTHORITY
 
 # statusbar loop
 while true; do
@@ -56,11 +58,7 @@ xset s 120 # second timeout
 
 # start user programs
 xss-lock -- start_i3lock +resetsaver &  # locking manager
-sxhkd &                                 # hotkeys
-redshift &                              # screen color
-copyq &                                 # clipboard manager
-udiskie  &                              # udisk/usb manager
-opensnitch-ui &                         # application firewall
 start_gpg &                             # gpg-connect-agent
-dex -a &                                # autostarts
-unclutter --timeout 1 &                 # hide mouse
+
+# Integration with systemd user unit files
+systemctl --user start wm.target
