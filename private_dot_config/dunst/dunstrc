@@ -438,7 +438,7 @@
 
 [log-all-notifications]
     summary = "*"
-    script = log_dunst
+    script = ~/.local/bin/log_dunst
 
 [volnoti-dbus]
     appname = Volume
