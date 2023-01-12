@@ -1,4 +1,3 @@
-# AMDGPU will set it wrong otherwise
 Xft.dpi: 96 
 Xcursor.theme: default
 Xcursor.size: 24
