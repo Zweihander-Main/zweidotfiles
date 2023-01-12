@@ -36,6 +36,7 @@ alias ropen='xdg-open "$(shuf -n1 -e ./*)"' # Open random file in c.dir
 alias rb='trash-put'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
+alias search='locate --all "" | fzf --nth=-1 --delimiter="/"' # everything tui
 
 # User programs
 alias redshifttoggle='pkill -USR1 redshift'
