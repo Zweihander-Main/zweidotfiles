@@ -1,0 +1,8 @@
+[Unit]
+Description=Automatically lock system between 17-17:15
+
+[Timer]
+OnCalendar=17:00..15:00
+
+[Install]
+WantedBy=timers.target
