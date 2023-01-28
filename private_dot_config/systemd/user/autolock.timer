@@ -2,7 +2,8 @@
 Description=Automatically lock system between 17-17:15
 
 [Timer]
-OnCalendar=17:00..15:00
+OnCalendar=17:00..15:0,15,30,45
+AccuracySec=5s
 
 [Install]
 WantedBy=timers.target
