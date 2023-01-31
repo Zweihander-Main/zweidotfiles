@@ -1,0 +1,12 @@
+[Unit]
+Description=delete old files upon startup
+Requires=mnt-osiris.mount
+After=mnt-osiris.mount
+
+[Service]
+Type=oneshot
+RemainAfterExit=no
+ExecStart=%h/.local/bin/delete_old_files
+
+[Install]
+WantedBy=wm.target
