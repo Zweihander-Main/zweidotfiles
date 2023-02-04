@@ -153,4 +153,5 @@
   "leetcode.hint.commentDescription": false,
   "leetcode.hint.commandShortcut": false,
   "editor.stickyScroll.enabled": true,
+  "editor.inlineSuggest.enabled": true,
 }
