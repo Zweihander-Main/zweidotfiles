@@ -76,4 +76,4 @@ ctrl + alt + shift + v
     vscodium
 
 ctrl + alt + shift + o
-    obs
+    obs --disable-component-update
