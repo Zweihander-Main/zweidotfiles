@@ -7,7 +7,7 @@
   },
   {
     "key": "ctrl+k ctrl+i",
-    "command": "-editor.debug.action.showDebugHover",
+    "command": "editor.debug.action.showDebugHover",
     "when": "editorTextFocus && inDebugMode"
   },
   {
@@ -17,7 +17,7 @@
   },
   {
     "key": "ctrl+k ctrl+i",
-    "command": "-editor.action.showHover",
+    "command": "editor.action.showHover",
     "when": "editorTextFocus"
   },
   {
@@ -32,7 +32,7 @@
   },
   {
     "key": "ctrl+b",
-    "command": "-workbench.action.toggleSidebarVisibility"
+    "command": "workbench.action.toggleSidebarVisibility"
   },
   {
     "key": "alt+space",
@@ -41,12 +41,27 @@
   },
   {
     "key": "ctrl+space",
-    "command": "-editor.action.triggerSuggest",
+    "command": "editor.action.triggerSuggest",
     "when": "editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
   },
   {
     "key": "ctrl+shift+l",
     "command": "editor.action.insertCursorAtEndOfEachLineSelected",
     "when": "editorTextFocus"
+  },
+  {
+    "key": "p p",
+    "command": "git.push",
+    "when": "focusedView == 'workbench.scm' && !textInputFocus"
+  },
+  {
+    "key": "c a",
+    "command": "git.commitStagedAmend",
+    "when": "focusedView == 'workbench.scm' && !textInputFocus"
+  },
+  {
+    "key": "c c",
+    "command": "git.commitStaged",
+    "when": "focusedView == 'workbench.scm' && !textInputFocus"
   }
 ]

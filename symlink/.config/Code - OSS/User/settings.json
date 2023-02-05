@@ -1,14 +1,10 @@
 {
-  "telemetry.enableTelemetry": false,
-  "telemetry.enableCrashReporter": false,
   "telemetry.telemetryLevel": "off",
   "emmet.triggerExpansionOnTab": true,
   "editor.fontFamily": "Source Code Pro, Consolas, 'Courier New', monospace",
   "editor.insertSpaces": false,
   "workbench.editor.highlightModifiedTabs": true,
-  "editor.rulers": [
-    80
-  ],
+  "editor.rulers": [80],
   "editor.overviewRulerBorder": false,
   "editor.hideCursorInOverviewRuler": true,
   "editor.scrollbar.horizontalScrollbarSize": 10,
@@ -45,57 +41,61 @@
   "editor.suggest.showStatusBar": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": [ "<leader>", "%" ],
-      "commands": [ "editor.emmet.action.matchTag" ]
+      "before": ["<leader>", "%"],
+      "commands": ["editor.emmet.action.matchTag"]
     },
     {
-      "before": [ "<leader>", "b", "k" ],
-      "commands": [ "workbench.action.closeActiveEditor" ]
+      "before": ["<leader>", "b", "k"],
+      "commands": ["workbench.action.closeActiveEditor"]
     },
     {
-      "before": [ "<leader>", "c", "D" ],
-      "commands": [ "editor.action.goToReferences" ]
+      "before": ["<leader>", "c", "D"],
+      "commands": ["editor.action.goToReferences"]
     },
     {
-      "before": [ "<leader>", "c", "f" ],
-      "commands": [ "editor.action.formatDocument" ]
+      "before": ["<leader>", "c", "f"],
+      "commands": ["editor.action.formatDocument"]
     },
     {
-      "before": [ "<leader>", "f", "s" ],
-      "commands": [ "workbench.action.files.save" ]
+      "before": ["<leader>", "f", "s"],
+      "commands": ["workbench.action.files.save"]
     },
     {
-      "before": [ "<leader>", "g", "g", "c", "c" ],
-      "commands": [ "git.commitStaged" ]
+      "before": ["<leader>", "g", "g"],
+      "commands": ["workbench.view.scm"]
     },
     {
-      "before": [ "<leader>", "g", "g", "p", "p" ],
-      "commands": [ "git.push" ]
+      "before": ["<leader>", "g", "s"],
+      "commands": ["git.stageSelectedRanges"]
     },
     {
-      "before": [ "<leader>", "g", "s" ],
-      "commands": [ "git.stageSelectedRanges" ]
+      "before": ["<leader>", "g", "S"],
+      "commands": ["git.stage"]
     },
     {
-      "before": [ "<leader>", "g", "S" ],
-      "commands": [ "git.stage" ]
+      "before": ["<leader>", "o", "p"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
     },
     {
-      "before": [ "<leader>", "o", "p" ],
-      "commands": [ "workbench.action.toggleSidebarVisibility" ]
+      "before": ["<leader>", "s", "l"],
+      "commands": ["editor.action.openLink"]
     },
     {
-      "before": [ "<leader>", "s", "l" ],
-      "commands": [ "editor.action.openLink" ]
+      "before": ["<leader>", "w", "h"],
+      "commands": ["workbench.action.focusLeftGroup"]
     },
     {
-      "before": [ "g", "s", "<leader>" ],
-      "after": [ "<leader>", "<leader>", "/" ]
+      "before": ["<leader>", "w", "l"],
+      "commands": ["workbench.action.focusRightGroup"]
     },
     {
-      "before": [ "g", "s" ],
-      "after": [ "<leader>", "<leader>" ]
+      "before": ["g", "s", "<leader>"],
+      "after": ["<leader>", "<leader>", "/"]
     },
+    {
+      "before": ["g", "s"],
+      "after": ["<leader>", "<leader>"]
+    }
   ],
   "workbench.editor.wrapTabs": true,
   "workbench.editor.decorations.colors": true,
@@ -136,12 +136,7 @@
   ],
   "redhat.telemetry.enabled": false,
   "python.languageServer": "Pylance",
-  "stylelint.validate": [
-    "css",
-    "less",
-    "postcss",
-    "scss"
-  ],
+  "stylelint.validate": ["css", "less", "postcss", "scss"],
   "windowColors.🌈 Theme": "remove",
   "codemetrics.basics.CodeLensHiddenUnder": 10,
   "problems.sortOrder": "position",
@@ -154,4 +149,18 @@
   "leetcode.hint.commandShortcut": false,
   "editor.stickyScroll.enabled": true,
   "editor.inlineSuggest.enabled": true,
+  "git.confirmSync": false,
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false,
+    "jsonc": false
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.documentSelectors": [
+    "**/*.astro"
+  ]
 }
