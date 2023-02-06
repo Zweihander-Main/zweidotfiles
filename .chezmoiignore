@@ -27,6 +27,7 @@ README.org
 /.config/rclone
 /.config/isync
 /.config/npm
+/.config/notmuch
 {{- end }} #End encrypted files
 
 # =================
