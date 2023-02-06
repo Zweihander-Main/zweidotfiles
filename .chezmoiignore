@@ -61,7 +61,7 @@ Roaming/Sublime Text 3/*.{sublime-settings,sublime-keymap,sublime-theme,sublime-
 .zshrc
 {{- end }} # End Windows only
 
-{{ if ne .chezmoi.osRelease.name "Arch Linux" -}}
+{{ if ne .osid "linux-arch" -}}
 .xinitrc
 {{- end }} # End Arch only
 
@@ -73,7 +73,7 @@ synergy.sgc
 /AppData
 
 # Ignore files inside WSL
-{{- if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" }}
+{{- if .osid | regexMatch "-microsoft-standard$" }}
 {{- end }} # End WSL
 
 {{- end }} # End Non-Windows

@@ -1,10 +1,15 @@
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{- $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
 {{- $gpgrecipient := promptString "gpg recipient" }}
 {{- $enablecrypt := promptString "true/false to enable encrypted files?" }}
 {{- $org_directory := promptString "directory for org files" }}
 {
     "data": {
         "enablecrypt": "{{ $enablecrypt }}",
-        "org_directory": "{{ $org_directory }}"
+        "org_directory": "{{ $org_directory }}",
+        "osid": "{{ $osid }}"
     },
     "encryption": "gpg",
     "gpg": {

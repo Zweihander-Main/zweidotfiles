@@ -21,7 +21,7 @@ fi
 [ -s "/usr/share/nvm/install-nvm-exec" ] && source /usr/share/nvm/install-nvm-exec
 
 # If not WSL
-{{ if not (.chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$") -}}
+{{ if not (.osid | regexMatch "-microsoft-standard$") -}}
 # Start X
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
     exec startx "${XDG_CONFIG_HOME}/x11/xinitrc" -- -keeptty &> "${XDG_DATA_HOME}/xorg/xorg.tty.log" # exec forces it back out when x session dies

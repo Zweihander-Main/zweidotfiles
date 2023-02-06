@@ -23,7 +23,7 @@ alias ldur="exiftool -q -m -p '\$Duration | \$Filename' --ext TXT ."
 alias space='free -h; df -h'
 alias dirs='dirs -v'
 
-# Home directory cleaning	
+# Home directory cleaning
 alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
 alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME}/yarn/config"'
 
@@ -50,7 +50,7 @@ alias ohmyzshupdate='cd /tmp; \
 		    curl -s -L -o oh-my-zsh-master.tar.gz https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz; \
 		    chezmoi import --strip-components 1 --destination "${XDG_CONFIG_HOME}/zsh/oh-my-zsh" oh-my-zsh-master.tar.gz; \
 		    cd; \
-		    compaudit | xargs chmod g-w,o-w';
+		    compaudit | xargs chmod g-w,o-w'
 
 # Rclone repos
 alias rcloneonedrive='rclone mount onedrive:/ /mnt/rclone/onedrive --daemon'
@@ -65,15 +65,14 @@ alias doomredo='doom upgrade; \
 	        doom build;'
 alias zsource='source "${XDG_CONFIG_HOME}/shell/env"; \
 	       source "${XDG_CONFIG_HOME}/shell/profile"; \
-	       source "${XDG_CONFIG_HOME}/zsh/.zshrc"';
+	       source "${XDG_CONFIG_HOME}/zsh/.zshrc"'
 
 # If Arch
-{{ if eq .chezmoi.osRelease.name "Arch Linux" -}}
+{{ if eq .osid "linux-arch" -}}
 alias cpio='bsdcpio'
 {{ end -}} # End Arch-only
 
 # If WSL
-{{ if .chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$" -}}
+{{ if .osid | regexMatch "-microsoft-standard$" -}}
 alias start='cmd.exe /c start ""'
 {{ end -}} # End WSL
-
