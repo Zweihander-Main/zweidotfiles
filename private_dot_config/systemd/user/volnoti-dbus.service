@@ -1,6 +1,5 @@
 [Unit]
 Description=Volnoti-dbus volume notification daemon
-PartOf=graphical-session.target
 Requires=pulseaudio.service
 Wants=dunst.service
 After=dunst.service pulseaudio.service
