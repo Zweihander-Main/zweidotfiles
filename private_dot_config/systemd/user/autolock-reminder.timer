@@ -1,0 +1,8 @@
+[Unit]
+Description=Notify about autolock at 16:45, 16:55
+
+[Timer]
+OnCalendar=16:45,16:55
+
+[Install]
+WantedBy=timers.target
