@@ -64,4 +64,9 @@
     "command": "git.commitStaged",
     "when": "focusedView == 'workbench.scm' && !textInputFocus"
   }
+  // {
+  //   "key": "space o p",
+  //   "command": "workbench.view.explorer",
+  //   "when": "vim.mode == 'Normal' && editorTextFocus && viewContainer.workbench.view.explorer.enabled"
+  // }
 ]
