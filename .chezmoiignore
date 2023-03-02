@@ -23,7 +23,7 @@ README.org
 {{- if ne .enablecrypt "true" }}
 /.ssh
 /.local/share/gnupg
-/.local/share/apparish
+/.local/share/apparish/apparixrc
 /.config/rclone
 /.config/isync
 /.config/npm
