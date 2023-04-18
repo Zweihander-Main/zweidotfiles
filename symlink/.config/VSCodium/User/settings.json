@@ -157,5 +157,5 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.documentSelectors": ["**/*.astro"],
-  "svelte.enable-ts-plugin": true
+  "svelte.enable-ts-plugin": true,
 }
