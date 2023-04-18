@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# Generic shellrc file, runs for interactive shells.
+# ZSH shellrc file, runs for interactive shells.
 
 # History settings
 HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
@@ -11,12 +11,12 @@ source "${XDG_CONFIG_HOME}/shell/aliases"
 
 # Override bm to allow for encrypted chezmoi file
 function bm() {
-	apparishbm "$1"
-	chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
+  apparishbm "$1"
+  chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
 }
 
 # Mkdir and move in one command
-function md() { mkdir -p "$1" && cd "$1" ; }
+function md() { mkdir -p "$1" && cd "$1" || return; }
 
 # vi
 set -o vi
@@ -60,7 +60,7 @@ function load-nvmrc() {
 
 if [ -s "/usr/share/nvm/nvm.sh" ]; then
   nvm_cmds=(nvm node npm yarn)
-  for cmd in $nvm_cmds ; do
+  for cmd in $nvm_cmds; do
     alias $cmd="unalias $nvm_cmds && unset nvm_cmds && . $NVM_DIR/nvm.sh --no-use && load-nvmrc && $cmd"
   done
 fi

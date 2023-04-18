@@ -2,19 +2,6 @@
 
 # profile file. Runs on login shells. Assumes env already set.
 
-#if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # If not running interactively, don't do anything
-    case $- in
-        *i*) ;;
-            *) return;;
-    esac
-    # Switch to ZSH
-    if test -t 1; then
-        exec zsh
-    fi
-fi
-
 # If not WSL
 {{ if not (.osid | regexMatch "-microsoft-standard$") -}}
 # Start X
