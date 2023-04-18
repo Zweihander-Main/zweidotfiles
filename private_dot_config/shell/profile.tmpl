@@ -15,11 +15,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# NVM
-[ -s "/usr/share/nvm/nvm.sh" ] && source /usr/share/nvm/nvm.sh
-[ -s "/usr/share/nvm/bash_completion" ] && source /usr/share/nvm/bash_completion
-[ -s "/usr/share/nvm/install-nvm-exec" ] && source /usr/share/nvm/install-nvm-exec
-
 # If not WSL
 {{ if not (.osid | regexMatch "-microsoft-standard$") -}}
 # Start X
