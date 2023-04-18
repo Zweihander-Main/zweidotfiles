@@ -11,18 +11,16 @@ HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space 
 HISTSIZE=50000
 
 # ZSH settings
-ZSH_THEME="zeta"
-export zeta="λ"
 DISABLE_AUTO_UPDATE="true"
 ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
-plugin=()
-
 
 # make sure completion list is loaded before anything else
 zmodload zsh/complist
 
-# Source ZSH frameworks
+# Source ZSH frameworks and themes
+ZSH_THEME="zeta"
 source $ZSH/oh-my-zsh.sh
+export zeta="λ"
 
 # Apparish for bookmarks
 source "${XDG_DATA_HOME}/apparish/bourne-apparish"
@@ -103,15 +101,10 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit ice blockf
+zinit ice lucid blockf wait
 zinit light zsh-users/zsh-completions
+zinit ice lucid wait
 zinit light zsh-users/zsh-syntax-highlighting
-
-# extra completions
-# fpath=("${XDG_CONFIG_HOME}/zsh/plugins/zsh-completions/src" $fpath)
-
-# syntax highlighting, should be at end
-# source "${XDG_CONFIG_HOME}/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # performance debugging end
 # end=$(date "+%s.%N")
