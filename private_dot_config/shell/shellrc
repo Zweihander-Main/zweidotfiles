@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/zsh -f
 
 # ZSH shellrc file, runs for interactive shells.
 
@@ -17,25 +17,20 @@ ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
 # make sure completion list is loaded before anything else
 zmodload zsh/complist
 
-# Source ZSH frameworks and themes
-ZSH_THEME="zeta"
-source $ZSH/oh-my-zsh.sh
-export zeta="λ"
-
 # Apparish for bookmarks
 source "${XDG_DATA_HOME}/apparish/bourne-apparish"
 
 # Override bm to allow for encrypted chezmoi file
-function bm() {
-  apparishbm "$1"
-  chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
+bm() {
+    apparishbm "$1"
+    chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
 }
 
 # All aliases
 source "${XDG_CONFIG_HOME}/shell/aliases"
 
 # Mkdir and move in one command
-function md() { mkdir -p "$1" && cd "$1" || return; }
+md() { mkdir -p "$1" && cd "$1" || return; }
 
 # fzf
 [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
@@ -54,31 +49,31 @@ function md() { mkdir -p "$1" && cd "$1" || return; }
 [ -x "/usr/bin/thefuck" ] && eval "$(thefuck --alias)"
 
 # NVM
-function load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
+load_nvmrc() {
+    local node_version="$(nvm version)"
+    local nvmrc_path="$(nvm_find_nvmrc)"
 
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+    if [ -n "$nvmrc_path" ]; then
+        local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
+        if [ "$nvmrc_node_version" = "N/A" ]; then
+            nvm install
+        elif [ "$nvmrc_node_version" != "$node_version" ]; then
+            nvm use
+        fi
+    elif [ "$node_version" != "$(nvm version default)" ]; then
+        nvm use default
     fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    nvm use default
-  fi
 
-  [ -s "/usr/share/nvm/bash_completion" ] && source /usr/share/nvm/bash_completion
-  [ -s "/usr/share/nvm/install-nvm-exec" ] && source /usr/share/nvm/install-nvm-exec
+    [ -s "/usr/share/nvm/bash_completion" ] && source /usr/share/nvm/bash_completion
+    [ -s "/usr/share/nvm/install-nvm-exec" ] && source /usr/share/nvm/install-nvm-exec
 }
 
 if [ -s "/usr/share/nvm/nvm.sh" ]; then
-  nvm_cmds=(nvm node npm yarn)
-  for cmd in $nvm_cmds; do
-    alias $cmd="unalias $nvm_cmds && unset nvm_cmds && . $NVM_DIR/nvm.sh --no-use && load-nvmrc && $cmd"
-  done
+    nvm_cmds=(nvm node npm yarn)
+    for cmd in $nvm_cmds; do
+        alias $cmd="unalias $nvm_cmds && unset nvm_cmds && . $NVM_DIR/nvm.sh --no-use && load_nvmrc && $cmd"
+    done
 fi
 
 # source plugins
@@ -88,7 +83,8 @@ fpath=("${XDG_CONFIG_HOME}/zsh/plugins" $fpath)
 set -o vi
 bindkey -v
 KEYTIMEOUT=1
-autoload -Uz cursor_mode; cursor_mode
+autoload -Uz cursor_mode
+cursor_mode
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
@@ -100,6 +96,42 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+
+zinit wait lucid for \
+    OMZL::compfix.zsh \
+    OMZL::functions.zsh \
+    OMZL::git.zsh \
+    OMZL::termsupport.zsh \
+    OMZL::theme-and-appearance.zsh
+#      zinit snippet OMZL::bzr.zsh
+#      zinit snippet OMZL::cli.zsh
+#      zinit snippet OMZL::clipboard.zsh
+#      zinit snippet OMZL::completion.zsh
+#      zinit snippet OMZL::correction.zsh
+#      zinit snippet OMZL::diagnostics.zsh
+#      zinit snippet OMZL::directories.zsh
+#      zinit snippet OMZL::grep.zsh
+#      zinit snippet OMZL::history.zsh
+#      zinit snippet OMZL::key-bindings.zsh
+#      zinit snippet OMZL::misc.zsh
+#      zinit snippet OMZL::nvm.zsh
+#      zinit snippet OMZL::prompt_info_functions.zsh
+#      zinit snippet OMZL::spectrum.zsh
+
+PS1=">" # provide a simple prompt till the theme loads
+zinit ice wait'!' lucid
+zinit snippet "https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme"
+# C.
+# zinit wait'!' lucid for \
+    #     "https://raw.githubusercontent.com/skylerlee/zeta-zsh-theme/master/zeta.zsh-theme"
+
+# D.
+# zinit wait lucid for \
+    #   atinit"zicompinit; zicdreplay"  \
+    #         zdharma-continuum/fast-syntax-highlighting \
+    #       OMZP::colored-man-pages \
+    #   as"completion" \
+    #         OMZP::docker/_docker
 
 zinit ice lucid blockf wait
 zinit light zsh-users/zsh-completions
