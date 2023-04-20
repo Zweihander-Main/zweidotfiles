@@ -9,6 +9,7 @@
 - [dmenu](https://github.com/Zweihander-Main/zwei_dmenu)
 - [keynav](https://github.com/Zweihander-Main/keynav)
 - [xmouseless](https://github.com/Zweihander-Main/xmouseless)
+- [zwei-zeta-zsh-theme](https://github.com/Zweihander-Main/zwei-zeta-zsh-theme)
 - [(OLD) miscWinScripts](https://github.com/Zweihander-Main/miscWinScripts)
 - [(OLD) hexchat-scripts](https://github.com/Zweihander-Main/hexchat_scripts)
 
