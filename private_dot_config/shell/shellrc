@@ -2,9 +2,8 @@
 
 # ZSH shellrc file, runs for interactive shells.
 
-# performance debugging start
-# start=$(date "+%s.%N")
-# zmodload zsh/zprof
+start=$(date "+%s.%N")
+zmodload zsh/zprof
 
 # History settings
 HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
@@ -17,14 +16,14 @@ ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
 # make sure completion list is loaded before anything else
 zmodload zsh/complist
 
-# Apparish for bookmarks
-source "${XDG_DATA_HOME}/apparish/bourne-apparish"
+# # Apparish for bookmarks
+# source "${XDG_DATA_HOME}/apparish/bourne-apparish"
 
-# Override bm to allow for encrypted chezmoi file
-bm() {
-    apparishbm "$1"
-    chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
-}
+# # Override bm to allow for encrypted chezmoi file
+# bm() {
+#     apparishbm "$1"
+#     chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
+# }
 
 # All aliases
 source "${XDG_CONFIG_HOME}/shell/aliases"
@@ -32,21 +31,12 @@ source "${XDG_CONFIG_HOME}/shell/aliases"
 # Mkdir and move in one command
 md() { mkdir -p "$1" && cd "$1" || return; }
 
-# fzf
-[ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
-[ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
+# # fzf
+# [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
+# [ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
 
-# broot
-[ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ] && source "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
-
-# mcfly
-[ -f "/usr/share/doc/mcfly/mcfly.zsh" ] && eval "$(mcfly init zsh)"
-
-# navi
-[ -x "/usr/bin/navi" ] && eval "$(navi widget zsh)"
-
-# thefuck
-[ -x "/usr/bin/thefuck" ] && eval "$(thefuck --alias)"
+# # broot
+# [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ] && source "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
 
 # NVM
 load_nvmrc() {
@@ -97,35 +87,26 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit wait lucid for \
-    OMZL::clipboard.zsh \
-    OMZL::completion.zsh \
-    OMZL::directories.zsh \
-    OMZL::functions.zsh \
-    OMZL::git.zsh \
-    OMZL::history.zsh \
-    OMZL::nvm.zsh \
-    OMZL::spectrum.zsh \
-    OMZL::termsupport.zsh \
-    OMZL::theme-and-appearance.zsh
-
 PS1=">" # provide a simple prompt till the theme loads
 zinit ice wait'!' lucid
 zinit snippet "https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme"
 
-# D.
-# zinit wait lucid for \
-    #   atinit"zicompinit; zicdreplay"  \
-    #         zdharma-continuum/fast-syntax-highlighting \
-    #       OMZP::colored-man-pages \
-    #   as"completion" \
-    #         OMZP::docker/_docker
+zinit wait lucid for \
+    atinit"zicompinit; zicdreplay"  \
+    zdharma-continuum/fast-syntax-highlighting \
+    atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
+    zsh-users/zsh-autosuggestions \
+    blockf atpull'zinit creinstall -q .' \
+    zsh-users/zsh-completions \
+    OMZL::clipboard.zsh \
+    OMZL::completion.zsh \
+    OMZL::directories.zsh \
+    OMZL::git.zsh \
+    OMZL::functions.zsh \
+    OMZL::nvm.zsh \
+    OMZL::spectrum.zsh \
+    OMZL::termsupport.zsh \
+    OMZP::colored-man-pages
 
-zinit ice lucid blockf wait
-zinit light zsh-users/zsh-completions
-zinit ice lucid wait
-zinit light zsh-users/zsh-syntax-highlighting
-
-# performance debugging end
-# end=$(date "+%s.%N")
-# date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
+end=$(date "+%s.%N")
+date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
