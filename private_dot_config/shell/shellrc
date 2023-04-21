@@ -16,27 +16,18 @@ ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
 # make sure completion list is loaded before anything else
 zmodload zsh/complist
 
-# # Apparish for bookmarks
-# source "${XDG_DATA_HOME}/apparish/bourne-apparish"
-
-# # Override bm to allow for encrypted chezmoi file
-# bm() {
-#     apparishbm "$1"
-#     chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
-# }
-
 # All aliases
 source "${XDG_CONFIG_HOME}/shell/aliases"
 
 # Mkdir and move in one command
 md() { mkdir -p "$1" && cd "$1" || return; }
 
-# # fzf
-# [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
-# [ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
+# fzf
+[ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
+[ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
 
-# # broot
-# [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ] && source "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
+# broot
+[ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ] && source "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
 
 # NVM
 load_nvmrc() {
@@ -68,12 +59,12 @@ fi
 
 # source functions
 fpath=("${XDG_CONFIG_HOME}/zsh/functions" $fpath)
+autoload -Uz "${XDG_CONFIG_HOME}"/zsh/functions/*(.:t)
 
 # vim related
 set -o vi
 bindkey -v
 KEYTIMEOUT=1
-autoload -Uz cursor_mode
 cursor_mode
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -92,7 +83,7 @@ zinit ice wait'!' lucid
 zinit snippet "https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme"
 
 zinit wait lucid for \
-    atinit"zicompinit; zicdreplay"  \
+    atinit"zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
     atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
     zsh-users/zsh-autosuggestions \
@@ -106,7 +97,17 @@ zinit wait lucid for \
     OMZL::nvm.zsh \
     OMZL::spectrum.zsh \
     OMZL::termsupport.zsh \
-    OMZP::colored-man-pages
+    OMZP::colored-man-pages \
+    atinit"sed -i 's/function bm()/function apparishbm()/g' .bourne-apparix; \
+    sed -i 's/apx_silent bind -q menu-complete/true/g' .bourne-apparix" \
+    atload"bindkey '\t' menu-complete" \
+    "https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix"
+
+# Override bm to allow for encrypted chezmoi file
+bm() {
+    apparishbm "$1"
+    chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
+}
 
 end=$(date "+%s.%N")
 date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
