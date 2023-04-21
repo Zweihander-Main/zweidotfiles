@@ -91,7 +91,6 @@ zinit wait lucid for \
     zsh-users/zsh-completions \
     OMZL::clipboard.zsh \
     OMZL::completion.zsh \
-    OMZL::directories.zsh \
     OMZL::git.zsh \
     OMZL::functions.zsh \
     OMZL::nvm.zsh \
