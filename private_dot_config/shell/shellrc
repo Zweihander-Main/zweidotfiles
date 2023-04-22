@@ -2,8 +2,8 @@
 
 # ZSH shellrc file, runs for interactive shells.
 
-# start=$(date "+%s.%N")
-# zmodload zsh/zprof
+start=$(date "+%s.%N")
+zmodload zsh/zprof
 
 # History settings (file defined in env)
 HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
@@ -33,9 +33,9 @@ source "${XDG_CONFIG_HOME}/shell/aliases"
 # Mkdir and move in one command
 md() { mkdir -p "$1" && cd "$1" || return; }
 
-# fzf
-[ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
-[ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
+# # fzf
+# [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
+# [ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
 
 # broot
 [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ] && source "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
@@ -69,8 +69,8 @@ if [ -s "/usr/share/nvm/nvm.sh" ]; then
 fi
 
 # source functions
-fpath=("${XDG_CONFIG_HOME}/shell/functions" $fpath)
-autoload -Uz "${XDG_CONFIG_HOME}"/shell/functions/*(.:t)
+fpath=("${XDG_CONFIG_HOME}/shell/autoload" $fpath)
+autoload -Uz "${XDG_CONFIG_HOME}"/shell/autoload/*(.:t)
 
 # vim related
 set -o vi
@@ -147,13 +147,21 @@ zinit wait lucid for \
     atload"bindkey '\t' menu-complete" \
     "https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix"
 
+# zinit ice lucid wait"1" from"gh-r" as"program" atload'eval "$(mcfly init zsh)"'
+# zinit ice lucid wait from"gh-r" as"program" pick"mcfly" atpull"mcfly init zsh > $ZSH_CACHE_DIR/mcfly.zsh" atclone"%atpull" src"$ZSH_CACHE_DIR/mcfly.zsh"
+zinit ice lucid wait"0a" from"gh-r" as"program" bpick"*x86*linux*" atload'eval "$(mcfly init zsh)"'
+zinit light cantino/mcfly
+
 # Override bm to allow for encrypted chezmoi file
 bm() {
     apparishbm "$1"
     chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
 }
 
-mcfly
+# source scripts
+# for script in "${XDG_CONFIG_HOME}/shell/shellrc.d"; do
+#   source "$script"
+# done
 
-# end=$(date "+%s.%N")
-# date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
+end=$(date "+%s.%N")
+date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
