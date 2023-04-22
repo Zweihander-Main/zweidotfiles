@@ -46,7 +46,7 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line # hit v for vim (normal mode)
 
-# Add text objects
+# Add vim text objects
 autoload -Uz select-bracketed select-quoted
 zle -N select-quoted
 zle -N select-bracketed
@@ -83,14 +83,15 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-PS1=">" # provide a simple prompt till the theme loads
+PS1='>' # provide a simple prompt till the theme loads
 zinit wait'!0a' lucid for \
     OMZL::git.zsh \
-    "https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme"
+    id-as'zwei-zeta-theme' \
+    'https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme'
 
 # Highlights, suggestions, completions
 zinit wait'0c' lucid for \
-    atinit"zicompinit; zicdreplay" \
+    atinit'zicompinit; zicdreplay' \
     zdharma-continuum/fast-syntax-highlighting \
     atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
     zsh-users/zsh-autosuggestions \
@@ -106,42 +107,35 @@ zinit wait'0b' lucid for \
     OMZL::spectrum.zsh \
     OMZL::termsupport.zsh \
     OMZP::colored-man-pages \
-    OMZP::nvm 
-
+    OMZP::nvm
 zstyle ':omz:plugins:nvm' lazy yes
 
 # Bracket Autopair
-zinit wait'0b' lucid for @hlissner/zsh-autopair
+zinit wait'0b' lucid for id-as'autopair' @hlissner/zsh-autopair
 
 # Apparish/apparix
 zinit wait'0b' lucid for \
-    atinit"sed -i 's/function bm()/function apparishbm()/g' .bourne-apparix; \
-    sed -i 's/apx_silent bind -q menu-complete/true/g' .bourne-apparix" \
+    id-as'apparish' \
+    atinit"sed -i 's/function bm()/function apparishbm()/g' apparish; \
+    sed -i 's/apx_silent bind -q menu-complete/true/g' apparish" \
     atload"bindkey '\t' menu-complete" \
-    "https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix"
-
-# McFly (sqlite history)
-zinit wait"0b" lucid for \
-    from"gh-r" as"program" \
-    bpick"*x86*linux*" \
-    atload'eval "$(mcfly init zsh)"' \
-    @cantino/mcfly
+    'https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix'
 
 # Navi (cheat sheets)
-zinit wait"0b" lucid for \
-    from"gh-r" as"program" \
-    bpick"*x86*linux*" \
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' id-as'navi'\
+    bpick'*x86*linux*' \
     atload'eval "$(navi widget zsh)"' \
     @denisidoro/navi
 
 # Broot (ls --tree)
-zinit wait'0b' lucid for \
+zinit wait'0b' lucid for id-as'broot'\
     as'program' \
-    "https://dystroy.org/broot/download/x86_64-linux/broot"
+    'https://dystroy.org/broot/download/x86_64-linux/broot'
 
 # Delta (diff viewer)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' \
+    from'gh-r' as'program' id-as'delta'\
     mv'delta-* -> delta' \
     pick'delta/delta' \
     @dandavison/delta
@@ -149,7 +143,7 @@ zinit wait'0b' lucid for \
 # Ripgrep (grep replacement)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'rg' \
-    pick'rg' bpick"*x86*linux*" \
+    pick'rg' bpick'*x86*linux*' \
     @microsoft/ripgrep-prebuilt \
     from'gh-r' id-as'rg-man' as'completion' \
     nocompile \
@@ -160,7 +154,7 @@ zinit wait'0b' lucid for \
 
 # Bat (cat replacement)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' \
+    from'gh-r' as'program' id-as'bat'\
     pick'bat' \
     atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
     atclone'cp -f bat*/bat bat' \
@@ -170,16 +164,23 @@ zinit wait'0b' lucid for \
 
 # fd (find replacement)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' \
+    from'gh-r' as'program' id-as'fd'\
     mv'fd-* -> files' \
     pick'files/fd' \
     atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
     atpull'%atclone' \
     @sharkdp/fd
 
+# McFly (sqlite history)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' id-as'mcfly'\
+    bpick'*x86*linux*' \
+    atload'eval "$(mcfly init zsh)"' \
+    @cantino/mcfly
+
 # FZF (fuzzy finder), tabs (completion replacement)
 zinit wait'0a' lucid \
-    from'gh-r' as'program' \
+    from'gh-r' as'program' id-as'fzf'\
     atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux > fzf-tmux' \
     atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh > completion.zsh' \
     atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh > key-bindings.zsh' \
@@ -195,22 +196,29 @@ zinit wait'0a' lucid \
     for @junegunn/fzf
 zinit wait'0b' lucid for has'fzf' @Aloxaf/fzf-tab
 
+# McFly-FZF integration
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' has'fzf' id-as'mcfly-fzf' \
+    bpick'*x86*linux*' \
+    atload'eval "$(mcfly-fzf init zsh)"' \
+    @bnprks/mcfly-fzf
+
 # LSD (ls replacement)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' \
+    from'gh-r' as'program' id-as'lsd'\
     mv'lsd* -> lsd' \
     pick'lsd/lsd' \
     atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
     @lsd-rs/lsd
 
 # Pre-installed programs
-if [ -x "/usr/bin/thefuck" ]; then
-    zinit ice lucid wait'1'
-    zinit load laggardkernel/zsh-thefuck
+if [ -x '/usr/bin/thefuck' ]; then
+    zinit ice lucid wait'1' for id-as'thefuck' \
+        laggardkernel/zsh-thefuck
 fi
 if [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ]; then
-    zinit ice lucid wait"0"
-    zinit load "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
+    zinit ice lucid wait'0b' for id-as'broot' \
+        "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
 fi
 
 end=$(date "+%s.%N")
