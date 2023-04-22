@@ -2,10 +2,10 @@
 
 # ZSH shellrc file, runs for interactive shells.
 
-start=$(date "+%s.%N")
-zmodload zsh/zprof
+# start=$(date "+%s.%N")
+# zmodload zsh/zprof
 
-# History settings
+# History settings (file defined in env)
 HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
 HISTSIZE=50000
 SAVEHIST=10000
@@ -69,8 +69,8 @@ if [ -s "/usr/share/nvm/nvm.sh" ]; then
 fi
 
 # source functions
-fpath=("${XDG_CONFIG_HOME}/zsh/functions" $fpath)
-autoload -Uz "${XDG_CONFIG_HOME}"/zsh/functions/*(.:t)
+fpath=("${XDG_CONFIG_HOME}/shell/functions" $fpath)
+autoload -Uz "${XDG_CONFIG_HOME}"/shell/functions/*(.:t)
 
 # vim related
 set -o vi
@@ -110,7 +110,6 @@ bindkey -M vicmd ds delete-surround
 bindkey -M vicmd ys add-surround
 bindkey -M visual S add-surround
 
-
 # dir related
 setopt auto_cd
 setopt auto_pushd
@@ -121,7 +120,7 @@ setopt pushdminus
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
-autoload -Uz _zinit
+
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 PS1=">" # provide a simple prompt till the theme loads
@@ -154,5 +153,7 @@ bm() {
     chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
 }
 
-end=$(date "+%s.%N")
-date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
+mcfly
+
+# end=$(date "+%s.%N")
+# date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
