@@ -117,103 +117,97 @@ source "${ZINIT_HOME}/zinit.zsh"
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 PS1=">" # provide a simple prompt till the theme loads
-zinit ice wait'!' lucid
-zinit snippet "https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme"
+zinit wait'!0a' lucid for \
+    OMZL::git.zsh \
+    "https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme"
 
-zinit wait lucid for \
-    \
+# Highlights, suggestions, completions
+zinit wait'0c' lucid for \
     atinit"zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
-    \
     atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
     zsh-users/zsh-autosuggestions \
-    \
     blockf atpull'zinit creinstall -q .' \
-    zsh-users/zsh-completions \
-    \
+    zsh-users/zsh-completions
+
+# OMZ, colored man pages, bracket autopair
+zinit wait'0b' lucid for \
     OMZL::clipboard.zsh \
     OMZL::completion.zsh \
-    OMZL::git.zsh \
     OMZL::functions.zsh \
     OMZL::nvm.zsh \
     OMZL::spectrum.zsh \
     OMZL::termsupport.zsh \
     OMZP::colored-man-pages \
+    @hlissner/zsh-autopair
+
+# Apparish/apparix
+zinit wait'0b' lucid for \
     atinit"sed -i 's/function bm()/function apparishbm()/g' .bourne-apparix; \
     sed -i 's/apx_silent bind -q menu-complete/true/g' .bourne-apparix" \
     atload"bindkey '\t' menu-complete" \
     "https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix"
 
-zinit wait lucid for \
-  @hlissner/zsh-autopair
+# McFly (sqlite history)
+zinit wait"0b" lucid for \
+    from"gh-r" as"program" \
+    bpick"*x86*linux*" \
+    atload'eval "$(mcfly init zsh)"' \
+    @cantino/mcfly
 
-zinit ice lucid wait"0a" from"gh-r" as"program" bpick"*x86*linux*" atload'eval "$(mcfly init zsh)"'
-zinit load cantino/mcfly
+# Navi (cheat sheets)
+zinit wait"0b" lucid for \
+    from"gh-r" as"program" \
+    bpick"*x86*linux*" \
+    atload'eval "$(navi widget zsh)"' \
+    @denisidoro/navi
 
-zinit ice lucid wait"0" from"gh-r" as"program" bpick"*x86*linux*" atload'eval "$(navi widget zsh)"'
-zinit load denisidoro/navi
-
-if [ -x "/usr/bin/thefuck" ]; then
-    zinit ice lucid wait'1'
-    zinit load laggardkernel/zsh-thefuck
-fi
-
-zinit wait lucid for \
-  as'program' \
-  https://dystroy.org/broot/download/x86_64-linux/broot
-
-if [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ]; then
-    zinit ice lucid wait"0"
-    zinit load "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
-fi
-
-zinit wait lucid for \
-  from'gh-r' \
-  as'program' \
-  mv'delta-* -> delta' \
-  pick'delta/delta' \
-  @dandavison/delta
-
-zinit wait lucid for \
-  from'gh-r' \
-  as'program' \
-  pick'rg' \
-  bpick"*x86*linux*" \
-  id-as'rg' \
-  @microsoft/ripgrep-prebuilt
-
-zinit wait lucid for \
-  from'gh-r' \
-  as'completion' \
-  nocompile \
-  mv'ripgrep-* -> ripgrep' \
-  atclone'ln -nsf "$PWD"/ripgrep/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
-  atpull'%atclone' \
-  id-as'rg-man' \
-  @BurntSushi/ripgrep
-
-zinit wait lucid for \
-  from'gh-r' \
-  as'program' \
-  pick'bat' \
-  atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
-  atclone'cp -f bat*/bat bat' \
-  atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
-  atpull'%atclone' \
-  @sharkdp/bat
-
-zinit wait lucid for \
-  from'gh-r' \
-  as'program' \
-  mv'fd-* -> files' \
-  pick'files/fd' \
-  atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
-  atpull'%atclone' \
-  @sharkdp/fd
-
-zinit wait lucid \
-    from'gh-r' \
+# Broot (ls --tree)
+zinit wait'0b' lucid for \
     as'program' \
+    "https://dystroy.org/broot/download/x86_64-linux/broot"
+
+# Delta (diff viewer)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' \
+    mv'delta-* -> delta' \
+    pick'delta/delta' \
+    @dandavison/delta
+
+# Ripgrep (grep replacement)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' id-as'rg' \
+    pick'rg' bpick"*x86*linux*" \
+    @microsoft/ripgrep-prebuilt \
+    from'gh-r' id-as'rg-man' as'completion' \
+    nocompile \
+    mv'ripgrep-* -> ripgrep' \
+    atclone'ln -nsf "$PWD"/ripgrep/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
+    atpull'%atclone' \
+    @BurntSushi/ripgrep
+
+# Bat (cat replacement)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' \
+    pick'bat' \
+    atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
+    atclone'cp -f bat*/bat bat' \
+    atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
+    atpull'%atclone' \
+    @sharkdp/bat
+
+# fd (find replacement)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' \
+    mv'fd-* -> files' \
+    pick'files/fd' \
+    atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
+    atpull'%atclone' \
+    @sharkdp/fd
+
+# FZF (fuzzy finder), tabs (completion replacement)
+zinit wait'0a' lucid \
+    from'gh-r' as'program' \
     atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux > fzf-tmux' \
     atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh > completion.zsh' \
     atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh > key-bindings.zsh' \
@@ -226,17 +220,26 @@ zinit wait lucid \
     pick'/dev/null' \
     multisrc'key-bindings.zsh' \
     multisrc'completion.zsh' \
-  for @junegunn/fzf
+    for @junegunn/fzf
+zinit wait'0b' lucid for id-as'auto' has'fzf' @Aloxaf/fzf-tab
 
-zinit wait lucid for id-as'auto' has'fzf' @Aloxaf/fzf-tab
+# LSD (ls replacement)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' \
+    mv'lsd* -> lsd' \
+    pick'lsd/lsd' \
+    atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
+    @lsd-rs/lsd
 
-zinit wait lucid for \
-  from'gh-r' \
-  as'program' \
-  mv'lsd* -> lsd' \
-  pick'lsd/lsd' \
-  atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
-  @lsd-rs/lsd
+# Pre-installed programs
+if [ -x "/usr/bin/thefuck" ]; then
+    zinit ice lucid wait'1'
+    zinit load laggardkernel/zsh-thefuck
+fi
+if [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ]; then
+    zinit ice lucid wait"0"
+    zinit load "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
+fi
 
 # Override bm to allow for encrypted chezmoi file
 bm() {
