@@ -33,13 +33,6 @@ source "${XDG_CONFIG_HOME}/shell/aliases"
 # Mkdir and move in one command
 md() { mkdir -p "$1" && cd "$1" || return; }
 
-# # fzf
-# [ -f "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
-# [ -f "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
-
-# broot
-[ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ] && source "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
-
 # NVM
 load_nvmrc() {
     local node_version="$(nvm version)"
@@ -91,13 +84,13 @@ autoload -Uz select-bracketed select-quoted
 zle -N select-quoted
 zle -N select-bracketed
 for km in viopp visual; do
-  bindkey -M $km -- '-' vi-up-line-or-history
-  for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
-    bindkey -M $km $c select-quoted
-  done
-  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
-    bindkey -M $km $c select-bracketed
-  done
+    bindkey -M $km -- '-' vi-up-line-or-history
+    for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+        bindkey -M $km $c select-quoted
+    done
+    for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+        bindkey -M $km $c select-bracketed
+    done
 done
 
 # Add vim surround
@@ -128,12 +121,16 @@ zinit ice wait'!' lucid
 zinit snippet "https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme"
 
 zinit wait lucid for \
+    \
     atinit"zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
+    \
     atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
     zsh-users/zsh-autosuggestions \
+    \
     blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions \
+    \
     OMZL::clipboard.zsh \
     OMZL::completion.zsh \
     OMZL::git.zsh \
@@ -147,22 +144,105 @@ zinit wait lucid for \
     atload"bindkey '\t' menu-complete" \
     "https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix"
 
+zinit wait lucid for \
+  @hlissner/zsh-autopair
+
 zinit ice lucid wait"0a" from"gh-r" as"program" bpick"*x86*linux*" atload'eval "$(mcfly init zsh)"'
-zinit light cantino/mcfly
+zinit load cantino/mcfly
 
 zinit ice lucid wait"0" from"gh-r" as"program" bpick"*x86*linux*" atload'eval "$(navi widget zsh)"'
-zinit light denisidoro/navi
+zinit load denisidoro/navi
+
+if [ -x "/usr/bin/thefuck" ]; then
+    zinit ice lucid wait'1'
+    zinit load laggardkernel/zsh-thefuck
+fi
+
+zinit wait lucid for \
+  as'program' \
+  https://dystroy.org/broot/download/x86_64-linux/broot
+
+if [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ]; then
+    zinit ice lucid wait"0"
+    zinit load "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
+fi
+
+zinit wait lucid for \
+  from'gh-r' \
+  as'program' \
+  mv'delta-* -> delta' \
+  pick'delta/delta' \
+  @dandavison/delta
+
+zinit wait lucid for \
+  from'gh-r' \
+  as'program' \
+  pick'rg' \
+  bpick"*x86*linux*" \
+  id-as'rg' \
+  @microsoft/ripgrep-prebuilt
+
+zinit wait lucid for \
+  from'gh-r' \
+  as'completion' \
+  nocompile \
+  mv'ripgrep-* -> ripgrep' \
+  atclone'ln -nsf "$PWD"/ripgrep/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
+  atpull'%atclone' \
+  id-as'rg-man' \
+  @BurntSushi/ripgrep
+
+zinit wait lucid for \
+  from'gh-r' \
+  as'program' \
+  pick'bat' \
+  atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
+  atclone'cp -f bat*/bat bat' \
+  atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
+  atpull'%atclone' \
+  @sharkdp/bat
+
+zinit wait lucid for \
+  from'gh-r' \
+  as'program' \
+  mv'fd-* -> files' \
+  pick'files/fd' \
+  atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
+  atpull'%atclone' \
+  @sharkdp/fd
+
+zinit wait lucid \
+    from'gh-r' \
+    as'program' \
+    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux > fzf-tmux' \
+    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh > completion.zsh' \
+    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh > key-bindings.zsh' \
+    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 > fzf-tmux.1' \
+    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 > fzf.1' \
+    atclone'mkdir -p $ZPFX/{bin,man/man1}' \
+    atclone'ln -nsvf *.1 "${ZINIT[MAN_DIR]}/man1"' \
+    atclone'chmod +x fzf-tmux' \
+    atpull'%atclone' \
+    pick'/dev/null' \
+    multisrc'key-bindings.zsh' \
+    multisrc'completion.zsh' \
+  for @junegunn/fzf
+
+zinit wait lucid for id-as'auto' has'fzf' @Aloxaf/fzf-tab
+
+zinit wait lucid for \
+  from'gh-r' \
+  as'program' \
+  mv'lsd* -> lsd' \
+  pick'lsd/lsd' \
+  atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
+  @lsd-rs/lsd
 
 # Override bm to allow for encrypted chezmoi file
 bm() {
     apparishbm "$1"
     chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
 }
-
-# source scripts
-# for script in "${XDG_CONFIG_HOME}/shell/shellrc.d"; do
-#   source "$script"
-# done
 
 end=$(date "+%s.%N")
 date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
