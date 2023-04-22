@@ -147,10 +147,11 @@ zinit wait lucid for \
     atload"bindkey '\t' menu-complete" \
     "https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix"
 
-# zinit ice lucid wait"1" from"gh-r" as"program" atload'eval "$(mcfly init zsh)"'
-# zinit ice lucid wait from"gh-r" as"program" pick"mcfly" atpull"mcfly init zsh > $ZSH_CACHE_DIR/mcfly.zsh" atclone"%atpull" src"$ZSH_CACHE_DIR/mcfly.zsh"
 zinit ice lucid wait"0a" from"gh-r" as"program" bpick"*x86*linux*" atload'eval "$(mcfly init zsh)"'
 zinit light cantino/mcfly
+
+zinit ice lucid wait"0" from"gh-r" as"program" bpick"*x86*linux*" atload'eval "$(navi widget zsh)"'
+zinit light denisidoro/navi
 
 # Override bm to allow for encrypted chezmoi file
 bm() {
