@@ -12,7 +12,7 @@ SAVEHIST=10000
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
-setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt hist_ignore_all_dups   # Delete an old recorded event if a new event is a duplicate.
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
@@ -20,48 +20,15 @@ setopt share_history          # share command history data
 # ZSH settings
 DISABLE_AUTO_UPDATE="true"
 ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
-setopt multios              # enable redirect to multiple streams: echo >file1 >file2
-setopt long_list_jobs       # show long list format job notifications
-setopt interactivecomments  # recognize comments
+setopt multios                # enable redirect to multiple streams: echo >file1 >file2
+setopt long_list_jobs         # show long list format job notifications
+setopt interactivecomments    # recognize comments
 
 # make sure completion list is loaded before anything else
 zmodload zsh/complist
 
-# All aliases
+# All aliases, functions
 source "${XDG_CONFIG_HOME}/shell/aliases"
-
-# Mkdir and move in one command
-md() { mkdir -p "$1" && cd "$1" || return; }
-
-# NVM
-load_nvmrc() {
-    local node_version="$(nvm version)"
-    local nvmrc_path="$(nvm_find_nvmrc)"
-
-    if [ -n "$nvmrc_path" ]; then
-        local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-        if [ "$nvmrc_node_version" = "N/A" ]; then
-            nvm install
-        elif [ "$nvmrc_node_version" != "$node_version" ]; then
-            nvm use
-        fi
-    elif [ "$node_version" != "$(nvm version default)" ]; then
-        nvm use default
-    fi
-
-    [ -s "/usr/share/nvm/bash_completion" ] && source /usr/share/nvm/bash_completion
-    [ -s "/usr/share/nvm/install-nvm-exec" ] && source /usr/share/nvm/install-nvm-exec
-}
-
-if [ -s "/usr/share/nvm/nvm.sh" ]; then
-    nvm_cmds=(nvm node npm yarn)
-    for cmd in $nvm_cmds; do
-        alias $cmd="unalias $nvm_cmds && unset nvm_cmds && . $NVM_DIR/nvm.sh --no-use && load_nvmrc && $cmd"
-    done
-fi
-
-# source functions
 fpath=("${XDG_CONFIG_HOME}/shell/autoload" $fpath)
 autoload -Uz "${XDG_CONFIG_HOME}"/shell/autoload/*(.:t)
 
@@ -130,7 +97,7 @@ zinit wait'0c' lucid for \
     blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions
 
-# OMZ, colored man pages, bracket autopair
+# OMZ, colored man pages, nvm
 zinit wait'0b' lucid for \
     OMZL::clipboard.zsh \
     OMZL::completion.zsh \
@@ -139,7 +106,12 @@ zinit wait'0b' lucid for \
     OMZL::spectrum.zsh \
     OMZL::termsupport.zsh \
     OMZP::colored-man-pages \
-    @hlissner/zsh-autopair
+    OMZP::nvm 
+
+zstyle ':omz:plugins:nvm' lazy yes
+
+# Bracket Autopair
+zinit wait'0b' lucid for @hlissner/zsh-autopair
 
 # Apparish/apparix
 zinit wait'0b' lucid for \
@@ -221,7 +193,7 @@ zinit wait'0a' lucid \
     multisrc'key-bindings.zsh' \
     multisrc'completion.zsh' \
     for @junegunn/fzf
-zinit wait'0b' lucid for id-as'auto' has'fzf' @Aloxaf/fzf-tab
+zinit wait'0b' lucid for has'fzf' @Aloxaf/fzf-tab
 
 # LSD (ls replacement)
 zinit wait'0b' lucid for \
@@ -240,12 +212,6 @@ if [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ]; then
     zinit ice lucid wait"0"
     zinit load "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
 fi
-
-# Override bm to allow for encrypted chezmoi file
-bm() {
-    apparishbm "$1"
-    chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
-}
 
 end=$(date "+%s.%N")
 date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"

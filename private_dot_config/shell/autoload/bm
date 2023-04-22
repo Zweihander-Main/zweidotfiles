@@ -1,0 +1,7 @@
+#!/usr/bin/zsh -f
+
+# Override bm to allow for encrypted chezmoi file
+bm() {
+    apparishbm "$1"
+    chezmoi add --encrypt "${XDG_DATA_HOME}/apparish/apparixrc"
+}
