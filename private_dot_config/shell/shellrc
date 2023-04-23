@@ -76,9 +76,16 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
 
-# Zinit
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+# Zinit and first time setup
+if [ ! -d $ZINIT_HOME ]; then
+     mkdir -p "$(dirname $ZINIT_HOME)"
+     [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+
+    if [ ! -f "${XDG_DATA_HOME}/shell/history" ]; then
+        mkdir -p "${XDG_DATA_HOME}/shell"
+        touch "${XDG_DATA_HOME}/shell/history"
+    fi
+fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 (( ${+_comps} )) && _comps[zinit]=_zinit

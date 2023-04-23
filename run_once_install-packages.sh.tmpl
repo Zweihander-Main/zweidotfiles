@@ -1,5 +1,24 @@
-{{ if eq .osid "linux-debian" -}}
 #!/bin/sh
-sudo apt install graphviz libsqlite3-0 isync maildir-utils python3-dev python3-pip python3-setuptools
+
+{{ if eq .osid "linux-debian" -}}
+sudo apt install \
+	git \
+	gnu-which \
+	graphviz \
+	libsqlite3-0 \
+	isync \
+	python3-dev \
+	python3-pip \
+	python3-setuptools
 pip3 install thefuck --user
+{{ end -}}
+
+{{ if eq .osid "linux-arch" -}}
+sudo pacman -Sy \
+	git \
+	which \
+	graphviz \
+	sqlite \
+	isync \
+	thefuck 
 {{ end -}}
