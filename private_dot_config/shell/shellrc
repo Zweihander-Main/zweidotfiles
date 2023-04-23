@@ -89,7 +89,6 @@ if [ ! -d $ZINIT_HOME ]; then
     fi
 fi
 source "${ZINIT_HOME}/zinit.zsh"
-
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 PS1='>' # provide a simple prompt till the theme loads
@@ -136,18 +135,23 @@ zinit wait'0c' lucid for \
 # Navi (cheat sheets)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'navi'\
-    bpick'*x86*linux*' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
     atload'eval "$(navi widget zsh)"' \
     @denisidoro/navi
 
 # Broot (ls --tree)
+local broot_url='https://dystroy.org/broot/download/x86_64-linux/broot'
+if [[ "${ZSH_ARCH}" == "aarch64" ]]; then
+    broot_url='https://dystroy.org/broot/download/aarch64-linux-android/broot'
+fi
 zinit wait'0b' lucid for id-as'broot'\
     as'program' \
-    'https://dystroy.org/broot/download/x86_64-linux/broot'
+    $broot_url
 
 # Delta (diff viewer)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'delta'\
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
     mv'delta-* -> delta' \
     pick'delta/delta' \
     @dandavison/delta
@@ -155,7 +159,7 @@ zinit wait'0b' lucid for \
 # Ripgrep (grep replacement)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'rg' \
-    pick'rg' bpick'*x86*linux*' \
+    pick'rg' bpick"*${ZSH_ARCH:-x86_64}*linux*" \
     @microsoft/ripgrep-prebuilt \
     from'gh-r' id-as'rg-man' as'completion' \
     nocompile \
@@ -167,7 +171,7 @@ zinit wait'0b' lucid for \
 # Bat (cat replacement)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'bat'\
-    pick'bat' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" pick'bat' \
     atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
     atclone'cp -f bat*/bat bat' \
     atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
@@ -177,6 +181,7 @@ zinit wait'0b' lucid for \
 # fd (find replacement)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'fd'\
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
     mv'fd-* -> files' \
     pick'files/fd' \
     atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
@@ -186,7 +191,7 @@ zinit wait'0b' lucid for \
 # McFly (sqlite history)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'mcfly'\
-    bpick'*x86*linux*' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
     atload'eval "$(mcfly init zsh)"' \
     @cantino/mcfly
 
@@ -210,7 +215,7 @@ zinit wait'0a' lucid \
 # McFly-FZF integration
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'mcfly-fzf' \
-    bpick'*x86*linux*' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
     atload'eval "$(mcfly-fzf init zsh)"' \
     @bnprks/mcfly-fzf
 
@@ -218,6 +223,7 @@ zinit wait'0b' lucid for \
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'lsd'\
     mv'lsd* -> lsd' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
     pick'lsd/lsd' \
     atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
     @lsd-rs/lsd
