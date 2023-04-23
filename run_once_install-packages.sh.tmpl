@@ -1,7 +1,7 @@
 #!/bin/sh
 
 {{ if eq .osid "linux-debian" -}}
-sudo apt install \
+# sudo apt install \
 	git \
 	gnu-which \
 	graphviz \
@@ -10,11 +10,11 @@ sudo apt install \
 	python3-dev \
 	python3-pip \
 	python3-setuptools
-pip3 install thefuck --user
+# pip3 install thefuck --user
 {{ end -}}
 
 {{ if eq .osid "linux-arch" -}}
-sudo pacman -Sy \
+# sudo pacman -Sy \
 	git \
 	which \
 	graphviz \
