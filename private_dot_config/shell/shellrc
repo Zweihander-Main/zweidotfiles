@@ -2,8 +2,8 @@
 
 # ZSH shellrc file, runs for interactive shells.
 
-start=$(date "+%s.%N")
-zmodload zsh/zprof
+# start=$(date "+%s.%N")
+# zmodload zsh/zprof
 
 # History settings (file defined in env)
 HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
@@ -89,21 +89,11 @@ zinit wait'!0a' lucid for \
     id-as'zwei-zeta-theme' \
     'https://raw.githubusercontent.com/Zweihander-Main/zwei-zeta-zsh-theme/master/zeta.zsh-theme'
 
-# Highlights, suggestions, completions
-zinit wait'0c' lucid for \
-    atinit'zicompinit; zicdreplay' \
-    zdharma-continuum/fast-syntax-highlighting \
-    atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
-    zsh-users/zsh-autosuggestions \
-    blockf atpull'zinit creinstall -q .' \
-    zsh-users/zsh-completions
-
 # OMZ, colored man pages, nvm
 zinit wait'0b' lucid for \
     OMZL::clipboard.zsh \
     OMZL::completion.zsh \
     OMZL::functions.zsh \
-    OMZL::nvm.zsh \
     OMZL::spectrum.zsh \
     OMZL::termsupport.zsh \
     OMZP::colored-man-pages \
@@ -113,12 +103,25 @@ zstyle ':omz:plugins:nvm' lazy yes
 # Bracket Autopair
 zinit wait'0b' lucid for id-as'autopair' @hlissner/zsh-autopair
 
-# Apparish/apparix
-zinit wait'0b' lucid for \
-    id-as'apparish' \
+# Highlights, suggestions, completions
+zinit wait'0c' lucid for \
+    atinit'zicompinit; zicdreplay' \
+    zdharma-continuum/fast-syntax-highlighting \
+    atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-accept" \
+    zsh-users/zsh-autosuggestions \
+    blockf atpull'zinit creinstall -q .' \
+    zsh-users/zsh-completions
+
+# FZF tab completions - should be after zsh-completions
+zinit wait'0c' lucid for \
+    has'fzf' id-as'fzf-tab' \
+    @Aloxaf/fzf-tab
+
+# Apparish/apparix -- should be after zsh-completions and fzf-tab
+zinit wait'0c' lucid for \
+    id-as'apparish' blockf completions \
     atinit"sed -i 's/function bm()/function apparishbm()/g' apparish; \
     sed -i 's/apx_silent bind -q menu-complete/true/g' apparish" \
-    atload"bindkey '\t' menu-complete" \
     'https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix'
 
 # Navi (cheat sheets)
@@ -178,7 +181,7 @@ zinit wait'0b' lucid for \
     atload'eval "$(mcfly init zsh)"' \
     @cantino/mcfly
 
-# FZF (fuzzy finder), tabs (completion replacement)
+# FZF (fuzzy finder), tabs (completion replacement) - should be after completions
 zinit wait'0a' lucid \
     from'gh-r' as'program' id-as'fzf'\
     atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux > fzf-tmux' \
@@ -194,7 +197,6 @@ zinit wait'0a' lucid \
     multisrc'key-bindings.zsh' \
     multisrc'completion.zsh' \
     for @junegunn/fzf
-zinit wait'0b' lucid for has'fzf' @Aloxaf/fzf-tab
 
 # McFly-FZF integration
 zinit wait'0b' lucid for \
@@ -221,5 +223,5 @@ if [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ]; then
         "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
 fi
 
-end=$(date "+%s.%N")
-date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
+# end=$(date "+%s.%N")
+# date -u -d "0 $end sec - $start sec" +"%H:%M:%S.%N"
