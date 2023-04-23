@@ -23,6 +23,8 @@ ZSH_COMPDUMP="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
 setopt multios                # enable redirect to multiple streams: echo >file1 >file2
 setopt long_list_jobs         # show long list format job notifications
 setopt interactivecomments    # recognize comments
+# Suppress insecure warnings if running as root
+[[ $EUID -eq 0 ]] && zstyle ':completion:*:warnings' suppress 1
 
 # make sure completion list is loaded before anything else
 zmodload zsh/complist
