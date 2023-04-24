@@ -119,6 +119,4 @@ fzf
 cargo
 lsd
 #+end_src
-#+begin_src shell
-cargo install --git https://github.com/bnprks/mcfly-fzf
-#+end_src
+- Missing: https://github.com/bnprks/mcfly-fzf
