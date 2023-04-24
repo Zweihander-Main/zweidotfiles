@@ -1,0 +1,121 @@
+#+TITLE: Notes
+
+* Base Programs Needed
+** Debian
+#+begin_src shell
+apt -y install \
+    git \
+    gnu-which \
+    graphviz \
+    libsqlite3-0 \
+    isync \
+    vim \
+    emacs \
+    chezmoi \
+    diffutils \
+    findutils \
+    hostname \
+    man-db \
+    grep \
+    gnupg \
+    sed \
+    tar \
+    bzip2 \
+    gzip \
+    xz-utils \
+    zip \
+    unzip \
+    openssh-client \
+    zsh \
+    wget \
+    curl \
+    file \
+    python3-dev \
+    python3-pip \
+    python3-setuptools
+pip3 install thefuck --user
+git clone https://github.com/rkitover/vimpager
+cd vimpager
+sudo make install-deb
+#+end_src
+** Arch
+#+begin_src shell
+pacman --noconfirm -Sy \
+    git \
+    which \
+    graphviz \
+    sqlite \
+    isync \
+    vim \
+    emacs-nativecomp \
+    chezmoi \
+    diffutils \
+    util-linux \
+    inetutils \
+    man-db \
+    grep \
+    gnupg \
+    sed \
+    tar \
+    bzip2 \
+    gzip \
+    xz \
+    zip \
+    unzip \
+    openssh \
+    zsh \
+    vimpager \
+    wget \
+    curl \
+    file \
+    thefuck
+#+end_src
+** Nix
+#+begin_src nix
+git
+which
+graphviz
+sqlite
+isync
+vim
+emacs
+chezmoi
+diffutils
+utillinux
+hostname
+man
+gnugrep
+gnupg
+gnused
+gnutar
+bzip2
+gzip
+xz
+zip
+unzip
+openssh
+zsh
+vimpager
+wget
+curl
+file
+thefuck
+#+end_src
+* Shell programs installed by ~.install_shell_apps = "true"~
+** Nix
+#+begin_src nix
+zsh-fzf-tab
+navi
+broot
+delta
+ripgrep
+bat
+fd
+mcfly
+fzf
+cargo
+lsd
+#+end_src
+#+begin_src shell
+cargo install --git https://github.com/bnprks/mcfly-fzf
+#+end_src
