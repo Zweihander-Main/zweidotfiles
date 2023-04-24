@@ -30,6 +30,7 @@ apt -y install \
     wget \
     curl \
     file \
+    gawk \
     python3-dev \
     python3-pip \
     python3-setuptools
@@ -68,6 +69,7 @@ pacman --noconfirm -Sy \
     wget \
     curl \
     file \
+    gawk \
     thefuck
 #+end_src
 ** Nix
@@ -99,6 +101,7 @@ vimpager
 wget
 curl
 file
+gawk
 thefuck
 #+end_src
 * Shell programs installed by ~.install_shell_apps = "true"~
