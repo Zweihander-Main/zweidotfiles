@@ -80,8 +80,8 @@ setopt pushdminus
 
 # Zinit and first time setup
 if [ ! -d $ZINIT_HOME ]; then
-     mkdir -p "$(dirname $ZINIT_HOME)"
-     [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
     if [ ! -f "${XDG_DATA_HOME}/shell/history" ]; then
         mkdir -p "${XDG_DATA_HOME}/shell"
@@ -120,10 +120,14 @@ zinit wait'0c' lucid for \
     blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions
 
+{{- if eq .install_shell_apps "true" }}
+
 # FZF tab completions - should be after zsh-completions
 zinit wait'0c' lucid for \
     id-as'fzf-tab' \
     @Aloxaf/fzf-tab
+
+{{- end }}
 
 # Apparish/apparix -- should be after zsh-completions and fzf-tab
 zinit wait'0c' lucid for \
@@ -131,6 +135,8 @@ zinit wait'0c' lucid for \
     atinit"sed -i 's/function bm()/function apparishbm()/g' apparish; \
     sed -i 's/apx_silent bind -q menu-complete/true/g' apparish" \
     'https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix'
+
+{{- if eq .install_shell_apps "true" }}
 
 # Navi (cheat sheets)
 zinit wait'0b' lucid for \
@@ -227,6 +233,17 @@ zinit wait'0b' lucid for \
     pick'lsd/lsd' \
     atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
     @lsd-rs/lsd
+
+{{- else }}
+
+zinit wait'0c' lucid light-mode for \
+    as"program" id-as'load-scripts' \
+    atload'eval "$(navi widget zsh)' \
+    atload'eval "$(mcfly init zsh)"' \
+    atload'eval "$(mcfly-fzf init zsh)"' \
+    @zdharma/null
+
+{{- end }}
 
 # Pre-installed programs
 if [ -x '/usr/bin/thefuck' ]; then

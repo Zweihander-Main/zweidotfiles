@@ -9,6 +9,7 @@
 LICENSE
 README.md
 README.org
+NOTES.org
 
 # git related files
 .git/
@@ -20,7 +21,7 @@ README.org
 /.ssh/environment
 
 # Encrypted files
-{{- if ne .enablecrypt "true" }}
+{{- if ne .enable_crypt "true" }}
 /.ssh
 /.local/share/gnupg
 /.local/share/apparish/apparixrc
