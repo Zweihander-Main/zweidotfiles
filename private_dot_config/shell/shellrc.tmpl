@@ -91,6 +91,12 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+{{- if eq .install_shell_apps "true" }}
+
+zinit light zdharma-continuum/zinit-annex-binary-symlink
+
+{{- end }}
+
 PS1='>' # provide a simple prompt till the theme loads
 zinit wait'!0a' lucid for \
     OMZL::git.zsh \
@@ -120,14 +126,11 @@ zinit wait'0c' lucid for \
     blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions
 
-{{- if eq .install_shell_apps "true" }}
-
 # FZF tab completions - should be after zsh-completions
 zinit wait'0c' lucid for \
+    has'fzf' \
     id-as'fzf-tab' \
     @Aloxaf/fzf-tab
-
-{{- end }}
 
 # Apparish/apparix -- should be after zsh-completions and fzf-tab
 zinit wait'0c' lucid for \
@@ -140,8 +143,8 @@ zinit wait'0c' lucid for \
 
 # Navi (cheat sheets)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'navi'\
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
+    from'gh-r' as'program' id-as'navi' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!navi' \
     atload'eval "$(navi widget zsh)"' \
     @denisidoro/navi
 
@@ -150,14 +153,14 @@ local broot_url='https://dystroy.org/broot/download/x86_64-linux/broot'
 if [[ "${ZSH_ARCH}" == "aarch64" ]]; then
     broot_url='https://dystroy.org/broot/download/aarch64-linux-android/broot'
 fi
-zinit wait'0b' lucid for id-as'broot'\
-    as'program' \
+zinit wait'0b' lucid for id-as'broot' \
+    as'program' lbin'!broot' \
     $broot_url
 
 # Delta (diff viewer)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'delta'\
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!delta/delta' \
     mv'delta-* -> delta' \
     pick'delta/delta' \
     @dandavison/delta
@@ -165,7 +168,7 @@ zinit wait'0b' lucid for \
 # Ripgrep (grep replacement)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'rg' \
-    pick'rg' bpick"*${ZSH_ARCH:-x86_64}*linux*" \
+    pick'rg' bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!rg' \
     @microsoft/ripgrep-prebuilt \
     from'gh-r' id-as'rg-man' as'completion' \
     nocompile \
@@ -176,8 +179,8 @@ zinit wait'0b' lucid for \
 
 # Bat (cat replacement)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'bat'\
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" pick'bat' \
+    from'gh-r' as'program' id-as'bat' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" pick'bat' lbin'!bat' \
     atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
     atclone'cp -f bat*/bat bat' \
     atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
@@ -186,8 +189,8 @@ zinit wait'0b' lucid for \
 
 # fd (find replacement)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'fd'\
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
+    from'gh-r' as'program' id-as'fd' \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!files/fd' \
     mv'fd-* -> files' \
     pick'files/fd' \
     atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
@@ -197,7 +200,7 @@ zinit wait'0b' lucid for \
 # McFly (sqlite history)
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'mcfly'\
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!mcfly' \
     atload'eval "$(mcfly init zsh)"' \
     @cantino/mcfly
 
@@ -213,7 +216,7 @@ zinit wait'0a' lucid \
     atclone'ln -nsvf *.1 "${ZINIT[MAN_DIR]}/man1"' \
     atclone'chmod +x fzf-tmux' \
     atpull'%atclone' \
-    pick'/dev/null' \
+    pick'/dev/null' lbin'!fzf' lbin'!fzf-tmux' \
     multisrc'key-bindings.zsh' \
     multisrc'completion.zsh' \
     for @junegunn/fzf
@@ -221,7 +224,7 @@ zinit wait'0a' lucid \
 # McFly-FZF integration
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'mcfly-fzf' \
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!mcfly-fzf' \
     atload'eval "$(mcfly-fzf init zsh)"' \
     @bnprks/mcfly-fzf
 
@@ -229,7 +232,7 @@ zinit wait'0b' lucid for \
 zinit wait'0b' lucid for \
     from'gh-r' as'program' id-as'lsd'\
     mv'lsd* -> lsd' \
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" \
+    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!lsd/lsd' \
     pick'lsd/lsd' \
     atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
     @lsd-rs/lsd
