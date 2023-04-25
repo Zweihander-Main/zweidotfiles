@@ -1,122 +1,237 @@
 #+TITLE: Notes
 
-* Base Programs Needed
+* Base programs needed
 ** Debian
 #+begin_src shell
-apt -y install \
-    git \
-    gnu-which \
-    graphviz \
-    libsqlite3-0 \
-    isync \
-    vim \
-    emacs \
-    chezmoi \
-    diffutils \
+sudo apt -y install \
+    curl \
+    debianutils \
+    file \
     findutils \
-    hostname \
-    man-db \
+    gawk \
+    git \
     grep \
-    gnupg \
+    gzip \
     sed \
     tar \
-    bzip2 \
-    gzip \
-    xz-utils \
-    zip \
-    unzip \
-    openssh-client \
-    zsh \
-    wget \
+    vim \
+    zsh
+sh -c "$(curl -fsLS get.chezmoi.io)"
+mv ./bin/chezmoi ~/.local/bin
+chezmoi init zweihander-main/zweidotfiles
+chezmoi apply
+chsh -s $(which zsh)
+#+end_src
+** Arch
+#+begin_src shell
+cd /tmp
+sudo pacman --noconfirm -Sy \
+    chezmoi \
     curl \
     file \
     gawk \
+    git \
+    grep \
+    gzip \
+    sed \
+    tar \
+    util-linux \
+    vim \
+    which \
+    zsh
+chezmoi init zweihander-main/zweidotfiles
+chezmoi apply
+chsh -s $(which zsh)
+#+end_src
+** Alpine
+#+begin_src shell
+cd /tmp
+doas apk --update add \
+    chezmoi \
+    curl \
+    file \
+    gawk \
+    git \
+    grep \
+    gzip \
+    sed \
+    shadow \
+    tar \
+    util-linux \
+    vim \
+    which \
+    zsh
+chezmoi init zweihander-main/zweidotfiles
+chezmoi apply
+chsh -s $(which zsh)
+#+end_src
+** Nix
+#+begin_src nix
+chezmoi
+curl
+gawk
+git
+gnugrep
+gnused
+gnutar
+gzip
+utillinux
+vim
+which
+zsh
+#+end_src
+* Extended programs (emacs/ect)
+** Debian
+#+begin_src shell
+sudo apt -y install \
+    bzip2 \
+    diffutils \
+    emacs \
+    gnupg \
+    graphviz \
+    hostname \
+    isync \
+    libsqlite3-0 \
+    man-db \
+    openssh-client \
     python3-dev \
     python3-pip \
     python3-setuptools
+    unzip \
+    wget \
+    xz-utils \
+    zip
 pip3 install thefuck --user
-git clone https://github.com/rkitover/vimpager
-cd vimpager
+git clone https://github.com/rkitover/vimpager /tmp/vimpager
+cd /tmp/vimpager
 sudo make install-deb
 #+end_src
 ** Arch
 #+begin_src shell
-pacman --noconfirm -Sy \
-    git \
-    which \
-    graphviz \
-    sqlite \
-    isync \
-    vim \
-    emacs-nativecomp \
-    chezmoi \
-    diffutils \
-    util-linux \
-    inetutils \
-    man-db \
-    grep \
-    gnupg \
-    sed \
-    tar \
+sudo pacman --noconfirm -Sy \
     bzip2 \
-    gzip \
-    xz \
-    zip \
-    unzip \
+    diffutils \
+    emacs-nativecomp \
+    gnupg \
+    graphviz \
+    inetutils \
+    isync \
+    man-db \
     openssh \
-    zsh \
+    sqlite \
+    thefuck
+    unzip \
     vimpager \
     wget \
-    curl \
-    file \
-    gawk \
+    xz \
+    zip
+#+end_src
+** Alpine
+#+begin_src shell
+doas apk --update add \
+    bzip2 \
+    diffutils \
+    emacs \
+    gnupg \
+    graphviz \
+    isync \
+    man-db \
+    net-tools \
+    openssh \
+    sqlite \
     thefuck
+    unzip \
+    wget \
+    xz \
+    zip
+git clone https://github.com/rkitover/vimpager /tmp/vimpager
+cd /tmp/vimpager
+sudo make install
 #+end_src
 ** Nix
 #+begin_src nix
-git
-which
-graphviz
-sqlite
-isync
-vim
-emacs
-chezmoi
-diffutils
-utillinux
-hostname
-man
-gnugrep
-gnupg
-gnused
-gnutar
 bzip2
-gzip
-xz
-zip
-unzip
+emacs
+file
+gnupg
+graphviz
+hostname
+isync
+man
 openssh
-zsh
+sqlite
+thefuck
+unzip
 vimpager
 wget
-curl
-file
-gawk
-thefuck
+xz
+zip
 #+end_src
-* Shell programs installed by ~.install_shell_apps = "true"~
+* Shell-related programs installed by ~.install_shell_apps = "true"~
+** Debian
+#+begin_src shell
+sudo apt -y install \
+    bat \
+    fd-find \
+    fzf \
+    ripgrep
+cd /tmp
+curl -s https://api.github.com/repos/lsd-rs/lsd/releases/latest \
+    | grep "browser_download_url.*${ZSH_ARCH}.*deb" \
+    | cut -d : -f 2,3 \
+    | tr -d \" \
+    | head -n1 \
+    | wget -qi -
+sudo apt install ./lsd*.deb
+curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
+    | grep "browser_download_url.*${ZSH_ARCH}.*deb" \
+    | cut -d : -f 2,3 \
+    | tr -d \" \
+    | head -n1 \
+    | wget -qi -
+sudo apt install ./git-delta*.deb
+curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
+    | grep "browser_download_url.*${ZSH_ARCH}.*tar.gz" \
+    | cut -d : -f 2,3 \
+    | tr -d \" \
+    | head -n1 \
+    | wget -qi -
+sudo curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | \
+    sudo sh -s -- --git cantino/mcfly
+#+end_src
+- Missing navi, broot, mcfly-fzf,
+** Alpine
+#+begin_src shell
+doas apk --update add \
+    bat \
+    broot \
+    delta \
+    fd \
+    fzf \
+    mcfly \
+    ripgrep 
+
+doas apk --update \
+    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ add \
+    lsd \
+    zsh-fzf-tab
+
+doas apk --update \
+    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ add \
+    navi
+#+end_src
+- Missing: https://github.com/bnprks/mcfly-fzf
 ** Nix
 #+begin_src nix
-zsh-fzf-tab
-navi
+bat
 broot
 delta
-ripgrep
-bat
 fd
-mcfly
 fzf
-cargo
 lsd
+mcfly
+navi
+ripgrep
+zsh-fzf-tab
 #+end_src
 - Missing: https://github.com/bnprks/mcfly-fzf
