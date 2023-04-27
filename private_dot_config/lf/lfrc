@@ -128,7 +128,7 @@ map P paste-special
 
 # FZF Integrations
 cmd fzf_apparish ${{
-    source "${XDG_DATA_HOME}/apparish/bourne-apparish"
+    source "${XDG_DATA_HOME}/zinit/snippets/apparish/apparish"
     res="$(apparish $(apparish | tr -s "[:blank:]" | cut -f2 -d' ' | fzf))"
     if [ -d "$res" ] ; then
         cmd="cd"
