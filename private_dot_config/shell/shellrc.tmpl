@@ -238,6 +238,12 @@ zinit wait'0b' lucid for \
     atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
     @lsd-rs/lsd
 
+# lf (file manager)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' id-as'lf'\
+    lbin'!lf' \
+    @gokcehan/lf
+
 {{- else }}
 
 

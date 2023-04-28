@@ -199,7 +199,7 @@ curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
 sudo curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | \
     sudo sh -s -- --git cantino/mcfly
 #+end_src
-- Missing navi, broot, mcfly-fzf,
+- Missing navi, broot, mcfly-fzf, lf
 ** Alpine
 #+begin_src shell
 doas apk --update add \
@@ -208,8 +208,9 @@ doas apk --update add \
     delta \
     fd \
     fzf \
+    lf \
     mcfly \
-    ripgrep 
+    ripgrep
 
 doas apk --update \
     --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ add \
@@ -228,6 +229,7 @@ broot
 delta
 fd
 fzf
+lf
 lsd
 mcfly
 navi
