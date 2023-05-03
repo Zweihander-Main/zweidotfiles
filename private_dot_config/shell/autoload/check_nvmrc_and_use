@@ -1,0 +1,10 @@
+#!/usr/bin/zsh -f
+
+# Workaround to allow for lazy loading of nvm
+# Use with add-zsh-hook chpwd
+
+check_nvmrc_and_use() {
+  if [[ -f ".nvmrc" ]]; then
+    nvm use
+  fi
+}
