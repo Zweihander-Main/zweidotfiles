@@ -248,25 +248,25 @@ zinit wait'0b' lucid for \
 
 
 if [[ $(command -v 'navi') ]]; then
-zinit wait'0c' lucid light-mode for \
-    as"program" id-as'load-scripts-navi' \
-    atload'eval "$(navi widget zsh)"' \
-    "https://github.com/zdharma-continuum/null"
+    zinit wait'0c' lucid light-mode for \
+        as"program" id-as'load-scripts-navi' \
+        atload'eval "$(navi widget zsh)"' \
+        "https://github.com/zdharma-continuum/null"
 fi
 
 
 if [[ $(command -v 'mcfly') ]]; then
-zinit wait'0c' lucid light-mode for \
-    as"program" id-as'load-script-mcfly' \
-    atload'eval "$(mcfly init zsh)"' \
-    "https://github.com/zdharma-continuum/null"
+    zinit wait'0c' lucid light-mode for \
+        as"program" id-as'load-script-mcfly' \
+        atload'eval "$(mcfly init zsh)"' \
+        "https://github.com/zdharma-continuum/null"
 fi
 
 if [[ $(command -v 'mcfly-fzf') ]]; then
-zinit wait'0c' lucid light-mode for \
-    as"program" id-as'load-scripts-mcfly-fzf' \
-    atload'eval "$(mcfly-fzf widget zsh)"' \
-    "https://github.com/zdharma-continuum/null"
+    zinit wait'0c' lucid light-mode for \
+        as"program" id-as'load-scripts-mcfly-fzf' \
+        atload'eval "$(mcfly-fzf widget zsh)"' \
+        "https://github.com/zdharma-continuum/null"
 fi
 {{- end }}
 
