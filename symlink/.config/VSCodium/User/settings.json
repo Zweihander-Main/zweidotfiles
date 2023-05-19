@@ -148,14 +148,18 @@
   "git.confirmSync": false,
   "github.copilot.enable": {
     "*": true,
-    "yaml": false,
     "plaintext": false,
     "markdown": false,
-    "jsonc": false
+    "scminput": false,
+    "yaml": false,
+    "jsonc": true
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.documentSelectors": ["**/*.astro"],
   "svelte.enable-ts-plugin": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
