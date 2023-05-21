@@ -241,9 +241,15 @@ zinit wait'0b' lucid for \
 
 # lf (file manager)
 zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'lf'\
+    from'gh-r' as'program' id-as'lf' \
     lbin'!lf' \
     @gokcehan/lf
+
+# viddy (watch replacement)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' id-as'viddy' \
+    lbin'!viddy' \
+    @sachaos/viddy
 
 {{- else }}
 

@@ -196,6 +196,13 @@ curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
     | tr -d \" \
     | head -n1 \
     | wget -qi -
+curl -s https://api.github.com/repos/sachaos/viddy/releases/latest \
+    | grep "browser_download_url.*Linux.*${ZSH_ARCH}.*tar.gz" \
+    | cut -d : -f 2,3 \
+    | tr -d \" \
+    | head -n1 \
+    | wget -qi -O viddy.tar.gz - \
+    && tar xvf viddy.tar.gz && mv viddy /usr/local/bin
 sudo curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | \
     sudo sh -s -- --git cantino/mcfly
 #+end_src
@@ -210,7 +217,8 @@ doas apk --update add \
     fzf \
     lf \
     mcfly \
-    ripgrep
+    ripgrep \
+    viddy
 
 doas apk --update \
     --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ add \
@@ -234,6 +242,7 @@ lsd
 mcfly
 navi
 ripgrep
+viddy
 zsh-fzf-tab
 #+end_src
 - Missing: https://github.com/bnprks/mcfly-fzf
