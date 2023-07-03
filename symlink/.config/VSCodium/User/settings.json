@@ -117,7 +117,8 @@
     "TODO",
     "XXX",
     "[ ]",
-    "[x]"
+    "[x]",
+    "NEXT"
   ],
   "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
   "workbench.enableExperiments": false,
