@@ -1,7 +1,7 @@
 [Unit]
 Description=bootsound with pulse
-Wants=pulseaudio.service
-After=pulseaudio.service
+Wants=sound.service
+After=sound.service
 
 [Service]
 Type=oneshot

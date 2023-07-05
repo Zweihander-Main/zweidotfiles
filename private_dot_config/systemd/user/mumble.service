@@ -1,8 +1,8 @@
 [Unit]
 Description=Mumble Daemon
-Requires=pulseaudio.service wait-for-dns.service
+Requires=sound.service wait-for-dns.service
 Wants=tray.service
-After=pulseaudio.service tray.service wait-for-dns.service
+After=sound.service tray.service wait-for-dns.service
 
 [Service]
 Type=exec

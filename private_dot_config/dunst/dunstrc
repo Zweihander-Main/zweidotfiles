@@ -440,20 +440,15 @@
     summary = "*"
     script = ~/.local/bin/log_dunst
 
-[volnoti-dbus]
-    appname = Volume
-    set_stack_tag = "volume"
+[pa-notify]
+    appname = pa-notify
+    set_stack_tag = "Volume"
     urgency = low
     background = "#191b1d"
 
-[volnoti-dbus-muted]
-    appname = Volume
-    body = "muted"
+[pa-notify-muted]
+    appname = pa-notify
+    summary = "Volume muted"
     new_icon = "audio-volume-muted"
-
-[volnoti-dbus-unmuted]
-    appname = Volume
-    body = "unmuted"
-    new_icon = "audio-volume-high"
 
 # vim: ft=cfg

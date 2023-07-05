@@ -1,5 +1,5 @@
 [Unit]
-Description=Dunst notification manager
+Description=Volume notification (provided by pa-notify)
 PartOf=graphical-session.target
 
 [Service]
