@@ -4,7 +4,7 @@
 
 # Set xkbmap settings before xmodmap
 setxkbmap -option terminate:ctrl_alt_bksp # allow terminate, should be ok with locking
-setxkbmap -option compose:ralt # allow compose
+setxkbmap -option compose:ralt            # allow compose
 
 userresources="${XDG_CONFIG_HOME}/x11/Xresources"
 usermodmap="${XDG_CONFIG_HOME}/x11/Xmodmap"
@@ -31,20 +31,20 @@ fi
 
 # source config files
 
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
- for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-  [ -x "$f" ] && . "$f"
- done
- unset f
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+    for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
+        [ -x "$f" ] && . "$f"
+    done
+    unset f
 fi
 
 # Set typematic delay [rate] -- default 660ms held, 25Hz repeat rate
-xset r rate 300 50
+xset r rate 275 70
 
 # statusbar loop
 while true; do
-   xsetroot -name "$(date +"%a, %D | %I:%M %p")"
-   sleep 2s
+    xsetroot -name "$(date +"%a, %D | %I:%M %p")"
+    sleep 2s
 done &
 
 # screen locking
@@ -52,10 +52,9 @@ xset s on
 xset s 120 # second timeout
 
 # start user programs
-xss-lock -- start_i3lock +resetsaver &  # locking manager
-start_gpg &                             # gpg-connect-agent
+xss-lock -- start_i3lock +resetsaver & # locking manager
+start_gpg &                            # gpg-connect-agent
 
 # Integration with systemd user unit files
-dbus-update-activation-environment --systemd PATH DBUS_SESSION_BUS_ADDRESS QT_QPA_PLATFORMTHEME && \
-	systemctl --user --no-block start wm.target
-
+dbus-update-activation-environment --systemd PATH DBUS_SESSION_BUS_ADDRESS QT_QPA_PLATFORMTHEME &&
+    systemctl --user --no-block start wm.target
