@@ -175,4 +175,5 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "git.defaultBranchName": "master",
+  "playwright.reuseBrowser": false,
 }
