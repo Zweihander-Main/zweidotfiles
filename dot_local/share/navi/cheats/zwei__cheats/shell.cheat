@@ -68,6 +68,3 @@ cat <file1-txt> | sort > <sorted-file1-txt>
 
 # Sort and remove duplicates and save to a new file
 sort <file1-txt> | uniq > <uniq-file1-txt>
-
-# Take a number string from pipe, divide it by 3, and calculate final result to 3 decimal places
-xargs -I{} echo "scale=3;{}/3" | bc
