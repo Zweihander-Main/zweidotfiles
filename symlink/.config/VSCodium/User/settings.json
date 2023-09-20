@@ -176,4 +176,10 @@
   },
   "git.defaultBranchName": "master",
   "playwright.reuseBrowser": false,
+  "vim.handleKeys": {
+    "<C-d>": true,
+    "<C-s>": false,
+    "<C-z>": false,
+    "<C-p>": false
+  },
 }
