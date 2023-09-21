@@ -16,11 +16,8 @@
   "editor.fontSize": 15,
   "workbench.activityBar.visible": true,
   "workbench.colorTheme": "Monokai Night",
-  "workbench.fontAliasing": "antialiased",
   "git.autofetch": true,
-  "update.enableWindowsBackgroundUpdates": false,
   "update.mode": "none",
-  "todo-tree.tree.showScanModeButton": false,
   "cSpell.logLevel": "Information",
   "postcssSorting.config": {
     "properties-order": "alphabetical"
