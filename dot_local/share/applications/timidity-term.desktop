@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Timidity MIDI player
+GenericName=MIDI player
+Comment=Play MIDI files
+TryExec=timidity
+Exec=timidity %F
+Terminal=true
+NoDisplay=true
+Categories=GTK;AudioVideo;Audio;Player;
+MimeType=audio/midi;

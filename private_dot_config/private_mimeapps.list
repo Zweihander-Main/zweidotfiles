@@ -23,6 +23,7 @@ application/zip=org.pwmt.zathura-cb.desktop;
 audio/aac=mplayer-term.desktop;
 audio/ac3=mplayer-term.desktop;
 audio/flac=mplayer-term.desktop;
+audio/midi=timidity-term.desktop;
 audio/mp4=mplayer-term.desktop;
 audio/mpeg=mplayer-term.desktop;
 audio/mpegurl=mplayer-term.desktop;

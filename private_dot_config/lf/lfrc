@@ -41,6 +41,7 @@ cmd open ${{
     test -L $f && f=$(readlink -f $f)
     case $(mimeo -m $f | tail -n1 | tr -d "[:blank:]") in
         text/*) $EDITOR $fx;;
+        audio/midi) timidity $fx;;
         audio/*) mplayer $fx;;
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
