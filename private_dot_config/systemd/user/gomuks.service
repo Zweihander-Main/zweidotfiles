@@ -1,0 +1,17 @@
+[Unit]
+Description=Gomuks in a separate tmux session
+Documentation=man:irssi(1)
+Wants=wait-for-dns.service dunst.service tray.service
+After=wait-for-dns.service dunst.service tray.service
+ConditionFileIsExecutable=/usr/bin/tmux
+ConditionFileIsExecutable=/usr/bin/gomuks
+
+[Service]
+Type=forking
+TimeoutSec=5
+WorkingDirectory=~
+ExecStart=/usr/bin/tmux -L gomuks -2 new-session -A -d -s gomuks /usr/bin/gomuks 
+ExecStop=/usr/bin/timeout 3 /usr/bin/tmux -L gomuks kill-session -t gomuks 
+
+[Install]
+WantedBy=wm.target
