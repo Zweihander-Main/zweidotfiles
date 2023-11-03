@@ -14,7 +14,6 @@
   "editor.minimap.showSlider": "always",
   "editor.minimap.maxColumn": 80,
   "editor.fontSize": 15,
-  "workbench.activityBar.visible": true,
   "workbench.colorTheme": "Monokai Night",
   "git.autofetch": true,
   "update.mode": "none",
@@ -179,4 +178,7 @@
     "<C-z>": false,
     "<C-p>": false
   },
+  "cSpell.enableFiletypes": [
+    "mdx"
+  ],
 }
