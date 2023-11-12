@@ -38,6 +38,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
+# Ensure logging dir exists
+mkdir -p ~/.local/share/xorg
+
 # Set typematic delay [rate] -- default 660ms held, 25Hz repeat rate
 xset r rate 275 70
 
