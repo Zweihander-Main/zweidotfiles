@@ -258,6 +258,15 @@ zinit wait'0b' lucid for \
     lbin'!moar* -> moar' \
     @walles/moar
 
+# neofetch (rice)
+zinit wait'0b' lucid for \
+    as'program' \
+    atpull'%atclone' \
+    make"-j PREFIX=${ZPFX} install > /dev/null" \
+    pick"neofetch" \
+    lbin'!neofetch' \
+  dylanaraps/neofetch
+
 {{- else }}
 
 
