@@ -1,0 +1,7 @@
+#!/usr/bin/zsh -f
+
+# Version of chezmoi edit that works with emacsclient -nc2
+chedit() {
+    VISUAL='emacsclient -c' chezmoi edit --hardlink=false "$1" 2>/dev/null
+    chezmoi apply "$1"
+}

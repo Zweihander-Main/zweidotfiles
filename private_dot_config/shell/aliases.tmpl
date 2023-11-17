@@ -71,7 +71,6 @@ alias gomuksattach='tmux -L gomuks attach'
 alias watts="apcaccess status | awk -F', *|: *' '/LOADPCT/{a=\$2}/NOMPOWER/{b=\$2}END{print (a/100)*b}'"
 
 # Chezmoi related
-alias chedit='chezmoi edit --apply'
 alias ohmyzshupdate='cd /tmp; \
 		    curl -s -L -o oh-my-zsh-master.tar.gz https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz; \
 		    chezmoi import --strip-components 1 --destination "${XDG_CONFIG_HOME}/zsh/oh-my-zsh" oh-my-zsh-master.tar.gz; \
