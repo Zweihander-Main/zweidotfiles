@@ -75,6 +75,15 @@ map g<delete> delete
 map gc calcdirsize
 map ~ select "~"
 
+# mkdir
+cmd mkdir %{{
+    printf "New directory: "
+    read ans
+    mkdir $ans
+    lf -remote "send $id select \"$ans\""
+}}
+map gm mkdir
+
 # extract the current file with the right command
 cmd extract ${{
     set -f
