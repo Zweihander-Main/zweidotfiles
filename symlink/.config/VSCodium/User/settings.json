@@ -150,7 +150,7 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false,
-    "yaml": false,
+    "yaml": true,
     "jsonc": true
   },
   "[jsonc]": {
@@ -181,4 +181,5 @@
   "cSpell.enableFiletypes": [
     "mdx"
   ],
+  "diffEditor.ignoreTrimWhitespace": false,
 }
