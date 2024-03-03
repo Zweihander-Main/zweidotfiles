@@ -1,7 +1,19 @@
 [general]
-shell = ""
+no_shell = false
+shell = "zsh"
 shell_options = ""
 
 [keymap]
 
 [color]
+# background=""
+# contrast_background=""
+# more_contrast_background=""
+border="darkred"
+title="darkred"
+# graphics=""
+text="white"
+# secondary_text=""
+# tertiary_text=""
+# inverse_text=""
+# contrast_secondary_text=""
