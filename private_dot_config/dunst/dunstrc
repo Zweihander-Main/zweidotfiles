@@ -17,6 +17,10 @@
     # will be ignored.
     follow = mouse
 
+
+    # For filtering
+    enable_posix_regex = true
+
     ### Geometry ###
 
     # dynamic width from 0 to 300
@@ -425,19 +429,19 @@
 #
 
 [ignore-timekpra-screensaver]
-    body = "Feature \"screensaver\", which is used to detect idle time, cannot be enabled!*"
+    body = "Feature \"screensaver\", which is used to detect idle time, cannot be enabled!.*"
     skip_display = true
 
 [ignore-irssi-reconnecting]
-    body = "IRC connection timed out.*"
+    body = ".*IRC connection timed out.*"
     skip_display = true
 
 [ignore-irssi-disconnected]
-    body = "Disconnected from IRC (Connection aborted).*"
+    body = ".*Disconnected from IRC.*"
     skip_display = true
 
 [log-all-notifications]
-    summary = "*"
+    summary = ".*"
     script = ~/.local/bin/log_dunst
 
 [pa-notify]
