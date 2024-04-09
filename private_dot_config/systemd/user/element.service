@@ -1,6 +1,7 @@
 [Unit]
 Description=Element Matrix Client
-Wants=keepassxc.service tray.service
+Wants=keepassxc.service
+Requires=keepassxc.service
 After=keepassxc.service tray.service
 
 [Service]
