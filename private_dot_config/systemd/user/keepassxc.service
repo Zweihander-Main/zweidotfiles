@@ -9,8 +9,7 @@ Restart=always
 RestartSec=10s
 ExecStartPre=%h/.local/bin/wait-for-keepassxc-requirements
 ExecStart=%h/.local/bin/start_keepassxc
-# Make sure keepass has been given a chance to login for units dependent on it
-ExecStartPost=/usr/bin/sleep 15
+ExecStartPost=%h/.local/bin/wait-for-database
 
 [Install]
 WantedBy=wm.target
