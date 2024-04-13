@@ -267,6 +267,14 @@ zinit wait'0b' lucid for \
     lbin'!neofetch' \
   dylanaraps/neofetch
 
+# autojump (fasted cd)
+if [[ $(command -v 'python') ]]; then
+    zinit wait'0b' lucid for \
+        as'program' id-as'autojump'\
+        atclone"python install.py -d ${ZPFX}> /dev/null" \
+        atload"source ${ZPFX}/etc/profile.d/autojump.sh" \
+        @wting/autojump
+fi
 {{- else }}
 
 
@@ -291,6 +299,7 @@ if [[ $(command -v 'mcfly-fzf') ]]; then
         atload'eval "$(mcfly-fzf init zsh)"' \
         "https://github.com/zdharma-continuum/null"
 fi
+
 {{- end }}
 
 # Pre-installed programs
