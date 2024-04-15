@@ -1,0 +1,12 @@
+[Unit]
+Description=PCManFM daemon mode
+Documentation=man:pcmanfm(1)
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pcmanfm -d
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=wm.target
