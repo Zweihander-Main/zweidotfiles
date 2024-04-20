@@ -1,0 +1,76 @@
+# -*-mode:gitignore-*- vim:ft=gotmpl.gitignore
+
+# =================
+#   Avoid in path
+# =================
+
+*.gz
+LICENSE
+README.md
+README.org
+NOTES.org
+.git/
+.gitattributes
+.gitignore
+.gitmodules
+.ssh/environment
+
+{{/* Crypt only */}}
+{{- if ne .enable_crypt "true"}}
+.ssh
+.local/share/gnupg
+.local/share/apparish/apparixrc
+.config/rclone
+.config/isync
+.config/npm
+.config/notmuch
+{{- end }}
+{{/* End crypt enabled */}}
+
+# =================
+#     Symlink
+# =================
+
+Roaming/VSCodium/User/settings.json
+
+# =================
+#   OS Specific 
+# =================
+
+{{/* *nix only */}}
+{{- if eq .chezmoi.os "windows"}}
+/.config
+/.local
+.profile
+.zshenv
+{{- end }}
+{{/* End *nix only */}}
+
+{{/* Arch only */}}
+{{- if ne .osid "linux-arch" }}
+.xinitrc
+{{- end }}
+{{/* End Arch only */}}
+
+{{/* Windows only */}}
+{{- if ne .chezmoi.os "windows" }}
+Documents
+AppData
+.workspacer
+
+    {{/* WSL only */}}
+    {{- if .osid | regexMatch "-microsoft-standard$"}}
+    {{- end }}
+    {{/* End WSL only */}}
+
+{{- end }}
+{{/* End Windows only */}}
+
+# =================
+#   Comp Specific
+# =================
+
+{{- if eq .chezmoi.hostname "Hostname" }}
+{{- end}}
+
+
