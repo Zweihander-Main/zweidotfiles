@@ -1,7 +1,7 @@
 # -*-mode:gitignore-*- vim:ft=gitignore
 
 # =================
-#      General
+#  Avoid importing
 # =================
 
 # General files
@@ -91,9 +91,3 @@ AppData/Roaming/VSCodium
 {{- end }} # End Aethelweard
 
 
-# ==========
-#    Old
-# ==========
-
-# Archived files -- no longer used
-archive
