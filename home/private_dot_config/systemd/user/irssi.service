@@ -4,18 +4,21 @@ Documentation=man:irssi(1)
 Wants=wait-for-dns.service dunst.service
 After=wait-for-dns.service dunst.service
 ConditionFileIsExecutable=/usr/bin/tmux
+ConditionFileIsExecutable=/usr/bin/irssi
+ConditionFileIsExecutable=/usr/bin/timeout
+ConditionPathExists=%h/.config/irssi/config
 
 [Service]
 Type=forking
 TimeoutSec=5
 WorkingDirectory=~
-ExecStart=/usr/bin/tmux -L irssi -2 new-session -A -d -s irssi /usr/bin/irssi --config=%h/.config/irssi/config --home=%h/.local/share/irssi
+ExecStart=tmux -L irssi -2 new-session -A -d -s irssi irssi --config=%h/.config/irssi/config --home=%h/.local/share/irssi
 # Send CTRL+u to clear the input line before /quit
-ExecStop=-/usr/bin/tmux -L irssi send-keys -t irssi:1 C-u
-ExecStop=-/usr/bin/tmux -L irssi send-keys -t irssi:1 "/quit" Enter
+ExecStop=-tmux -L irssi send-keys -t irssi:1 C-u
+ExecStop=-tmux -L irssi send-keys -t irssi:1 "/quit" Enter
 # Sending /quit to irssi is asynchronous, so wait for irssi to exit
 # before killing the session in tmux
-ExecStop=/usr/bin/timeout 3 /usr/bin/tmux -L irssi kill-session -t irssi
+ExecStop=timeout 3 tmux -L irssi kill-session -t irssi
 
 [Install]
 WantedBy=wm.target

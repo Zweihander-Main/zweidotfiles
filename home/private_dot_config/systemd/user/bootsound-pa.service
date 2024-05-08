@@ -2,11 +2,13 @@
 Description=bootsound with pulse
 Wants=sound.service
 After=sound.service
+ConditionFileIsExecutable=!/usr/bin/paplay
+ConditionPathExists=!/usr/share/sounds/bootsounds/windows_95-boot.wav
 
 [Service]
 Type=oneshot
 RemainAfterExit=no
-ExecStart=/usr/bin/paplay /usr/share/sounds/bootsounds/windows_95-boot.wav
+ExecStart=paplay /usr/share/sounds/bootsounds/windows_95-boot.wav
 
 [Install]
 WantedBy=wm.target

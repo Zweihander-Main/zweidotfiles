@@ -2,12 +2,13 @@
 Description=Timekpr-nExT client application (for notifications)
 Wants=tray.service
 After=tray.service
+ConditionFileIsExecutable=/usr/bin/timekprc
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=20s
-ExecStart=/usr/bin/timekprc
+ExecStart=timekprc
 
 [Install]
 WantedBy=wm.target

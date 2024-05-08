@@ -3,15 +3,18 @@ Description=Mumble Daemon
 Requires=sound.service wait-for-dns.service
 Wants=tray.service
 After=sound.service tray.service wait-for-dns.service
+ConditionFileIsExecutable=/usr/bin/sleep
+ConditionFileIsExecutable=/usr/bin/mumble
+ConditionFileIsExecutable=/usr/bin/xdotool
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=10s
-ExecStartPre=/usr/bin/sleep 3
-ExecStart=/usr/bin/mumble
-ExecStartPost=/usr/bin/sleep 3
-ExecStartPost=/usr/bin/xdotool search --sync --class mumble windowactivate windowfocus key --delay 150 --clearmodifiers --repeat 3 alt+e+h
+ExecStartPre=sleep 3
+ExecStart=mumble
+ExecStartPost=sleep 3
+ExecStartPost=xdotool search --sync --class mumble windowactivate windowfocus key --delay 150 --clearmodifiers --repeat 3 alt+e+h
 
 [Install]
 WantedBy=wm.target

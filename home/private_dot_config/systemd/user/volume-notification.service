@@ -3,13 +3,15 @@ Description=Volume notification (by pa-notify)
 Requires=sound.service
 Wants=dunst.service
 After=dunst.service sound.service
+ConditionFileIsExecutable=/usr/bin/sleep
+ConditionFileIsExecutable=/usr/bin/pa-notify
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=10s
-ExecStartPre=/usr/bin/sleep 2
-ExecStart=/usr/bin/pa-notify
+ExecStartPre=sleep 2
+ExecStart=pa-notify
 
 [Install]
 WantedBy=wm.target

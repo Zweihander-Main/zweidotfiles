@@ -1,16 +1,19 @@
 [Unit]
 Description=Volume notification (provided by pa-notify)
 PartOf=graphical-session.target
+ConditionFileIsExecutable=!/usr/bin/sleep
+ConditionFileIsExecutable=!/usr/bin/dunstctl
+ConditionFileIsExecutable=!/usr/bin/dunst
 
 [Service]
 Type=dbus
 BusName=org.freedesktop.Notifications
 Restart=always
 RestartSec=5s
-ExecStart=/usr/bin/dunst
+ExecStart=dunst
 # Make sure notifications aren't paused on start
-ExecStartPost=/usr/bin/sleep 2
-ExecStartPost=/usr/bin/dunstctl set-paused false
+ExecStartPost=sleep 2
+ExecStartPost=dunstctl set-paused false
 
 [Install]
 WantedBy=wm.target

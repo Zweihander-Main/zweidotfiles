@@ -2,12 +2,13 @@
 Description=Start UI of opensnitch application firewall
 Requires=tray.service
 After=tray.service
+ConditionFileIsExecutable=/usr/bin/opensnitch-ui
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/opensnitch-ui
+ExecStart=opensnitch-ui
 
 [Install]
 WantedBy=wm.target

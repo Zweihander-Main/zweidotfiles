@@ -1,11 +1,12 @@
 [Unit]
 Description=Activity Watch server
+ConditionFileIsExecutable=/usr/bin/aw-server
 
 [Service]
 Type=exec
 Restart=on-failure
 RestartSec=20s
-ExecStart=/usr/bin/aw-server
+ExecStart=aw-server
 
 [Install]
 WantedBy=wm.target

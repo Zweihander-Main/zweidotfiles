@@ -2,12 +2,13 @@
 Description=Activity Watch watcher for active window and title
 Requires=aw-server.service
 After=aw-server.service
+ConditionFileIsExecutable=/usr/bin/aw-watcher-window
 
 [Service]
 Type=exec
 Restart=on-failure
 RestartSec=20s
-ExecStart=/usr/bin/aw-watcher-window
+ExecStart=aw-watcher-window
 
 [Install]
 WantedBy=wm.target

@@ -1,10 +1,11 @@
 [Unit]
 Description=PCManFM daemon mode
 Documentation=man:pcmanfm(1)
+ConditionFileIsExecutable=/usr/bin/pcmanfm
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/pcmanfm -d
+ExecStart=pcmanfm -d
 Restart=always
 RestartSec=10s
 

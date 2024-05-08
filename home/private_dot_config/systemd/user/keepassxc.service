@@ -2,6 +2,10 @@
 Description=KeepassXC Password Manager
 Wants=tray.service wait-for-dns.service
 After=tray.service wait-for-dns.service
+ConditionFileIsExecutable=/usr/bin/keepassxc
+ConditionFileIsExecutable=%h/.local/bin/wait-for-keepassxc-requirements
+ConditionFileIsExecutable=%h/.local/bin/start_keepassxc
+ConditionFileIsExecutable=%h/.local/bin/wait-for-database
 
 [Service]
 Type=exec

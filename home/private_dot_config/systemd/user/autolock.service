@@ -1,5 +1,6 @@
 [Unit]
 Description=Lock computer, checking if it's already locked
+ConditionFileIsExecutable=%h/.local/bin/check_i3lock
 
 [Service]
 Type=oneshot

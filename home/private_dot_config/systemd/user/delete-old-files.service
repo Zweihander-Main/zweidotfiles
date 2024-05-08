@@ -2,6 +2,7 @@
 Description=delete old files upon startup
 Requires=mnt-osiris.mount
 After=mnt-osiris.mount
+ConditionFileIsExecutable=%h/.local/bin/delete_old_files
 
 [Service]
 Type=oneshot

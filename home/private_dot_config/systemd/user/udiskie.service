@@ -3,10 +3,11 @@ Description=Auto mounting with Udiskie -- usb/udisk manager
 Documentation=man:udiskie(8)
 Wants=tray.service
 After=tray.service
+ConditionFileIsExecutable=/usr/bin/udiskie
 
 [Service]
 Type=exec
-ExecStart=/usr/bin/udiskie
+ExecStart=udiskie
 Restart=always
 RestartSec=5s
 

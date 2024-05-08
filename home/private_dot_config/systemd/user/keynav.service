@@ -1,12 +1,13 @@
 [Unit]
 Description=Keynav mouse-free application
 PartOf=graphical-session.target
+ConditionFileIsExecutable=/usr/bin/keynav
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/keynav
+ExecStart=keynav
 
 [Install]
 WantedBy=wm.target

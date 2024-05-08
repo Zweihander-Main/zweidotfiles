@@ -1,6 +1,9 @@
 [Unit]
 Description=System tray using stalonetray
 PartOf=graphical-session.target
+ConditionFileIsExecutable=/usr/bin/sleep
+ConditionFileIsExecutable=/usr/bin/stalonetray
+ConditionFileIsExecutable=%h/.config/stalonetray/stalonetrayrc
 
 [Service]
 Type=exec
@@ -8,7 +11,7 @@ Restart=always
 RestartSec=5s
 ExecStart=stalonetray -c %h/.config/stalonetray/stalonetrayrc
 # Make sure it's fully loaded before dependencies get going
-ExecStartPost=/usr/bin/sleep 1
+ExecStartPost=sleep 1
 
 [Install]
 WantedBy=wm.target

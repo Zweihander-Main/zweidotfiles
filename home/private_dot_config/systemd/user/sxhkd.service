@@ -2,11 +2,12 @@
 Description=simple X hotkey daemon
 Documentation=man:sxhkd(1)
 PartOf=graphical-session.target
+ConditionFileIsExecutable=/usr/bin/sxhkd
 
 [Service]
 Type=exec
 RestartSec=10s
-ExecStart=/usr/bin/sxhkd
+ExecStart=sxhkd
 Restart=always
 
 [Install]

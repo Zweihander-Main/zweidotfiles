@@ -2,10 +2,11 @@
 Description=Redshift display colour temperature adjustment
 Documentation=man:redshift(1)
 PartOf=graphical-session.target
+ConditionFileIsExecutable=/usr/bin/redshift
 
 [Service]
 Type=exec
-ExecStart=/usr/bin/redshift
+ExecStart=redshift
 Restart=always
 RestartSec=10s
 

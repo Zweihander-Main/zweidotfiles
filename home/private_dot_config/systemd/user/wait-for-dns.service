@@ -2,6 +2,7 @@
 Description=Wait for DNS
 Requires=sys-subsystem-net-devices-enp68s0.device
 After=sys-subsystem-net-devices-enp68s0.device
+ConditionFileIsExecutable=/usr/bin/host
 
 [Service]
 Type=oneshot

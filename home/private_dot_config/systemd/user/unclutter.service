@@ -1,12 +1,13 @@
 [Unit]
 Description=Hide mouse cursor with unclutter
 Documentation=man:unclutter-xfixes(1)
+ConditionFileIsExecutable=/usr/bin/unclutter
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=10s
-ExecStart=/usr/bin/unclutter --timeout 1
+ExecStart=unclutter --timeout 1
 
 [Install]
 WantedBy=wm.target

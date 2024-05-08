@@ -3,12 +3,13 @@ Description=Copyq clipboard manager
 Documentation=man:copyq(1)
 Wants=tray.service
 After=tray.service
+ConditionFileIsExecutable=/usr/bin/copyq
 
 [Service]
 Type=exec
 RestartSec=20s
 Restart=always
-ExecStart=/usr/bin/copyq
+ExecStart=copyq
 
 [Install]
 WantedBy=wm.target

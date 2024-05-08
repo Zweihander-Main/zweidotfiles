@@ -2,12 +2,13 @@
 Description=Element Matrix Client
 Requires=keepassxc.service
 After=keepassxc.service tray.service
+ConditionFileIsExecutable=/usr/bin/element-desktop
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=20s
-ExecStart=/usr/bin/element-desktop --hidden
+ExecStart=element-desktop --hidden
 
 [Install]
 WantedBy=wm.target
