@@ -3,7 +3,7 @@ Description=System tray using stalonetray
 PartOf=graphical-session.target
 ConditionFileIsExecutable=/usr/bin/sleep
 ConditionFileIsExecutable=/usr/bin/stalonetray
-ConditionFileIsExecutable=%h/.config/stalonetray/stalonetrayrc
+ConditionPathExists=%h/.config/stalonetray/stalonetrayrc
 
 [Service]
 Type=exec
