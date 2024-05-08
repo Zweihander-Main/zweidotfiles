@@ -1,9 +1,9 @@
 [Unit]
 Description=Volume notification (provided by pa-notify)
 PartOf=graphical-session.target
-ConditionFileIsExecutable=!/usr/bin/sleep
-ConditionFileIsExecutable=!/usr/bin/dunstctl
-ConditionFileIsExecutable=!/usr/bin/dunst
+ConditionFileIsExecutable=/usr/bin/sleep
+ConditionFileIsExecutable=/usr/bin/dunstctl
+ConditionFileIsExecutable=/usr/bin/dunst
 
 [Service]
 Type=dbus
