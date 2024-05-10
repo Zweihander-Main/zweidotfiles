@@ -268,6 +268,13 @@ zinit wait'0b' lucid for \
     lbin'!neofetch' \
   dylanaraps/neofetch
 
+# sd (sed replacement)
+zinit wait'0b' lucid for \
+    from'gh-r' as'program' id-as'sd'\
+    mv'sd*/sd -> sd' \
+    lbin'!sd' \
+    @chmln/sd
+
 # autojump (fasted cd)
 if [[ $(command -v 'python') ]]; then
     zinit wait'0b' lucid for \
