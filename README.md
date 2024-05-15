@@ -16,7 +16,7 @@
 
 ## Usage
 
-Powered by [chezmoi](https://github.com/twpayne/chezmoi). 
+Powered by [chezmoi](https://github.com/twpayne/chezmoi). Currently split with nix home-manager.
 
 ## Available for Hire
 
