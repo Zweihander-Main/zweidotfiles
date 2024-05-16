@@ -12,15 +12,17 @@ in {
     # for ctpv in lf
     ctpv
     exiftool
+    glibcLocales # for exiftool
     atool
     ffmpegthumbnailer
-    ueberzugpp
+    # ueberzugpp # not working atm, install locally
     chafa
     jq
     glow
   ];
 
   xdg.configFile."lf/lfrc".source = ./lfrc;
+  xdg.configFile."ctpv/config".source = ./ctpv.config;
 }
 
 

@@ -142,157 +142,12 @@ zinit wait'0c' lucid for \
     sed -i 's/apx_silent bind -q menu-complete/true/g' apparish" \
     'https://raw.githubusercontent.com/micans/apparix/main/.bourne-apparix'
 
-{{- if eq .install_shell_apps "true" }}
-
-# Navi (cheat sheets)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'navi' \
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!navi' \
-    atload'eval "$(navi widget zsh)"' \
-    @denisidoro/navi
-
-# Broot (ls --tree)
-local broot_url='https://dystroy.org/broot/download/x86_64-linux/broot'
-if [[ "${ZSH_ARCH}" == "aarch64" ]]; then
-    broot_url='https://dystroy.org/broot/download/aarch64-linux-android/broot'
-fi
-zinit wait'0b' lucid for id-as'broot' \
-    as'program' lbin'!broot' \
-    $broot_url
-
-# Delta (diff viewer)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'delta'\
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!delta/delta' \
-    mv'delta-* -> delta' \
-    pick'delta/delta' \
-    @dandavison/delta
-
-# Ripgrep (grep replacement)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'rg' \
-    pick'rg' bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!rg' \
-    @microsoft/ripgrep-prebuilt \
-    from'gh-r' id-as'rg-man' as'completion' \
-    nocompile \
-    mv'ripgrep-* -> ripgrep' \
-    atclone'ln -nsf "$PWD"/ripgrep/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
-    atpull'%atclone' \
-    @BurntSushi/ripgrep
-
-# Bat (cat replacement)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'bat' \
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" pick'bat' lbin'!bat' \
-    atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
-    atclone'cp -f bat*/bat bat' \
-    atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
-    atpull'%atclone' \
-    @sharkdp/bat
-
-# fd (find replacement)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'fd' \
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!files/fd' \
-    mv'fd-* -> files' \
-    pick'files/fd' \
-    atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
-    atpull'%atclone' \
-    @sharkdp/fd
-
-# McFly (sqlite history)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'mcfly'\
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!mcfly' \
-    atload'eval "$(mcfly init zsh)"' \
-    @cantino/mcfly
-
-# FZF (fuzzy finder), tabs (completion replacement) - should be after completions
-zinit wait'0a' lucid \
-    from'gh-r' as'program' id-as'fzf'\
-    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux > fzf-tmux' \
-    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh > completion.zsh' \
-    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh > key-bindings.zsh' \
-    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 > fzf-tmux.1' \
-    atclone'curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 > fzf.1' \
-    atclone'mkdir -p $ZPFX/{bin,man/man1}' \
-    atclone'ln -nsvf *.1 "${ZINIT[MAN_DIR]}/man1"' \
-    atclone'chmod +x fzf-tmux' \
-    atpull'%atclone' \
-    pick'/dev/null' lbin'!fzf' lbin'!fzf-tmux' \
-    multisrc'key-bindings.zsh' \
-    multisrc'completion.zsh' \
-    for @junegunn/fzf
-
-# McFly-FZF integration
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'mcfly-fzf' \
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!mcfly-fzf' \
-    atload'eval "$(mcfly-fzf init zsh)"' \
-    @bnprks/mcfly-fzf
-
-# LSD (ls replacement)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'lsd'\
-    mv'lsd* -> lsd' \
-    bpick"*${ZSH_ARCH:-x86_64}*linux*" lbin'!lsd/lsd' \
-    pick'lsd/lsd' \
-    atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
-    @lsd-rs/lsd
-
-# lf (file manager)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'lf' \
-    lbin'!lf' \
-    @gokcehan/lf
-
-# viddy (watch replacement)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'viddy' \
-    lbin'!viddy' \
-    @sachaos/viddy
-
-# moar (pager)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'moar' \
-    bpick"*linux*86*" \
-    lbin'!moar* -> moar' \
-    @walles/moar
-
-# neofetch (rice)
-zinit wait'0b' lucid for \
-    as'program' \
-    atpull'%atclone' \
-    make"-j PREFIX=${ZPFX} install > /dev/null" \
-    pick"neofetch" \
-    lbin'!neofetch' \
-  dylanaraps/neofetch
-
-# sd (sed replacement)
-zinit wait'0b' lucid for \
-    from'gh-r' as'program' id-as'sd'\
-    mv'sd*/sd -> sd' \
-    lbin'!sd' \
-    @chmln/sd
-
-# autojump (fasted cd)
-if [[ $(command -v 'python') ]]; then
-    zinit wait'0b' lucid for \
-        as'program' id-as'autojump'\
-        atclone"python install.py -d ${ZPFX}> /dev/null" \
-        atload"source ${ZPFX}/etc/profile.d/autojump.sh" \
-        @wting/autojump
-fi
-{{- else }}
-
-
 if [[ $(command -v 'navi') ]]; then
     zinit wait'0c' lucid light-mode for \
         as"program" id-as'load-scripts-navi' \
         atload'eval "$(navi widget zsh)"' \
         "https://github.com/zdharma-continuum/null"
 fi
-
 
 if [[ $(command -v 'mcfly') ]]; then
     zinit wait'0c' lucid light-mode for \
@@ -308,16 +163,25 @@ if [[ $(command -v 'mcfly-fzf') ]]; then
         "https://github.com/zdharma-continuum/null"
 fi
 
-{{- end }}
-
-# Pre-installed programs
-if [[ $(command -v 'thefuck') ]]; then
-    zinit ice lucid wait'1' for id-as'thefuck' \
-        laggardkernel/zsh-thefuck
+if [[ $(command -v 'autojump') ]]; then
+    zinit wait'0c' lucid light-mode for \
+        as'program' id-as'load-script-autojump'\
+        atload"source $(readlink ${XDG_STATE_HOME}/nix/profile/etc/profile.d/autojump.sh)" \
+        "https://github.com/zdharma-continuum/null"
 fi
-if [ -f "${XDG_CONFIG_HOME}/broot/launcher/bash/br" ]; then
-    zinit ice lucid wait'0b' for id-as'broot' \
-        "${XDG_CONFIG_HOME}/broot/launcher/bash/br"
+
+if [[ $(command -v 'thefuck') ]]; then
+    zinit wait'0c' lucid light-mode for \
+        as'program' id-as'load-script-thefuck'\
+        atload'eval "$(thefuck --alias)"' \
+        "https://github.com/zdharma-continuum/null"
+fi
+
+if [[ $(command -v 'broot') ]]; then
+    zinit wait'0c' lucid light-mode for \
+        as'program' id-as'load-script-broot'\
+        atload"source $(readlink ${XDG_STATE_HOME}/nix/profile/etc/profile.d/br.bash)" \
+        "https://github.com/zdharma-continuum/null"
 fi
 
 # end=$(date "+%s.%N")

@@ -7,25 +7,31 @@
 }: let 
   homeDir = config.home.homeDirectory;
 in {
+  imports = [
+    ./lf        # file manager
+  ];
+
   home.packages = with pkgs; [
-    bat
-    broot
-    delta
-    fd
-    fzf
-    lsd
-    mcfly
-    navi
-    ripgrep
-    viddy
-    zsh-fzf-tab
-    moar
-    neofetch
-    autojump
-    mcfly-fzf
+    autojump    # cd enhancement
+    bat         # cat++
+    broot       # ls --tree
+    delta       # diff viewer
+    fd          # find replacement
+    fzf         # fuzzy finder
+    lsd         # ls replacement
+    mcfly       # history enhancement
+    mcfly-fzf   # mcfly fzf integration
+    moar        # pager replacement
+    navi        # cheat sheets
+    neofetch    # rice
+    ripgrep     # grep replacement
+    sd          # sed replacement
+    thefuck     # correct prev command
+    viddy       # watch replacement
   ];
 }
 
-
-
-
+  # TODO bat port
+  # TODO navi port
+  # TODO neofetch port and replacement
+  # TODO viddy port

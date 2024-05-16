@@ -8,7 +8,7 @@
   ...
 }: {
   imports = [
-#    ./coreutils.nix
+    ./coreutils.nix
   ];
 
   nixpkgs = {
