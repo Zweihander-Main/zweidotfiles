@@ -167,87 +167,49 @@ wget
 xz
 zip
 #+end_src
-* Shell-related programs installed by ~.install_shell_apps = "true"~
-** Debian
+* Nix setup
+** Arch
 #+begin_src shell
-sudo apt -y install \
-    bat \
-    fd-find \
-    fzf \
-    ripgrep \
-    autojump \
-    sd
-cd /tmp
-curl -s https://api.github.com/repos/lsd-rs/lsd/releases/latest \
-    | grep "browser_download_url.*${ZSH_ARCH}.*deb" \
-    | cut -d : -f 2,3 \
-    | tr -d \" \
-    | head -n1 \
-    | wget -qi -
-sudo apt install ./lsd*.deb
-curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
-    | grep "browser_download_url.*${ZSH_ARCH}.*deb" \
-    | cut -d : -f 2,3 \
-    | tr -d \" \
-    | head -n1 \
-    | wget -qi -
-sudo apt install ./git-delta*.deb
-curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
-    | grep "browser_download_url.*${ZSH_ARCH}.*tar.gz" \
-    | cut -d : -f 2,3 \
-    | tr -d \" \
-    | head -n1 \
-    | wget -qi -
-curl -s https://api.github.com/repos/sachaos/viddy/releases/latest \
-    | grep "browser_download_url.*Linux.*${ZSH_ARCH}.*tar.gz" \
-    | cut -d : -f 2,3 \
-    | tr -d \" \
-    | head -n1 \
-    | wget -qi -O viddy.tar.gz - \
-    && tar xvf viddy.tar.gz && mv viddy /usr/local/bin
-sudo curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | \
-    sudo sh -s -- --git cantino/mcfly
+paru -S nix
+sudo vi /etc/nix/nix.conf
+###########################
+# Fix xdg dirs for home dir
+use-xdg-base-directories = true
+# Enable flakes
+experimental-features = nix-command flakes
+# Use available cores
+max-jobs = auto
+###########################
+sudo systemctl enable --now nix-daemon.service
+sudo usermod -aG nix-users zwei
+nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
+rm -r ~/.config/home-manager
+ln -s ~/.local/share/chezmoi/nix ~/.config/home-manager
+home-manager switch --flake .#zwei@linux
 #+end_src
-- Missing navi, broot, mcfly-fzf, lf
 ** Alpine
 #+begin_src shell
-doas apk --update add \
-    bat \
-    broot \
-    delta \
-    fd \
-    fzf \
-    lf \
-    mcfly \
-    ripgrep \
-    viddy \
-    sd
-
-doas apk --update \
-    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ add \
-    lsd \
-    zsh-fzf-tab
-
-doas apk --update \
-    --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ add \
-    navi
-#+end_src
-- Missing: https://github.com/bnprks/mcfly-fzf
-** Nix
-#+begin_src nix
-bat
-broot
-delta
-fd
-fzf
-lf
-lsd
-mcfly
-navi
-ripgrep
-viddy
-zsh-fzf-tab
-autojump
-sd
-#+end_src
-- Missing: https://github.com/bnprks/mcfly-fzf
+apk add nix --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
+doas vi /etc/nix/nix.conf
+###########################
+# Fix xdg dirs for home dir
+use-xdg-base-directories = true
+# Enable flakes
+experimental-features = nix-command flakes
+# Add local user
+allowed-users = zwei
+###########################
+doas /etc/init.d/nix-daemon start
+doas rc-update add nix-daemon
+nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --update
+export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
+nix-shell '<home-manager>' -A install
+rm -r ~/.config/home-manager
+ln -s ~/.local/share/chezmoi/nix ~/.config/home-manager
+home-manager switch --flake .#zwei@linux

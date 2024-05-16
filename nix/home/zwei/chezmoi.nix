@@ -18,7 +18,6 @@ in {
     "data": {
         "enable_crypt": "false",
         "org_directory": "${homeDir}/org",
-        "install_shell_apps": "false",
         "osid": "linux-nixos"
     },
     "encryption": "gpg",

@@ -93,12 +93,6 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-{{- if eq .install_shell_apps "true" }}
-
-zinit light zdharma-continuum/zinit-annex-binary-symlink
-
-{{- end }}
-
 PS1='>' # provide a simple prompt till the theme loads
 zinit wait'!0a' lucid for \
     OMZL::git.zsh \

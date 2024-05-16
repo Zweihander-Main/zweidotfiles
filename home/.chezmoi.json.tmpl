@@ -2,7 +2,6 @@
 {{- if hasKey .chezmoi.osRelease "id" -}}
 {{- $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
-{{- $install_shell_apps := promptBool "true/false to get zinit to install programs (false to manually install)" }}
 {{- $enable_crypt := promptBool "true/false to enable encrypted files" }}
 {{- $gpg_recipient := promptString "gpg recipient" }}
 {{- $org_directory := promptString "directory for org files" }}
@@ -10,7 +9,6 @@
     "data": {
         "enable_crypt": "{{ $enable_crypt }}",
         "org_directory": "{{ $org_directory }}",
-        "install_shell_apps": "{{ $install_shell_apps }}",
         "osid": "{{ $osid }}"
     },
     "encryption": "gpg",
