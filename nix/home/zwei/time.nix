@@ -27,6 +27,10 @@ in {
     Timer = {
       OnCalendar = "1:00";
     };
+
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
   };
 }
 
