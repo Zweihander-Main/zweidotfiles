@@ -168,25 +168,53 @@ xz
 zip
 #+end_src
 * Nix setup
-** Arch
+** Debian
 #+begin_src shell
-paru -S nix
+sudo sh <(curl -L https://nixos.org/nix/install) --daemon --yes --no-channel-add --no-modify-profile
 sudo vi /etc/nix/nix.conf
-###########################
+#+end_src
+#+begin_src conf
 # Fix xdg dirs for home dir
 use-xdg-base-directories = true
 # Enable flakes
 experimental-features = nix-command flakes
 # Use available cores
 max-jobs = auto
-###########################
+#+end_src
+#+begin_src shell
 sudo systemctl enable --now nix-daemon.service
 sudo usermod -aG nix-users zwei
 nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
 nix-channel --update
-nix-shell '<home-manager>' -A install
 export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
+nix-shell '<home-manager>' -A install
+rm -r ~/.config/home-manager
+ln -s ~/.local/share/chezmoi/nix ~/.config/home-manager
+source /etc/profile.d/nix.sh
+home-manager switch --flake .#zwei@linux
+#+end_src
+** Arch
+#+begin_src shell
+paru -S nix
+sudo vi /etc/nix/nix.conf
+#+end_src
+#+begin_src conf
+# Fix xdg dirs for home dir
+use-xdg-base-directories = true
+# Enable flakes
+experimental-features = nix-command flakes
+# Use available cores
+max-jobs = auto
+#+end_src
+#+begin_src shell
+sudo systemctl enable --now nix-daemon.service
+sudo usermod -aG nix-users zwei
+nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --update
+export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
+nix-shell '<home-manager>' -A install
 rm -r ~/.config/home-manager
 ln -s ~/.local/share/chezmoi/nix ~/.config/home-manager
 home-manager switch --flake .#zwei@linux
@@ -195,14 +223,16 @@ home-manager switch --flake .#zwei@linux
 #+begin_src shell
 apk add nix --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 doas vi /etc/nix/nix.conf
-###########################
+#+end_src
+#+begin_src conf
 # Fix xdg dirs for home dir
 use-xdg-base-directories = true
 # Enable flakes
 experimental-features = nix-command flakes
-# Add local user
-allowed-users = zwei
-###########################
+# Use available cores
+max-jobs = auto
+#+end_src
+#+begin_src shell
 doas /etc/init.d/nix-daemon start
 doas rc-update add nix-daemon
 nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
@@ -213,3 +243,4 @@ nix-shell '<home-manager>' -A install
 rm -r ~/.config/home-manager
 ln -s ~/.local/share/chezmoi/nix ~/.config/home-manager
 home-manager switch --flake .#zwei@linux
+#+end_src
