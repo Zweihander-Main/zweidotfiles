@@ -110,6 +110,7 @@ zinit wait'0b' lucid for \
     atload'add-zsh-hook chpwd check_nvmrc_and_use' \
     OMZP::nvm
 zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:alpha:lib:git' async-prompt no
 
 # Bracket Autopair
 zinit wait'0b' lucid for id-as'autopair' @hlissner/zsh-autopair
