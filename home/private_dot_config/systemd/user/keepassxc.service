@@ -8,7 +8,7 @@ ConditionFileIsExecutable=%h/.local/bin/start_keepassxc
 ConditionFileIsExecutable=%h/.local/bin/wait-for-database
 
 [Service]
-Type=exec
+Type=simple
 Restart=always
 RestartSec=10s
 ExecStartPre=%h/.local/bin/wait-for-keepassxc-requirements

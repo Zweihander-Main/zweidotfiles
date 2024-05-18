@@ -5,7 +5,7 @@
 # If not WSL
 {{ if not (.osid | regexMatch "-microsoft-standard$") -}}
 # Start X
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" = "1" ]; then
     exec startx "${XDG_CONFIG_HOME}/x11/xinitrc" -- -keeptty &> "${XDG_DATA_HOME}/xorg/xorg.tty.log" # exec forces it back out when x session dies
 fi
 {{ end -}} # End non-WSL
