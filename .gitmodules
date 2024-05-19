@@ -1,6 +1,6 @@
-[submodule "private_dot_config/bat/syntaxes/Sublime-GenericConfig"]
-	path = private_dot_config/bat/syntaxes/Sublime-GenericConfig
+[submodule "nix/home/zwei/bat/syntaxes/Sublime-GenericConfig"]
+	path = nix/home/zwei/bat/syntaxes/Sublime-GenericConfig
 	url = https://github.com/skozlovf/Sublime-GenericConfig
-[submodule "private_dot_config/bat/themes/sublime-tomorrow-theme"]
-	path = private_dot_config/bat/themes/sublime-tomorrow-theme
+[submodule "nix/home/zwei/bat/themes/sublime-tomorrow-theme"]
+	path = nix/home/zwei/bat/themes/sublime-tomorrow-theme
 	url = https://github.com/theymaybecoders/sublime-tomorrow-theme

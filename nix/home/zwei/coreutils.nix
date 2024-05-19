@@ -9,11 +9,11 @@
 in {
   imports = [
     ./lf        # file manager
+    ./bat       # cat++
   ];
 
   home.packages = with pkgs; [
     autojump    # cd enhancement
-    bat         # cat++
     broot       # ls --tree
     delta       # diff viewer
     fd          # find replacement
@@ -31,7 +31,6 @@ in {
   ];
 }
 
-  # TODO bat port
   # TODO navi port
   # TODO neofetch port and replacement
   # TODO viddy port
