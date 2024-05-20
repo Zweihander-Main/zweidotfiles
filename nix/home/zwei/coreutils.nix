@@ -10,6 +10,9 @@ in {
   imports = [
     ./lf        # file manager
     ./bat       # cat++
+    ./navi      # cheat sheets
+    ./neofetch  # rice
+    ./viddy     # watch replacement
   ];
 
   home.packages = with pkgs; [
@@ -22,15 +25,9 @@ in {
     mcfly       # history enhancement
     mcfly-fzf   # mcfly fzf integration
     moar        # pager replacement
-    navi        # cheat sheets
-    neofetch    # rice
     ripgrep     # grep replacement
     sd          # sed replacement
     thefuck     # correct prev command
-    viddy       # watch replacement
   ];
 }
 
-  # TODO navi port
-  # TODO neofetch port and replacement
-  # TODO viddy port
