@@ -45,6 +45,7 @@
     sysz
     zathura
     unzip
+    sxhkd
     # dev
     gcc 
     python3
