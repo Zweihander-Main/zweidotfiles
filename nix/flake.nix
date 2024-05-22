@@ -54,6 +54,10 @@
         specialArgs = {inherit inputs outputs secrets;};
         modules = [./nixos/aethelweard];
       };
+      droid = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs secrets;};
+        modules = [./nixos/droid];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
