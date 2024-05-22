@@ -4,7 +4,7 @@
   lib,
   secrets,
   ...
-}: let 
+}: let
   homeDir = config.home.homeDirectory;
 in {
   home.packages = with pkgs; [
@@ -24,7 +24,3 @@ in {
   xdg.configFile."lf/lfrc".source = ./lfrc;
   xdg.configFile."ctpv/config".source = ./ctpv.config;
 }
-
-
-
-

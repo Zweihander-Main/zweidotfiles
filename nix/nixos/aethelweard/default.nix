@@ -47,18 +47,18 @@
   networking = {
     hostName = "aethelweard";
     wireless = {
-      enable = true;  # Enables wireless support via wpa_supplicant.
+      enable = true; # Enables wireless support via wpa_supplicant.
       networks = {
         "${secrets.wifi.ssid}" = {
           hidden = secrets.wifi.hidden;
-          psk="${secrets.wifi.password}";
+          psk = "${secrets.wifi.password}";
         };
       };
     };
     # Allows syncthing
     firewall = {
-      allowedTCPPorts = [ 22000 ];
-      allowedUDPPorts = [ 22000 21027 ];
+      allowedTCPPorts = [22000];
+      allowedUDPPorts = [22000 21027];
     };
   };
 
@@ -68,40 +68,41 @@
   # Use the systemd-boot EFI  boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "hid-microsoft" ];
+  boot.kernelModules = ["hid-microsoft"];
 
   users.users = {
     zwei = {
       initialPassword = "changeme";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = [ "${secrets.ssh.authorized_key}" ];
+      openssh.authorizedKeys.keys = ["${secrets.ssh.authorized_key}"];
       shell = pkgs.zsh;
       extraGroups = ["wheel"];
     };
     karlmagnus = {
       initialPassword = "changeme";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = [ "${secrets.ssh.authorized_key}" ];
+      openssh.authorizedKeys.keys = ["${secrets.ssh.authorized_key}"];
       shell = pkgs.zsh;
     };
   };
 
-
   security.sudo = {
     enable = true;
-    extraRules = [{
-		  commands = [
-		  {
-			  command = "${pkgs.acpilight}/bin/xbacklight";
-			  options = [ "NOPASSWD" ];
-		  }
-		  ];
-		  groups = [ "wheel" ];
-	  }];
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "${pkgs.acpilight}/bin/xbacklight";
+            options = ["NOPASSWD"];
+          }
+        ];
+        groups = ["wheel"];
+      }
+    ];
   };
 
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     git
     git-crypt
     findutils
@@ -156,4 +157,3 @@
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
 }
-

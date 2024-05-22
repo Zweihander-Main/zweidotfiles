@@ -4,10 +4,9 @@
   lib,
   secrets,
   ...
-}: let 
+}: let
   homeDir = config.home.homeDirectory;
 in {
-
   home.packages = with pkgs; [
     redshift
     acpilight
@@ -20,7 +19,7 @@ in {
     Unit = {
       Description = "Redshift display color temperature adjustment";
       Documentation = "man:redshift(1)";
-      PartOf = [ "graphical-session.target" ];
+      PartOf = ["graphical-session.target"];
     };
 
     Service = {
@@ -30,9 +29,6 @@ in {
       Restart = "on-failure";
     };
 
-    Install = { WantedBy = [ "wm.target" ]; };
+    Install = {WantedBy = ["wm.target"];};
   };
 }
-
-
-

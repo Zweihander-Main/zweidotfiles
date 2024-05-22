@@ -4,19 +4,14 @@
   lib,
   secrets,
   ...
-}: let 
+}: let
   homeDir = config.home.homeDirectory;
 in {
-
   home.packages = with pkgs; [
-    syncthing 
+    syncthing
   ];
- 
+
   services.syncthing = {
     enable = true;
   };
-   
 }
-
-
-

@@ -4,10 +4,9 @@
   lib,
   secrets,
   ...
-}: let 
+}: let
   homeDir = config.home.homeDirectory;
 in {
-
   systemd.user.services.nix_logout = {
     Unit = {
       Description = "Force logout at given time";
@@ -29,11 +28,7 @@ in {
     };
 
     Install = {
-      WantedBy = [ "timers.target" ];
+      WantedBy = ["timers.target"];
     };
   };
 }
-
-
-
-

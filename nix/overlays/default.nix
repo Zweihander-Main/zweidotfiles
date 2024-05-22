@@ -14,12 +14,12 @@
       };
     });
     dwm = prev.dwm.overrideAttrs (old: {
-        src = prev.fetchFromGitHub {
-          owner = "Zweihander-Main";
-          repo = "zwei_dwm";
-          rev = "b873e4bba2b44eedfbd3b01658cc9e23f349d304";
-          hash = "sha256-ePmGMT3OpvPIkJJZqT/0o70PtKUiixdrQxIHeL80whc=";
-        };
+      src = prev.fetchFromGitHub {
+        owner = "Zweihander-Main";
+        repo = "zwei_dwm";
+        rev = "b873e4bba2b44eedfbd3b01658cc9e23f349d304";
+        hash = "sha256-ePmGMT3OpvPIkJJZqT/0o70PtKUiixdrQxIHeL80whc=";
+      };
     });
   };
 
@@ -32,4 +32,3 @@
     };
   };
 }
-

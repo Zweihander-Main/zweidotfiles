@@ -36,8 +36,8 @@
     homeDirectory = "/home/zwei";
   };
 
-  home.packages = with pkgs; [ 
-    # user programs      
+  home.packages = with pkgs; [
+    # user programs
     alacritty
     tmux
     firefox
@@ -47,7 +47,7 @@
     unzip
     sxhkd
     # dev
-    gcc 
+    gcc
     python3
   ];
 
@@ -61,4 +61,3 @@
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
 }
-

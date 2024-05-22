@@ -36,7 +36,7 @@
 
   environment.packages = with pkgs; [
     # Nix
-    home-manager 
+    home-manager
     # Basic packages
     vim
     chezmoi
@@ -80,3 +80,4 @@
   system.stateVersion = "23.05";
 }
 # vim: ft=nix
+

@@ -4,10 +4,9 @@
   lib,
   secrets,
   ...
-}: let 
+}: let
   homeDir = config.home.homeDirectory;
 in {
-
   home.packages = with pkgs; [
     stalonetray
   ];
@@ -17,7 +16,7 @@ in {
   systemd.user.services.nix_tray = {
     Unit = {
       Description = "System tray using stalonetray";
-      PartOf = [ "graphical-session.target" ];
+      PartOf = ["graphical-session.target"];
     };
 
     Service = {
@@ -25,9 +24,9 @@ in {
       ExecStart = "${pkgs.stalonetray}/bin/stalonetray -c %h/.config/stalonetray/stalonetrayrc";
       RestartSec = 5;
       Restart = "on-failure";
-      ExecStartPost =  "/run/current-system/sw/bin/sleep 1";
+      ExecStartPost = "/run/current-system/sw/bin/sleep 1";
     };
 
-    Install = { WantedBy = [ "wm.target" ]; };
+    Install = {WantedBy = ["wm.target"];};
   };
 }
