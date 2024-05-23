@@ -8,11 +8,11 @@
   homeDir = config.home.homeDirectory;
 in {
   imports = [
-    ./lf # file manager
-    ./bat # cat++
-    ./navi # cheat sheets
-    ./neofetch # rice
-    ./viddy # watch replacement
+    ../lf # file manager
+    ../bat # cat++
+    ../navi # cheat sheets
+    ../neofetch # rice
+    ../viddy # watch replacement
   ];
 
   home.packages = with pkgs; [

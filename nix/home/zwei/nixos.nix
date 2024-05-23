@@ -7,17 +7,18 @@
   secrets,
   ...
 }: {
-  imports = [
-    ./chezmoi.nix
-    ./emacs.nix
-    ./syncthing.nix
-    ./time.nix
-    ./x11.nix
-    ./coreutils.nix
-    ./redshift
-    ./stalonetray
-    ./lf
-  ];
+  imports =
+    [
+      ./chezmoi
+      ./syncthing
+      ./time
+      ./x11
+      ./coreutils
+      ./redshift
+      ./stalonetray
+      ./lf
+    ]
+    ++ (builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
     overlays = [
@@ -54,6 +55,11 @@
   programs.home-manager.enable = true;
 
   xdg.enable = true;
+
+  emacs = {
+    enable = true;
+    doom.enable = true;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
