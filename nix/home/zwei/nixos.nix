@@ -10,13 +10,14 @@
   imports =
     [
       ./chezmoi
+      ./coreutils
+      ./emacs
+      ./lf
+      ./redshift
+      ./stalonetray
       ./syncthing
       ./time
       ./x11
-      ./coreutils
-      ./redshift
-      ./stalonetray
-      ./lf
     ]
     ++ (builtins.attrValues outputs.homeManagerModules);
 
@@ -55,11 +56,6 @@
   programs.home-manager.enable = true;
 
   xdg.enable = true;
-
-  emacs = {
-    enable = true;
-    doom.enable = true;
-  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
