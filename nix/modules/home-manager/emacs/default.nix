@@ -6,7 +6,6 @@
 }:
 with lib; let
   cfg = config.emacs;
-  configDir = config.dotfiles.configDir;
 in {
   options.emacs = {
     enable = mkOption {

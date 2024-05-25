@@ -1,34 +1,58 @@
 {
-  pkgs,
   config,
+  pkgs,
   lib,
-  secrets,
   ...
-}: let
-  homeDir = config.home.homeDirectory;
+}:
+with lib; let
+  cfg = config.redshift;
 in {
-  home.packages = with pkgs; [
-    redshift
-    acpilight
-  ];
-
-  xdg.configFile."redshift/redshift.conf".source = ./redshift.conf;
-  xdg.configFile."redshift/hooks/brightness.sh".source = ./brightness.sh;
-
-  systemd.user.services.nix_redshift = {
-    Unit = {
-      Description = "Redshift display color temperature adjustment";
-      Documentation = "man:redshift(1)";
-      PartOf = ["graphical-session.target"];
+  options.redshift = {
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Install redshift and enable service.
+      '';
+    };
+    ddcci = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        If monitor supports DDC/CI controls for backlight control.
+      '';
+    };
+    night = mkOption {
+      type = types.int;
+      default = 1200;
+      description = ''
+        Colour temperature to use at night, between `1000` and `25000` K.
+      '';
+    };
+  };
+  config = mkIf cfg.enable {
+    services.redshift = {
+      enable = true;
+      provider = "manual";
+      temperature = {
+        day = 6700;
+        night = cfg.night;
+      };
+      dawnTime = "9:00-10:45";
+      duskTime = "22:00-23:45";
+      latitude = "41.7";
+      longitude = "-115";
+      settings = {
+        redshift = {
+          brightness-night = "1";
+          brightness-day = "0.8";
+          fade = 1;
+          adjustment-method = "randr";
+        };
+      };
     };
 
-    Service = {
-      Type = "exec";
-      ExecStart = "${pkgs.redshift}/bin/redshift";
-      RestartSec = 5;
-      Restart = "on-failure";
-    };
-
-    Install = {WantedBy = ["wm.target"];};
+    xdg.configFile."redshift/hooks/brightness.sh".source = ./brightness.sh;
+    xdg.configFile."systemd/user/wm.target.wants/redshift.service".text = mkIf cfg.ddcci "";
   };
 }

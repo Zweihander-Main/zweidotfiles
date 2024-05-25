@@ -53,6 +53,12 @@
     python3
   ];
 
+  redshift = {
+    enable = true;
+    ddcci = true;
+    night = 1000;
+  };
+
   programs.home-manager.enable = true;
 
   xdg.enable = true;
