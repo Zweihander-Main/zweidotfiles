@@ -34,12 +34,8 @@
     # Load secrets file
     secrets = builtins.fromJSON (builtins.readFile "${self}/../secrets/secrets.json");
   in {
-    # Custom packages
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    # Formatter for your nix files, available through 'nix fmt'
-    # Other options beside 'alejandra' include 'nixpkgs-fmt'
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-    # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
 
     nixosModules = import ./modules/nixos;
