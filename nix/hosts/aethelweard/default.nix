@@ -10,6 +10,7 @@
   imports = [
     inputs.hardware.nixosModules.microsoft-surface-pro-3
     ./hardware-configuration.nix
+    ./lib.nix
   ];
 
   nixpkgs = {

@@ -55,7 +55,6 @@
 
   redshift = {
     enable = true;
-    ddcci = true;
     night = 1000;
   };
 

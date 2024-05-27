@@ -1,0 +1,3 @@
+{
+  hostAttr = import ../common;
+}

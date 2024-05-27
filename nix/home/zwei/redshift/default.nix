@@ -15,13 +15,6 @@ in {
         Install redshift and enable service.
       '';
     };
-    ddcci = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        If monitor supports DDC/CI controls for backlight control.
-      '';
-    };
     night = mkOption {
       type = types.int;
       default = 1200;
@@ -53,6 +46,6 @@ in {
     };
 
     xdg.configFile."redshift/hooks/brightness.sh".source = ./brightness.sh;
-    xdg.configFile."systemd/user/wm.target.wants/redshift.service".text = mkIf cfg.ddcci "";
+    xdg.configFile."systemd/user/wm.target.wants/redshift.service".text = mkIf config.hostAttr.ddcci "";
   };
 }

@@ -38,19 +38,19 @@
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
     overlays = import ./overlays {inherit inputs;};
 
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
+    nixosModules = import ./lib/nixos;
+    homeManagerModules = import ./lib/home-manager;
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#aethelweard'
     nixosConfigurations = {
       aethelweard = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs secrets;};
-        modules = [./nixos/aethelweard];
+        modules = [./hosts/aethelweard];
       };
       droid = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs secrets;};
-        modules = [./nixos/droid];
+        modules = [./hosts/droid];
       };
     };
 
@@ -70,7 +70,7 @@
       "zwei@aethelweard" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets;};
-        modules = [./home/zwei/nixos.nix];
+        modules = [./hosts/aethelweard/lib.nix ./home/zwei/nixos.nix];
       };
       "karlmagnus@aethelweard" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
