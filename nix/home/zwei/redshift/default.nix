@@ -46,6 +46,9 @@ in {
     };
 
     xdg.configFile."redshift/hooks/brightness.sh".source = ./brightness.sh;
-    xdg.configFile."systemd/user/wm.target.wants/redshift.service".text = mkIf config.hostAttr.ddcci "";
+    xdg.configFile."systemd/user/wm.target.wants/redshift.service" = mkIf config.hostAttr.ddcci {
+      text = "";
+      executable = true;
+    };
   };
 }

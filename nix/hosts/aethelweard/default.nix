@@ -10,7 +10,7 @@
   imports = [
     inputs.hardware.nixosModules.microsoft-surface-pro-3
     ./hardware-configuration.nix
-    ./lib.nix
+    # ./lib.nix
   ];
 
   nixpkgs = {
@@ -93,7 +93,7 @@
       {
         commands = [
           {
-            command = "${pkgs.acpilight}/bin/xbacklight";
+            command = "/run/current-system/sw/bin/xbacklight";
             options = ["NOPASSWD"];
           }
         ];
@@ -116,6 +116,7 @@
     home-manager
     procps
     killall
+    acpilight
   ];
 
   fonts.packages = with pkgs; [

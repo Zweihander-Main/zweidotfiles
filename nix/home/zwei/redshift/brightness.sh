@@ -14,7 +14,7 @@ backlights=($(xbacklight -list | grep intel*))
 set_brightness() {
 	for backlight in "${backlights[@]}"
 	do
-		xbacklight -set $1 -fps $fps -ctrl $backlight &
+		sudo xbacklight -set $1 -fps $fps -ctrl $backlight &
 	done
 }
 
