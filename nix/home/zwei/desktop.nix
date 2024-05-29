@@ -11,10 +11,6 @@
     ./server.nix
     ./redshift.nix
   ];
- 
-  redshift = {
-    enable = true;
-  };
 
   home.packages = with pkgs; [
   ];

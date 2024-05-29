@@ -53,11 +53,6 @@
     python3
   ];
 
-  redshift = {
-    enable = true;
-    night = 1000;
-  };
-
   programs.home-manager.enable = true;
 
   xdg.enable = true;

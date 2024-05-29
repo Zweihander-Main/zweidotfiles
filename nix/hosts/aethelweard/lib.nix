@@ -1,5 +1,10 @@
 {config, ...}: {
   config = {
-    hostAttr.ddcci = true;
+    hostAttr = {
+      monitor = {
+        ddcci = true;
+        nightTemp = 1000;
+      };
+    };
   };
 }
