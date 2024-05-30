@@ -27,8 +27,8 @@ in {
   '';
   home.activation = {
     initChezmoi = lib.hm.dag.entryAfter ["writeBoundary" "installPackages" "git" "chezmoi" "xdg"] ''
-      mkdir -p ~/.local/share/chezmoi
-      cd ~/.local/share/chezmoi
+      mkdir -p "$XDG_DATA_HOME/chezmoi"
+      cd "$XDG_DATA_HOME/chezmoi"
       if ! [ -d ".git" ]; then
         ${pkgs.git}/bin/git init
         ${pkgs.git}/bin/git remote add origin https://github.com/Zweihander-Main/zweidotfiles
@@ -40,8 +40,8 @@ in {
 
     bootstrapShellScripts = lib.hm.dag.entryAfter ["writeBoundary" "installPackages" "git"] ''
       if ! [ -d "${homeDir}/dev/sys/shell_scripts" ]; then
-        mkdir -p ~/dev/sys
-        ${pkgs.git}/bin/git clone https://github.com/Zweihander-Main/shell_scripts ~/dev/sys/shell_scripts
+        mkdir -p "${homeDir}/dev/sys"
+        ${pkgs.git}/bin/git clone https://github.com/Zweihander-Main/shell_scripts "${homeDir}/dev/sys/shell_scripts"
       fi
     '';
   };

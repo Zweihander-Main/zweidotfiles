@@ -6,6 +6,7 @@
 }:
 with lib; let
   cfg = config.emacs;
+  homeDir = config.home.homeDirectory;
 in {
   options.emacs = {
     enable = mkOption {
@@ -83,8 +84,8 @@ in {
            cd "$XDG_CONFIG_HOME"/emacs/bin/
            ./doom install
         fi
-        if [ ! -d "~/org" ]; then
-          mkdir -p "~/org"
+        if [ ! -d "${homeDir}/org" ]; then
+          mkdir -p "${homeDir}/org"
         fi
       '';
     };
