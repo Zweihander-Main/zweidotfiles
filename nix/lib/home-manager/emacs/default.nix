@@ -85,7 +85,7 @@ in {
            ./doom install
         fi
         if [ ! -d "${homeDir}/org" ]; then
-          mkdir -p "${homeDir}/org"
+          mkdir -p "${homeDir}/org/gtd"
         fi
       '';
     };

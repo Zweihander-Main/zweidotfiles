@@ -37,6 +37,8 @@
     dockfmt
     # :tools editoconfig
     editorconfig-core-c
+    # :tools copilot
+    nodePackages.npm
   ];
 
   emacs = {
