@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: with lib; let
+}:
+with lib; let
   homeDir = config.home.homeDirectory;
   doomRepoUrl = "https://github.com/doomemacs/doomemacs";
   configRepoUrl = "https://github.com/Zweihander-Main/zweidoom";
@@ -20,7 +21,7 @@ in {
 
   systemd.user.services.emacs = {
     Install = mkForce {
-      WantedBy = [ "wm.target" ];
+      WantedBy = ["wm.target"];
     };
   };
 
@@ -88,17 +89,22 @@ in {
   home.activation = {
     installDoomEmacs = ''
       if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-         ${pkgs.git}/bin/git clone --depth=1 --single-branch "${doomRepoUrl}" "$XDG_CONFIG_HOME/emacs"
+        ${pkgs.git}/bin/git clone --depth=1 --single-branch "${doomRepoUrl}" "$XDG_CONFIG_HOME/emacs"
       fi
       if [ ! -f "$XDG_CONFIG_HOME/doom/init.el" ]; then
-         mkdir -p "$XDG_CONFIG_HOME/doom"
-         cd "$XDG_CONFIG_HOME/doom"
-         ${pkgs.git}/bin/git init
-         ${pkgs.git}/bin/git remote add origin "${configRepoUrl}"
-         ${pkgs.git}/bin/git fetch
-         ${pkgs.git}/bin/git checkout origin/master -ft
-         cd "$XDG_CONFIG_HOME"/emacs/bin/
-         ./doom install
+        mkdir -p "$XDG_CONFIG_HOME/doom"
+        cd "$XDG_CONFIG_HOME/doom"
+        ${pkgs.git}/bin/git init
+        ${pkgs.git}/bin/git remote add origin "${configRepoUrl}"
+        ${pkgs.git}/bin/git fetch
+        ${pkgs.git}/bin/git checkout origin/master -ft
+        PATH="$XDG_STATE_HOME/nix/profile/bin:$PATH"
+        cd "$XDG_CONFIG_HOME"/emacs/bin/
+        ./doom install
+      else
+        PATH="$XDG_STATE_HOME/nix/profile/bin:$PATH"
+        cd "$XDG_CONFIG_HOME"/emacs/bin/
+        ./doom sync
       fi
       if [ ! -d "${homeDir}/org" ]; then
         mkdir -p "${homeDir}/org/gtd"
