@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: with lib; {
+}:
+with lib; {
   services.redshift = {
     enable = true;
     provider = "manual";
