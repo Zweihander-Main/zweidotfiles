@@ -13,10 +13,13 @@ in {
 
   xdg.configFile."stalonetray/stalonetrayrc".source = ./stalonetrayrc;
 
-  systemd.user.services.nix_tray = {
+  systemd.user.services.tray = {
     Unit = {
       Description = "System tray using stalonetray";
       PartOf = ["graphical-session.target"];
+      onditionFileIsExecutable = "/usr/bin/sleep";
+      ConditionFileIsExecutable = "/usr/bin/stalonetray";
+      ConditionPathExists = "%h/.config/stalonetray/stalonetrayrc";
     };
 
     Service = {
