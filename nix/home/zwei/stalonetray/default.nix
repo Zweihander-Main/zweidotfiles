@@ -26,7 +26,7 @@ in {
       ExecStart = "${pkgs.stalonetray}/bin/stalonetray -c %h/.config/stalonetray/stalonetrayrc";
       RestartSec = 5;
       Restart = "on-failure";
-      ExecStartPost = "${pkgs.coreutils}/bin/sleep 1";
+      ExecStartPost = "${pkgs.runtimeShell} -c 'exec sleep 1'";
     };
 
     Install = {WantedBy = ["wm.target"];};

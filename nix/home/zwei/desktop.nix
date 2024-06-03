@@ -11,7 +11,7 @@
     ./server.nix
     ./redshift.nix
     #./emacs.nix
-    #./stalonetray.nix
+    ./stalonetray.nix
   ];
 
   home.packages = with pkgs; [
