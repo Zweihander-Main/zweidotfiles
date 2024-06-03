@@ -17,8 +17,7 @@ in {
     Unit = {
       Description = "System tray using stalonetray";
       PartOf = ["graphical-session.target"];
-      onditionFileIsExecutable = "/usr/bin/sleep";
-      ConditionFileIsExecutable = "/usr/bin/stalonetray";
+      ConditionFileIsExecutable = "${pkgs.stalonetray}/bin/stalonetray";
       ConditionPathExists = "%h/.config/stalonetray/stalonetrayrc";
     };
 
@@ -27,7 +26,7 @@ in {
       ExecStart = "${pkgs.stalonetray}/bin/stalonetray -c %h/.config/stalonetray/stalonetrayrc";
       RestartSec = 5;
       Restart = "on-failure";
-      ExecStartPost = "/run/current-system/sw/bin/sleep 1";
+      ExecStartPost = "${pkgs.coreutils}/bin/sleep 1";
     };
 
     Install = {WantedBy = ["wm.target"];};
