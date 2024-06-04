@@ -26,9 +26,12 @@ with lib; {
     };
   };
 
-  xdg.configFile."redshift/hooks/brightness.sh".source = ./brightness.sh;
-  xdg.configFile."systemd/user/wm.target.wants/redshift.service" = mkIf config.hostAttr.monitor.ddcci {
-    text = "";
+  systemd.user.services.redshift = {
+    Install = mkForce {WantedBy = ["wm.target"];};
+  };
+
+  xdg.configFile."redshift/hooks/brightness.sh" = mkIf config.hostAttr.monitor.ddcci {
+    source = ./brightness.sh;
     executable = true;
   };
 }
