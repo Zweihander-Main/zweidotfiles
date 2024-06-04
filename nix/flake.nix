@@ -67,6 +67,8 @@
         extraSpecialArgs = {inherit inputs outputs secrets;};
         modules = [./hosts/desktop/lib.nix ./home/zwei/desktop.nix];
       };
+      "zwei@ptah" = outputs.homeConfigurations."zwei@desktop";
+      "zwei@horus" = outputs.homeConfigurations."zwei@desktop";
       "zwei@aethelweard" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets;};
