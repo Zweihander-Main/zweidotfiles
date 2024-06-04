@@ -8,10 +8,11 @@
   ...
 }: {
   imports = [
-    ./server.nix
-    ./redshift.nix
-    #./emacs.nix
-    ./stalonetray.nix
+    ./default.nix
+    ./coreutils
+    ./redshift
+    #./emacs
+    ./stalonetray
   ];
 
   home.packages = with pkgs; [

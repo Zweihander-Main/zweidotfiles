@@ -60,12 +60,12 @@
       "zwei@server" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets;};
-        modules = [./home/zwei/server.nix];
+        modules = [./hosts/server/lib.nix ./home/zwei/server.nix];
       };
       "zwei@desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets;};
-        modules = [./home/zwei/desktop.nix];
+        modules = [./hosts/desktop/lib.nix ./home/zwei/desktop.nix];
       };
       "zwei@aethelweard" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
