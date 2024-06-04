@@ -117,6 +117,7 @@
     procps
     killall
     acpilight
+    upower
   ];
 
   fonts.packages = with pkgs; [
@@ -146,6 +147,11 @@
     enable = true;
     package = pkgs.mlocate;
     localuser = null;
+  };
+
+  services.upower = {
+    enable = true;
+    package = pkgs.upower;
   };
 
   # Enable the X11 windowing system.
