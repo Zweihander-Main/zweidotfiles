@@ -118,6 +118,7 @@
     killall
     acpilight
     upower
+    lm_sensors
   ];
 
   fonts.packages = with pkgs; [
