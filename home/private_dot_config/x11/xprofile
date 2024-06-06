@@ -59,5 +59,5 @@ xss-lock -- start_i3lock +resetsaver & # locking manager
 start_gpg &                            # gpg-connect-agent
 
 # Integration with systemd user unit files
-dbus-update-activation-environment --systemd PATH DBUS_SESSION_BUS_ADDRESS QT_QPA_PLATFORMTHEME &&
+dbus-update-activation-environment --systemd PATH DBUS_SESSION_BUS_ADDRESS QT_QPA_PLATFORMTHEME XAUTHORITY DISPLAY &&
     systemctl --user --no-block start wm.target
