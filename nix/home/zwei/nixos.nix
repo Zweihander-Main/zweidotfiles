@@ -10,6 +10,7 @@
   imports = [
     ./default.nix
     ./chezmoi
+    ./copyq
     ./coreutils
     ./emacs
     ./lf

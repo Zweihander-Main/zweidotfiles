@@ -10,8 +10,9 @@
   imports = [
     ./default.nix
     ./coreutils
-    ./redshift
+    ./copyq
     #./emacs
+    ./redshift
     ./stalonetray
   ];
 
