@@ -39,10 +39,10 @@ super + apostrophe
 super + q
     dunstctl close
 
-super + shift + q 
+super + shift + q
     dunstctl close-all
 
-super + grave 
+super + grave
     dunstctl history-pop
 
 super + shift + grave

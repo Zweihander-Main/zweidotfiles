@@ -16,6 +16,7 @@
     ./lf
     ./redshift
     ./stalonetray
+    ./sxhkd
     ./syncthing
     ./time
     ./x11

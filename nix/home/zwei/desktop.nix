@@ -14,6 +14,7 @@
     #./emacs
     ./redshift
     ./stalonetray
+    ./sxhkd
   ];
 
   home.packages = with pkgs; [
