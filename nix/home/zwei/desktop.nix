@@ -11,6 +11,7 @@
     ./default.nix
     ./coreutils
     ./copyq
+    ./dunst
     #./emacs
     ./redshift
     ./stalonetray

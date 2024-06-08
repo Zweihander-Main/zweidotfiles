@@ -12,6 +12,7 @@
     ./chezmoi
     ./copyq
     ./coreutils
+    ./dunst
     ./emacs
     ./lf
     ./redshift
