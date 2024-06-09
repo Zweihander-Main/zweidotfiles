@@ -13,6 +13,7 @@
     ./copyq
     ./dunst
     #./emacs
+    ./mouseless
     ./redshift
     ./stalonetray
     ./sxhkd

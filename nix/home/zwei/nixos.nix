@@ -15,6 +15,7 @@
     ./dunst
     ./emacs
     ./lf
+    ./mouseless
     ./redshift
     ./stalonetray
     ./sxhkd

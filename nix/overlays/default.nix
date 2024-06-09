@@ -21,6 +21,14 @@
         hash = "sha256-ePmGMT3OpvPIkJJZqT/0o70PtKUiixdrQxIHeL80whc=";
       };
     });
+    keynav = prev.keynav.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "Zweihander-Main";
+        repo = "keynav";
+        rev = "ba80a07ca90bb5224b2f7bdaf490a7383189238e";
+        hash = "sha256-qqTjOKktjXC6CTEqYY+a0nIKw4gL+/tdqIP2pxw7xIk=";
+      };
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
