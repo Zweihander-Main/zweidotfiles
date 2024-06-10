@@ -14,6 +14,7 @@
     ./coreutils
     ./dunst
     ./emacs
+    ./flameshot
     ./lf
     ./mouseless
     ./redshift

@@ -34,4 +34,6 @@ with lib; {
     source = ./brightness.sh;
     executable = true;
   };
+
+  xdg.configFile."autostart/geoclue-demo-agent.desktop".source = ./geoclue-demo-agent.desktop;
 }

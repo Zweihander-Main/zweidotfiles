@@ -13,6 +13,7 @@
     ./copyq
     ./dunst
     #./emacs
+    ./flameshot
     ./mouseless
     ./redshift
     ./stalonetray

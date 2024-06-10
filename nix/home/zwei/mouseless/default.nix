@@ -8,8 +8,8 @@
   homeDir = config.home.homeDirectory;
 in {
   home.packages = with pkgs; [
-    keynav           # fork in overlay
-    xmouseless       # fork in pkgs
+    keynav # fork in overlay
+    xmouseless # fork in pkgs
     unclutter-xfixes # unmodified
   ];
 
