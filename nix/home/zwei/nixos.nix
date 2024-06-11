@@ -22,13 +22,13 @@
     ./sxhkd
     ./syncthing
     ./time
+    ./tmux
     ./x11
   ];
 
   home.packages = with pkgs; [
     # user programs
     alacritty
-    tmux
     firefox
     ungoogled-chromium
     sysz

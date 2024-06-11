@@ -10,6 +10,7 @@
   imports = [
     ./default.nix
     ./coreutils
+    ./tmux
   ];
 
   home.packages = with pkgs; [

@@ -18,6 +18,7 @@
     ./redshift
     ./stalonetray
     ./sxhkd
+    ./tmux
   ];
 
   home.packages = with pkgs; [
