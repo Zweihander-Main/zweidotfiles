@@ -158,10 +158,12 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    layout = "us";
-    libinput.enable = true; #touchpad
+    xkb.layout = "us";
     displayManager.startx.enable = true;
   };
+
+  # Enable touchpad
+  services.libinput.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
