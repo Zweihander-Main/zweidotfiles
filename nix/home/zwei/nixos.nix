@@ -18,6 +18,7 @@
     ./lf
     ./mouseless
     ./redshift
+    ./shellscripts
     ./stalonetray
     ./sxhkd
     ./syncthing

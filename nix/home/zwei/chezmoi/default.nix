@@ -37,12 +37,5 @@ in {
       ${pkgs.git}/bin/git pull --set-upstream origin master
       ${pkgs.chezmoi}/bin/chezmoi apply || true
     '';
-
-    bootstrapShellScripts = lib.hm.dag.entryAfter ["writeBoundary" "installPackages" "git"] ''
-      if ! [ -d "${homeDir}/dev/sys/shell_scripts" ]; then
-        mkdir -p "${homeDir}/dev/sys"
-        ${pkgs.git}/bin/git clone https://github.com/Zweihander-Main/shell_scripts "${homeDir}/dev/sys/shell_scripts"
-      fi
-    '';
   };
 }
