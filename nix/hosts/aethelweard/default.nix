@@ -71,6 +71,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = ["hid-microsoft"];
 
+  # Disable faulty soldered SSD
+  boot.kernelParams = ["libata.force=1.00:disable"];
+
   users.users = {
     zwei = {
       initialPassword = "changeme";
