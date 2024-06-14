@@ -74,6 +74,10 @@
   # Disable faulty soldered SSD
   boot.kernelParams = ["libata.force=1.00:disable"];
 
+  # Reduce writes on SD card
+  services.journald.storage = "volatile";
+  services.journald.extraConfig = "SystemMaxUse=20M";
+
   users.users = {
     zwei = {
       initialPassword = "changeme";
