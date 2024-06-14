@@ -1,0 +1,23 @@
+#!/usr/bin/zsh -f
+
+# Completely resets iptables firewall (run with sudo/doas)
+
+iptablesclear() {
+    elevator="sudo"
+    if [ -x "$(command -v doas &> /dev/null)" ]; then
+        elevator="doas"
+    fi
+    $elevator iptables -F
+    $elevator iptables -X
+    $elevator iptables -t nat -F
+    $elevator iptables -t nat -X
+    $elevator iptables -t mangle -F
+    $elevator iptables -t mangle -X
+    $elevator iptables -t raw -F
+    $elevator iptables -t raw -X
+    $elevator iptables -t security -F
+    $elevator iptables -t security -X
+    $elevator iptables -P INPUT ACCEPT
+    $elevator iptables -P FORWARD ACCEPT
+    $elevator iptables -P OUTPUT ACCEPT
+}
