@@ -20,6 +20,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/acefdda3-5f5a-42bd-bd72-20e1ffd990f0";
     fsType = "ext4";
+    options = ["noatime" "commit=60"];
   };
 
   fileSystems."/boot" = {
