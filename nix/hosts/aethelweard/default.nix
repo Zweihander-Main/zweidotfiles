@@ -77,6 +77,7 @@
   # Reduce writes on SD card
   services.journald.storage = "volatile";
   services.journald.extraConfig = "SystemMaxUse=20M";
+  boot.tmp.useTmpfs = true;
 
   users.users = {
     zwei = {
