@@ -10,6 +10,7 @@
   imports = [
     ./default.nix
     ./chezmoi
+    ./chromium
     ./copyq
     ./coreutils
     ./dunst
@@ -31,7 +32,6 @@
     # user programs
     alacritty
     firefox
-    ungoogled-chromium
     sysz
     zathura
     unzip
