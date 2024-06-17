@@ -10,13 +10,14 @@
     profile-sync-daemon
   ];
 
-  # For profile
+  # For profile to RAM
   services.psd = {
     enable = true;
     resyncTimer = "1h";
   };
+  xdg.configFile."psd/psd.conf".source = ./psd.conf;
 
-  # For cache
+  # For cache to RAM
   systemd.user.tmpfiles.rules = ["d /run/user/1000/chromium-cache"];
   home.file.".cache/chromium".source = config.lib.file.mkOutOfStoreSymlink "/run/user/1000/chromium-cache";
 }
