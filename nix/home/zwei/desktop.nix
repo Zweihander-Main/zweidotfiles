@@ -9,6 +9,7 @@
 }: {
   imports = [
     ./default.nix
+    ./alacritty
     ./coreutils
     ./copyq
     ./dunst

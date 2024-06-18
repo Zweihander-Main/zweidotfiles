@@ -9,6 +9,7 @@
 }: {
   imports = [
     ./default.nix
+    ./alacritty
     ./chezmoi
     ./chromium
     ./copyq
@@ -30,7 +31,6 @@
 
   home.packages = with pkgs; [
     # user programs
-    alacritty
     firefox
     sysz
     zathura
