@@ -4,7 +4,8 @@
   lib,
   secrets,
   ...
-}: let
+}:
+with lib; let
   homeDir = config.home.homeDirectory;
 in {
   imports = [
@@ -27,6 +28,7 @@ in {
     moar # pager replacement
     ripgrep # grep replacement
     sd # sed replacement
+    (mkIf config.hostAttr.preinstalled.systemd sysz) # systemd assistant
     thefuck # correct prev command
   ];
 }

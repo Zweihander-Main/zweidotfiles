@@ -57,10 +57,15 @@
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#zwei@aethelweard'
     homeConfigurations = {
-      "zwei@server" = home-manager.lib.homeManagerConfiguration {
+      "zwei@server-debian" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets;};
-        modules = [./hosts/server/lib.nix ./home/zwei/server.nix];
+        modules = [./hosts/server/server-debian.nix ./home/zwei/server.nix];
+      };
+      "zwei@server-alpine" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs secrets;};
+        modules = [./hosts/server/server-alpine.nix ./home/zwei/server.nix];
       };
       "zwei@desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;

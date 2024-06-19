@@ -16,5 +16,12 @@ in {
         description = "Color temp to use at night, between`1000` and `25000` K.";
       };
     };
+    preinstalled = {
+      systemd = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Is systemd available on the host?";
+      };
+    };
   };
 }

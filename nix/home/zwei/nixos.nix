@@ -32,7 +32,6 @@
   home.packages = with pkgs; [
     # user programs
     firefox
-    sysz
     zathura
     unzip
     sxhkd
