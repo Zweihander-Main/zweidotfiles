@@ -22,6 +22,11 @@ in {
         default = true;
         description = "Is systemd available on the host?";
       };
+      udiskie = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Is udiskie available on the host?";
+      };
     };
   };
 }

@@ -111,22 +111,23 @@
   };
 
   environment.systemPackages = with pkgs; [
-    vim
+    acpilight
+    findutils
     git
     git-crypt
-    findutils
-    mlocate
-    wget
-    w3m
-    lynx
-    htop-vim
-    zsh
     home-manager
-    procps
+    htop-vim
     killall
-    acpilight
-    upower
     lm_sensors
+    lynx
+    mlocate
+    procps
+    unzip
+    upower
+    vim
+    w3m
+    wget
+    zsh
   ];
 
   fonts.packages = with pkgs; [

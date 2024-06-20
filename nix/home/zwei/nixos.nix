@@ -26,6 +26,7 @@
     ./syncthing
     ./time
     ./tmux
+    ./udiskie
     ./x11
   ];
 
@@ -33,8 +34,6 @@
     # user programs
     firefox
     zathura
-    unzip
-    sxhkd
     # dev
     gcc
     python3

@@ -20,6 +20,7 @@
     ./stalonetray
     ./sxhkd
     ./tmux
+    ./udiskie
   ];
 
   home.packages = with pkgs; [

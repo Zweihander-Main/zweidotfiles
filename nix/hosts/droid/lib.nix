@@ -3,6 +3,7 @@
     hostAttr = {
       preinstalled = {
         systemd = false;
+        udiskie = false;
       };
     };
   };
