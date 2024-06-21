@@ -15,11 +15,18 @@ with lib; {
       Documentation = "man:udiskie(8)";
       Wants = ["tray.service"];
       After = ["tray.service"];
+      ConditionFileIsExecutable =
+        if config.hostAttr.preinstalled.udiskie
+        then "/usr/bin/udiskie"
+        else "${pkgs.udiskie}/bin/udiskie";
     };
 
     Service = {
       Type = "exec";
-      ExecStart = "udiskie";
+      ExecStart =
+        if config.hostAttr.preinstalled.udiskie
+        then "/usr/bin/udiskie"
+        else "${pkgs.udiskie}/bin/udiskie";
       RestartSec = 5;
       Restart = "always";
     };

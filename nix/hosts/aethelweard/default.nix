@@ -79,6 +79,9 @@
   services.journald.extraConfig = "SystemMaxUse=20M";
   boot.tmp.useTmpfs = true;
 
+  # Allow for udiskie
+  services.udisks2.enable = true;
+
   users.users = {
     zwei = {
       initialPassword = "changeme";
