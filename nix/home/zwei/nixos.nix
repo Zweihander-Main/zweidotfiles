@@ -34,8 +34,20 @@
     # user programs
     firefox
     zathura
-    # dev
-    gcc
+    # dev - c/cpp
+    # gcc
+    clang
+    clang-tools
+    cmake
+    codespell
+    conan
+    cppcheck
+    doxygen
+    gdb
+    gtest
+    lcov
+    vcpkg
+    # dev - python
     python3
   ];
 }

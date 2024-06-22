@@ -48,7 +48,7 @@ in {
 
     ## Module dependencies
     # :lang cc
-    libclang
+    # libclang
     glslang
     # :lang common-lisp
     sbcl
