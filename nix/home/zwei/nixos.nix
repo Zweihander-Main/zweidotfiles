@@ -14,6 +14,8 @@
     ./chromium
     ./copyq
     ./coreutils
+    ./dev-c
+    ./dev-python
     ./dunst
     ./emacs
     ./flameshot
@@ -34,20 +36,5 @@
     # user programs
     firefox
     zathura
-    # dev - c/cpp
-    # gcc
-    clang
-    clang-tools
-    cmake
-    codespell
-    conan
-    cppcheck
-    doxygen
-    gdb
-    gtest
-    lcov
-    vcpkg
-    # dev - python
-    python3
   ];
 }
