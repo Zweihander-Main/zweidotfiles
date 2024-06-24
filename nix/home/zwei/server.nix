@@ -11,6 +11,7 @@
     ./default.nix
     ./coreutils
     ./tmux
+    ./vim
   ];
 
   home.packages = with pkgs; [

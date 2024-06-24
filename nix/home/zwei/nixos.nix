@@ -29,6 +29,7 @@
     ./time
     ./tmux
     ./udiskie
+    ./vim
     ./x11
   ];
 

@@ -21,6 +21,7 @@
     ./sxhkd
     ./tmux
     ./udiskie
+    ./vim
   ];
 
   home.packages = with pkgs; [
