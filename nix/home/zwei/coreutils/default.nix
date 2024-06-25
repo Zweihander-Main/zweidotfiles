@@ -12,7 +12,7 @@ in {
     ../lf # file manager
     ../bat # cat++
     ../navi # cheat sheets
-    ../neofetch # rice
+    ../fetch # rice
     ../viddy # watch replacement
   ];
 

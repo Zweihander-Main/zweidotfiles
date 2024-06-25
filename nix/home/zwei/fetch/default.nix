@@ -8,7 +8,7 @@
   homeDir = config.home.homeDirectory;
 in {
   home.packages = with pkgs; [
-    neofetch
+    fastfetch
   ];
 
   xdg.configFile."neofetch/config.conf".source = ./config.conf;
