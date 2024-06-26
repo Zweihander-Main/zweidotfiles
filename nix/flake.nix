@@ -60,12 +60,12 @@
       "zwei@server-debian" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets;};
-        modules = [./hosts/server/server-debian.nix ./home/zwei/server.nix];
+        modules = [./hosts/server-debian/lib.nix ./home/zwei/server.nix];
       };
       "zwei@server-alpine" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets;};
-        modules = [./hosts/server/server-alpine.nix ./home/zwei/server.nix];
+        modules = [./hosts/server-alpine/lib.nix ./home/zwei/server.nix];
       };
       "zwei@desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
