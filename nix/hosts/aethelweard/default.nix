@@ -146,6 +146,8 @@
     enable = true;
     enableSSHSupport = true;
   };
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.pcscd.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh = {
