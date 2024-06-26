@@ -8,6 +8,7 @@
       preinstalled = {
         systemd = true;
         udiskie = true;
+        alacritty = true;
       };
     };
   };

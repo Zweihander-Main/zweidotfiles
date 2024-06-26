@@ -27,6 +27,11 @@ in {
         default = false;
         description = "Is udiskie available on the host?";
       };
+      alacritty = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Is alacritty available on the host?";
+      };
     };
   };
 }

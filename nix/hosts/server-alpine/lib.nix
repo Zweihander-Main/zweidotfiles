@@ -4,6 +4,7 @@
       preinstalled = {
         systemd = false;
         udiskie = false;
+        alacritty = false;
       };
     };
   };
