@@ -30,5 +30,6 @@ in {
     sd # sed replacement
     (mkIf config.hostAttr.preinstalled.systemd sysz) # systemd assistant
     thefuck # correct prev command
+    tldr # man pages
   ];
 }
