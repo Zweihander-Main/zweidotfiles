@@ -20,6 +20,7 @@
     ./stalonetray
     ./sxhkd
     ./tmux
+    ./time
     ./udiskie
     ./vim
   ];
