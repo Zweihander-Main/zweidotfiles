@@ -11,7 +11,5 @@ in {
     fastfetch
   ];
 
-  xdg.configFile."neofetch/config.conf".source = ./config.conf;
+  xdg.configFile."fetch/config.jsonc".source = ./config.jsonc;
 }
-# TODO: replace with fork
-
