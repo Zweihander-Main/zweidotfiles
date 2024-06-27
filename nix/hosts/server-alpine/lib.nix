@@ -5,6 +5,7 @@
         systemd = false;
         udiskie = false;
         alacritty = false;
+        emacs = false;
       };
     };
   };

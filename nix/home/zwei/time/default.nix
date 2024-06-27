@@ -77,7 +77,7 @@ in {
 
     Timer = {
       OnCalendar = "16:30..45:0,15,30,45";
-      AccuracySec= "5s";
+      AccuracySec = "5s";
     };
 
     Install = {

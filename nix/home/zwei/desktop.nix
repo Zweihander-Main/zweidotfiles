@@ -13,7 +13,7 @@
     ./coreutils
     ./copyq
     ./dunst
-    #./emacs
+    ./emacs
     ./flameshot
     ./mouseless
     ./redshift

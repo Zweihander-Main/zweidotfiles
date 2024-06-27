@@ -32,6 +32,11 @@ in {
         default = false;
         description = "Is alacritty available on the host?";
       };
+      emacs = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Is emacs available on the host?";
+      };
     };
   };
 }

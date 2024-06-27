@@ -9,6 +9,7 @@
         systemd = true;
         udiskie = true;
         alacritty = true;
+        emacs = true;
       };
     };
   };

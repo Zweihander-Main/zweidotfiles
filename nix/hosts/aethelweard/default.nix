@@ -148,9 +148,8 @@
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry-gtk2;
   };
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = [pkgs.yubikey-personalization];
   services.pcscd.enable = true;
-
 
   # Enable the OpenSSH daemon.
   services.openssh = {
