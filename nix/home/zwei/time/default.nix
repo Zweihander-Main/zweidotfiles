@@ -50,7 +50,10 @@ in {
     };
 
     Timer = {
-      OnCalendar = "16:25,35";
+      OnCalendar = [
+        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 16:15,25" # 16:15, 16:25 except on Wednesdays
+        "Wed *-*-* 17:00,10" # 17:00, 17:10 on Wednesdays
+      ];
     };
 
     Install = {
@@ -76,7 +79,10 @@ in {
     };
 
     Timer = {
-      OnCalendar = "16:30..45:0,15,30,45";
+      OnCalendar = [
+        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 16:30..45:0,15,30,45" # 16:30-45, every 15 secs except on Wednesdays
+        "Wed *-*-* 17:15..30:0,15,30,45" # 17:15-30, every 15 secs on Wednesdays
+      ];
       AccuracySec = "5s";
     };
 
