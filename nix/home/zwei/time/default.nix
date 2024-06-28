@@ -40,7 +40,7 @@ in {
 
     Service = {
       Type = "oneshot";
-      ExecStart = "dunstify -a \"autolock\" -i appointment-soon \"Autolock coming up\"";
+      ExecStart = "${pkgs.dunst}/bin/dunstify -a \"autolock\" -i appointment-soon \"Autolock coming up\"";
     };
   };
 
