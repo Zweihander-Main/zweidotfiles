@@ -6,6 +6,7 @@
         udiskie = false;
         alacritty = false;
         emacs = false;
+        vim = false;
       };
     };
   };

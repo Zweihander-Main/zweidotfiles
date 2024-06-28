@@ -10,6 +10,7 @@
         udiskie = true;
         alacritty = true;
         emacs = true;
+        vim = true;
       };
     };
   };

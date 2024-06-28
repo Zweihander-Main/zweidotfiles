@@ -37,6 +37,11 @@ in {
         default = false;
         description = "Is emacs available on the host?";
       };
+      vim = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Is vim available on the host?";
+      };
     };
   };
 }

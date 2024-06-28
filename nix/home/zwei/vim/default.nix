@@ -8,7 +8,7 @@
   homeDir = config.home.homeDirectory;
 in {
   home.packages = with pkgs; [
-    vim
+    (lib.mkIf (!config.hostAttr.preinstalled.vim) vim)
   ];
 
   xdg.configFile."vim/vimrc".source = ./vimrc;
