@@ -124,6 +124,7 @@
     lm_sensors
     lynx
     mlocate
+    unstable.pcsclite # https://github.com/NixOS/nixpkgs/issues/290926
     pinentry-gtk2
     procps
     unzip
