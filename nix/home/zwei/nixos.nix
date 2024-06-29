@@ -23,6 +23,7 @@
     ./mouseless
     ./redshift
     ./shellscripts
+    ./sound
     ./stalonetray
     ./sxhkd
     ./syncthing
