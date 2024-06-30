@@ -8,9 +8,7 @@
   homeDir = config.home.homeDirectory;
 in {
   systemd.user.services.nix_logout = {
-    Unit = {
-      Description = "Force logout at given time";
-    };
+    Unit = {Description = "Force logout at given time";};
 
     Service = {
       Type = "oneshot";
@@ -19,17 +17,11 @@ in {
   };
 
   systemd.user.timers.nix_logout = {
-    Unit = {
-      Description = "Automatically logout at 1";
-    };
+    Unit = {Description = "Automatically logout at 1";};
 
-    Timer = {
-      OnCalendar = "1:00";
-    };
+    Timer = {OnCalendar = "1:00";};
 
-    Install = {
-      WantedBy = ["timers.target"];
-    };
+    Install = {WantedBy = ["timers.target"];};
   };
 
   systemd.user.services.autolock-reminder = {
@@ -40,25 +32,23 @@ in {
 
     Service = {
       Type = "oneshot";
-      ExecStart = "${pkgs.dunst}/bin/dunstify -a \"autolock\" -i appointment-soon \"Autolock coming up\"";
+      ExecStart = ''
+        ${pkgs.dunst}/bin/dunstify -a "autolock" -i appointment-soon "Autolock coming up"'';
     };
   };
 
   systemd.user.timers.autolock-reminder = {
-    Unit = {
-      Description = "Notify about autolock at 16:25, 16:35";
-    };
+    Unit = {Description = "Notify about upcoming autolock";};
 
     Timer = {
       OnCalendar = [
-        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 16:15,25" # 16:15, 16:25 except on Wednesdays
-        "Wed *-*-* 17:00,10" # 17:00, 17:10 on Wednesdays
+        "Mon,Tue,Thu,Fri,Sat *-*-* 16:15,25" # 16:15, 16:25 except on Wed/Sun
+        "Wed *-*-* 17:00,10" # 17:00, 17:10 on Wed
+        "Sun *-*-* 16:00,10" # 16:00, 16:10 on Sun
       ];
     };
 
-    Install = {
-      WantedBy = ["timers.target"];
-    };
+    Install = {WantedBy = ["timers.target"];};
   };
 
   systemd.user.services.autolock = {
@@ -74,20 +64,17 @@ in {
   };
 
   systemd.user.timers.autolock = {
-    Unit = {
-      Description = "Automatically lock system between 16:30-16:45";
-    };
+    Unit = {Description = "Automatically lock system midday";};
 
     Timer = {
       OnCalendar = [
-        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 16:30..45:0,15,30,45" # 16:30-45, every 15 secs except on Wednesdays
-        "Wed *-*-* 17:15..30:0,15,30,45" # 17:15-30, every 15 secs on Wednesdays
+        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 16:30..45:0,15,30,45" # 16:30-45, every 15 secs except on Wed/Sun
+        "Wed *-*-* 17:15..30:0,15,30,45" # 17:15-30, every 15 secs on Wed
+        "Sun *-*-* 16:15..30:0,15,30,45" # 16:15-30, every 15 secs on Sun
       ];
       AccuracySec = "5s";
     };
 
-    Install = {
-      WantedBy = ["timers.target"];
-    };
+    Install = {WantedBy = ["timers.target"];};
   };
 }

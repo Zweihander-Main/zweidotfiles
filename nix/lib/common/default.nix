@@ -1,5 +1,10 @@
 # Per host common options used in both home manager and nixos
-{lib, config, inputs, ...}:
+{
+  lib,
+  config,
+  inputs,
+  ...
+}:
 with lib; let
   cfg = config.hostAttr;
 in {
