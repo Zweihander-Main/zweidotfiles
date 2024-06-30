@@ -10,10 +10,12 @@
     pa-notify
   ];
 
-  xdg.configFile."systemd/user/pipewire-pulse.service/override.conf".source = ./override.conf;
-  # xdg.configFile."systemd/user/sound.service".source = config.lib.file.mkOutOfStoreSymlink "${config.hostAttr.paths.systemdUserPkgServiceFiles}/pipewire-pulse.service";
-  # xdg.configFile."systemd/user/default.target.wants/pipewire-pulse.service".source = config.lib.file.mkOutOfStoreSymlink "${config.hostAttr.paths.systemdUserPkgServiceFiles}/pipewire-pulse.service";
-  # xdg.configFile."systemd/user/sockets.target.wants/pipewire-pulse.socket".source = config.lib.file.mkOutOfStoreSymlink "${config.hostAttr.paths.systemdUserPkgServiceFiles}/pipewire-pulse.socket";
+  xdg.configFile."systemd/user/pipewire-pulse.service.d/override.conf".source = ./override.conf;
+  home.activation = {
+    linkSound = lib.hm.dag.entryAfter ["writeBoundary" "installPackages" "xdg"] ''
+      ln -sf "${config.hostAttr.paths.systemdUserPkgServiceFiles}pipewire-pulse.service" "$XDG_CONFIG_HOME/systemd/user/sound.service"
+    '';
+  };
 
   systemd.user.services.volume-notification = {
     Unit = {
