@@ -43,5 +43,12 @@ in {
         description = "Is vim available on the host?";
       };
     };
+    paths = {
+      systemdUserPkgServiceFiles = mkOption {
+        type = types.str;
+        default = "/etc/systemd/user/";
+        description = "Path where preinstalled systemd user service files should be.";
+      };
+    };
   };
 }

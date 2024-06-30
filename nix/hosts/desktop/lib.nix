@@ -12,6 +12,9 @@
         emacs = true;
         vim = true;
       };
+      paths = {
+        systemdUserPkgServiceFiles = "/usr/lib/systemd/user/";
+      };
     };
   };
 }

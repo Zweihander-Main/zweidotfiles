@@ -17,6 +17,7 @@
     ./flameshot
     ./mouseless
     ./redshift
+    ./sound
     ./stalonetray
     ./sxhkd
     ./tmux
