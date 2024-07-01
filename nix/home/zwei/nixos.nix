@@ -38,5 +38,6 @@
     # user programs
     firefox
     zathura
+    xdg-ninja
   ];
 }
