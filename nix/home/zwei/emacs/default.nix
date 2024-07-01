@@ -104,6 +104,8 @@ in {
         ./doom install
       else
         PATH="$XDG_STATE_HOME/nix/profile/bin:$PATH"
+        cd "$XDG_CONFIG_HOME/doom"
+        ${pkgs.git}/bin/git pull
         cd "$XDG_CONFIG_HOME"/emacs/bin/
         ./doom sync
       fi
