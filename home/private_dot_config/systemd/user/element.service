@@ -9,6 +9,8 @@ Type=exec
 Restart=always
 RestartSec=20s
 ExecStart=element-desktop --hidden
+ExecStartPost=xdotool search --sync --onlyvisible --name "KeepassXC -  Access Request" windowfocus keydown Enter && xdotool keyup --window 0 Enter
+ExecStartPost=xdotool search --sync --onlyvisible --name "KeepassXC -  Access Request" windowfocus keydown Enter && xdotool keyup --window 0 Enter
 
 [Install]
 WantedBy=wm.target
