@@ -140,7 +140,10 @@
     source-code-pro
   ];
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    histFile = "$XDG_DATA_HOME/shell/history";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
