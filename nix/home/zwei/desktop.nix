@@ -16,7 +16,8 @@
     ./emacs
     ./flameshot
     ./mouseless
-    ./redshift
+    ./pcmanfm
+    /redshift
     ./sound
     ./stalonetray
     ./sxhkd

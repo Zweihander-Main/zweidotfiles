@@ -21,6 +21,7 @@
     ./flameshot
     ./lf
     ./mouseless
+    ./pcmanfm
     ./redshift
     ./shellscripts
     ./sound
