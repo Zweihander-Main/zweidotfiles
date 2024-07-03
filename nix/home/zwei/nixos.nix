@@ -40,5 +40,9 @@
     firefox
     zathura
     xdg-ninja
+    mplayer
+    smplayer
+    yt-dlp
+    pipe-viewer
   ];
 }
