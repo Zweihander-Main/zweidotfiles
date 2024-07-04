@@ -22,6 +22,7 @@
     ./lf
     ./mouseless
     ./pcmanfm
+    ./pipe-viewer
     ./redshift
     ./shellscripts
     ./sound
@@ -40,9 +41,5 @@
     firefox
     zathura
     xdg-ninja
-    mplayer
-    smplayer
-    yt-dlp
-    pipe-viewer
   ];
 }
