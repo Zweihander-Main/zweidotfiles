@@ -1,6 +1,6 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# CLI Pipe Viewer 0.4.5 - configuration file
+# CLI Pipe Viewer 0.5.1 - configuration file
 
 use utf8;
 
@@ -48,13 +48,13 @@ our $CONFIG = {
   date                          => undef,
   debug                         => 0,
   download_and_play             => 0,
-  download_with_wget            => 0,
+  download_with_wget            => 1,
   download_with_ytdl            => 1,
   downloads_dir                 => "$ENV{HOME}/vids/towatch/",
   env_proxy                     => 1,
   fat32safe                     => 0,
   features                      => [],
-  ffmpeg_cmd                    => "/usr/bin/ffmpeg",
+  ffmpeg_cmd                    => "ffmpeg",
   force_fallback                => 0,
   fullscreen                    => 0,
   get_captions                  => 1,
@@ -90,7 +90,7 @@ our $CONFIG = {
   skip_if_exists                => 1,
   skip_watched                  => 0,
   split_videos                  => 1,
-  srt_languages                 => ["en", "es"],
+  srt_languages                 => ["en"],
   subscribed_channels_file      => "$ENV{HOME}/.config/pipe-viewer/subscribed_channels.txt",
   subscriptions_lifetime        => 600,
   subscriptions_limit           => 10000,
@@ -98,8 +98,16 @@ our $CONFIG = {
   timeout                       => undef,
   user_agent                    => undef,
   video_filename_format         => "*FTITLE* - *ID*.*FORMAT*",
-  video_player_selected         => "mplayer",
+  video_player_selected         => "{{player}}",
   video_players                 => {
+                                     audioonly => {
+                                       arg => "--really-quiet --force-media-title=*TITLE* --no-ytdl --no-video *VIDEO*",
+                                       audio => "--audio-file=*AUDIO*",
+                                       cmd => "mpv",
+                                       fs => "--fullscreen",
+                                       novideo => "--no-video",
+                                       srt => "--sub-file=*SUB*",
+                                     },
                                      mplayer => {
                                        arg => "-title *TITLE* -really-quiet ffmpeg://\$(youtube-dl -f b -g *URL*)",
                                        cmd => "mplayer",
@@ -109,7 +117,7 @@ our $CONFIG = {
                                      },
                                      mpv => {
                                        arg => "--really-quiet --ytdl --ao=pulse --force-media-title=*TITLE* ytdl://*URL*",
-                                       cmd => "/usr/bin/mpv",
+                                       cmd => "mpv",
                                        fs => "--fullscreen",
                                        novideo => "--no-video",
                                        srt => "--sub-file=*SUB*",
@@ -133,12 +141,12 @@ our $CONFIG = {
   videoDuration                 => undef,
   watch_history                 => 1,
   watch_history_file            => "$ENV{HOME}/.config/pipe-viewer/watched.txt",
-  wget_cmd                      => "/usr/bin/wget",
+  wget_cmd                      => "wget",
   youtube_channel_url           => "https://www.youtube.com/channel/%s",
   youtube_playlist_url          => "https://www.youtube.com/playlist?list=%s",
   youtube_video_url             => "https://www.youtube.com/watch?v=%s",
   ytdl                          => 1,
-  ytdl_cmd                      => "/usr/bin/yt-dlp",
+  ytdl_cmd                      => "yt-dlp",
   ytdlp_comments                => 0,
   ytdlp_max_comments            => 10,
   ytdlp_max_replies             => 3,

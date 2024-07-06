@@ -10,32 +10,28 @@ in {
   home.packages = with pkgs; [
     pipe-viewer
     mplayer
-    # j2cli
+    j2cli
   ];
 
   systemd.user.tmpfiles.rules = ["d ${homeDir}/vids/towatch"];
 
-  # TODO: remove old config, port to desktop
-  # TODO: music only option for config
+  # TODO: port to desktop with optional audioonly option
+  # TODO: explore creating lib of jinja and removing pkg from here
 
-  # Templating using jinja2?
+  xdg.configFile."pipe-viewer/pipe-viewer.conf".source =
+    pkgs.runCommand
+    "template-pipe-viewer"
+    {
+      passAsFile = [
+        "paramsJson"
+      ];
+      paramsJson = builtins.toJSON {
+        player = "audioonly";
+      };
+    }
+    ''
+      ${pkgs.j2cli}/bin/j2 -f json ${./pipe-viewer.conf.j2} "$paramsJsonPath" > "$out"
+    '';
 
-  # pkgs.runCommand
-  # "myscript"
-  # {
-  #   passAsFile = [
-  #     "paramsJson"
-  #   ];
-  #   paramsJson = builtins.toJSON {
-  #     items = [
-  #       "socks"
-  #       "towel"
-  #     ];
-  #   };
-  # }
-  # '''
-  #   ${pkgs.j2cli}/bin/j2 -f json ${./my-script.j2} "$paramsJsonPath" > "$out"
-  # ''
-
-  xdg.configFile."pipe-viewer/pipe-viewer.conf".source = ./pipe-viewer.conf;
+  # xdg.configFile."pipe-viewer/pipe-viewer.conf".source = ./pipe-viewer.conf;
 }
