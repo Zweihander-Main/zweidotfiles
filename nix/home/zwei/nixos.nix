@@ -38,8 +38,9 @@
 
   home.packages = with pkgs; [
     # user programs
+    anki
     firefox
-    zathura
     xdg-ninja
+    zathura
   ];
 }
