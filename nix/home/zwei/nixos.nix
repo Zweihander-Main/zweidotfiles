@@ -10,6 +10,7 @@
   imports = [
     ./default.nix
     ./alacritty
+    ./anki
     ./chezmoi
     ./chromium
     ./copyq
@@ -38,7 +39,6 @@
 
   home.packages = with pkgs; [
     # user programs
-    anki
     firefox
     xdg-ninja
     zathura
