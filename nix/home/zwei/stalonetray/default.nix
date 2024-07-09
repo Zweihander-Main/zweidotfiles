@@ -29,6 +29,12 @@ in {
       ExecStartPost = "${pkgs.runtimeShell} -c 'exec sleep 1'";
     };
 
-    Install = {WantedBy = ["wm.target"];};
+    Install = {WantedBy = ["wm.target" "tray.target"];};
+  };
+
+  systemd.user.targets.tray = {
+    Unit = {
+      Description = "Tray target";
+    };
   };
 }
