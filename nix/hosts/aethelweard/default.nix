@@ -178,8 +178,12 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
+    dpi = 196;
     xkb.layout = "us";
     displayManager.startx.enable = true;
+    monitorSection = ''
+      DisplaySize 254 169
+    '';
   };
 
   # Enable touchpad
