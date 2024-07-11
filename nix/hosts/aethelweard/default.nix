@@ -113,7 +113,7 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systempackages = with pkgs; [
     acpilight
     findutils
     git
