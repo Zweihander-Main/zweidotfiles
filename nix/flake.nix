@@ -20,8 +20,6 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
-    inherit (nixpkgs.lib) nixosSystem;
-    inherit (home-manager.lib) homeManagerConfiguration;
 
     # Supported systems for your flake packages, shell, etc.
     systems = [
@@ -38,11 +36,22 @@
     # Load secrets file
     secrets = builtins.fromJSON (builtins.readFile "${self}/../secrets/secrets.json");
 
-    # Custom lib funcs
-    mkLib = nixpkgs:
-      nixpkgs.lib.extend
-      (final: prev: (import ./lib final) // home-manager.lib);
-    lib = mkLib nixpkgs;
+    # Custom lib extensions
+      lib = nixpkgs.lib.extend
+        (final: prev: {
+   final.mkTemplate = src: params:
+    nixpkgs.runCommand
+    "template-${src}"
+    {
+      buildInputs = [nixpkgs.j2cli];
+      passAsFile = [
+        "paramsJson"
+      ];
+      paramsJson = builtins.toJSON params;
+    }
+    ''
+      ${nixpkgs.j2cli}/bin/j2 -f json ${src} "$paramsJsonPath" > "$out"
+    '';});
   in {
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
