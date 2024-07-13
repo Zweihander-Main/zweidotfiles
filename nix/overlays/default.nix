@@ -39,7 +39,4 @@
       config.allowUnfree = true;
     };
   };
-
-
-
 }

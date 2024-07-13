@@ -1,7 +1,11 @@
-/*
-Jinja2 templating
-*/
-lib: basePath: rec {
+{lib, ...}: let
+  inherit
+    (builtins)
+    pkgs
+    ;
+  /*
+  Jinja2 templating
+  */
   mkTemplate = src: params:
     pkgs.runCommand
     "template-${src}"
@@ -15,4 +19,6 @@ lib: basePath: rec {
     ''
       ${pkgs.j2cli}/bin/j2 -f json ${src} "$paramsJsonPath" > "$out"
     '';
+in {
+  inherit mkTemplate;
 }
