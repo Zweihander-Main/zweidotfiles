@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  overlays,
   secrets,
   ...
 }: let
@@ -17,7 +16,7 @@ in {
 
   # TODO: port to desktop with optional audioonly option
 
-  xdg.configFile."pipe-viewer/pipe-viewer.conf".source = overlays.mkTemplate ./pipe-viewer.conf.j2 {
+  xdg.configFile."pipe-viewer/pipe-viewer.conf".source = lib.mine.mkTemplate ./pipe-viewer.conf.j2 {
     player = "audioonly";
   };
 }
