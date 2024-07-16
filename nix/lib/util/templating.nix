@@ -1,7 +1,4 @@
 {lib, pkgs, ...}: let
-inherit
-    (builtins)
-  ;
   # Jinja2 templating
   mkTemplate = src: params:
     pkgs.runCommand "template-${src}" {

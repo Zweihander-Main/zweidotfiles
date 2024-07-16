@@ -39,9 +39,10 @@
     # Extend nixpkgs.lib with custom lib and HM lib
     # Custom `./lib` will exposed as `lib.mine`
     # NOTE merge with `home-manager.lib` otherwise build will fail.
+    # TODO: sys agnostic
     mkLib = nixpkgs:
       nixpkgs.lib.extend
-        (self: super: {mine = import ./lib/util {lib = self; pkgs = import nixpkgs {};};} // home-manager.lib);
+        (self: super: {mine = import ./lib/util {lib = self; pkgs = nixpkgs.legacyPackages.x86_64-linux;};} // home-manager.lib);
     lib = mkLib inputs.nixpkgs;
   in {
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
