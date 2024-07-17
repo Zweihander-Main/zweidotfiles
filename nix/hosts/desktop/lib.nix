@@ -12,6 +12,11 @@
         emacs = true;
         vim = true;
       };
+      programs = {
+        pipeViewer = {
+          player = "mpv";
+        };
+      };
       paths = {
         systemdUserPkgServiceFiles = "/usr/lib/systemd/user/";
       };

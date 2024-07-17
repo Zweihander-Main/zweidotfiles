@@ -14,9 +14,7 @@ in {
 
   systemd.user.tmpfiles.rules = ["d ${homeDir}/vids/towatch"];
 
-  # TODO: port to desktop with optional audioonly option
-
   xdg.configFile."pipe-viewer/pipe-viewer.conf".source = lib.mine.mkTemplate ./pipe-viewer.conf.j2 {
-    player = "audioonly";
+    player = config.hostAttr.programs.pipeViewer.player;
   };
 }

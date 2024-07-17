@@ -12,6 +12,11 @@
         emacs = false;
         vim = false;
       };
+      programs = {
+        pipeViewer = {
+          player = "audioonly";
+        };
+      };
       paths = {
         systemdUserPkgServiceFiles = "/etc/systemd/user/";
       };

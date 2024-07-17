@@ -48,6 +48,15 @@ in {
         description = "Is vim available on the host?";
       };
     };
+    programs = {
+      pipeViewer = {
+        player = mkOption {
+          type = types.str;
+          default = "audioonly";
+          description = "Which player defined in config to use.";
+        };
+      };
+    };
     paths = {
       systemdUserPkgServiceFiles = mkOption {
         type = types.str;

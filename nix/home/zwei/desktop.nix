@@ -17,7 +17,8 @@
     ./flameshot
     ./mouseless
     ./pcmanfm
-    /redshift
+    ./pipe-viewer
+    ./redshift
     ./sound
     ./stalonetray
     ./sxhkd
