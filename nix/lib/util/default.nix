@@ -1,7 +1,16 @@
-{lib, pkgs, ...} @ args:
+{
+  lib,
+  pkgs,
+  ...
+} @ args:
 with lib; let
   _lib = self: let
-    callLibs = file: import file ({lib = self; pkgs = pkgs;} // args);
+    callLibs = file:
+      import file ({
+          lib = self;
+          pkgs = pkgs;
+        }
+        // args);
   in {
     templating = callLibs ./templating.nix;
   };

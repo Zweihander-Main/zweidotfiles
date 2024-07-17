@@ -1,4 +1,8 @@
-{lib, pkgs, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   # Jinja2 templating
   mkTemplate = src: params:
     pkgs.runCommand "template-${src}" {
