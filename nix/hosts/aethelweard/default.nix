@@ -132,6 +132,7 @@
     vim
     w3m
     wget
+    xorg.xev
     zsh
   ];
 
