@@ -43,6 +43,66 @@ in {
       ## Fonts
       emacs-all-the-icons-fonts
       (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+      # iosevka
+      (iosevka.override {
+        set = "SS09Extended";
+        privateBuildPlan = ''
+          [buildPlans.IosevkaSS09Extended]
+          family = "IosevkaSS09Extended"
+          spacing = "normal"
+          serifs = "sans"
+          noCvSs = true
+          exportGlyphNames = false
+
+            [buildPlans.IosevkaSS09Extended.variants]
+            inherits = "ss09"
+
+          [buildPlans.IosevkaSS09Extended.widths.Condensed]
+          shape = 500
+          menu = 3
+          css = "condensed"
+
+          [buildPlans.IosevkaSS09Extended.widths.Normal]
+          shape = 600
+          menu = 5
+          css = "normal"
+        '';
+      })
+      # (iosevka.override {
+      #   set = "IosevkaSS09TermExtended";
+      #   privateBuildPlan = ''
+      #     [buildPlans.IosevkaSs09TermExtended]
+      #     family = "IosevkaSS09TermExtended"
+      #     spacing = "term"
+      #     serifs = "sans"
+      #     noCvSs = true
+      #     exportGlyphNames = false
+
+      #       [buildPlans.IosevkaSs09TermExtended.variants]
+      #       inherits = "ss09"
+
+      #     [buildPlans.IosevkaSs09TermExtended.widths.Condensed]
+      #     shape = 500
+      #     menu = 3
+      #     css = "condensed"
+
+      #     [buildPlans.IosevkaSs09TermExtended.widths.Normal]
+      #     shape = 600
+      #     menu = 5
+      #     css = "normal"
+      #   '';
+      # })
+      # (iosevka.override {
+      #   set = "IosevkaAile";
+      #   privateBuildPlan = ''
+      #     [buildPlans.IosevkaAile]
+      #     family = "IosevkaAile"
+      #     spacing = "quasi-proportional"
+      #     serifs = "sans"
+      #     noCvSs = true
+      #     exportGlyphNames = false
+      #   '';
+      # })
 
       ## Personal config deps
       lsb-release
