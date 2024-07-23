@@ -6,7 +6,8 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchzip {
     url = "https://github.com/be5invis/Iosevka/releases/download/v${version}/PkgTTF-IosevkaSS09-${version}.zip";
-    hash = "sha256-ec84ceec73cadb4e651483a62b783ec173cd966edfdf2cb9794aab566383dff4";
+    stripRoot = false;
+    hash = "sha256-DtwxzFYTQV0raoBLAUzxPwjeInkzMgZJCHRLUCvG5WU=";
   };
 
   installPhase = ''
