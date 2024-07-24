@@ -44,6 +44,8 @@ in {
       emacs-all-the-icons-fonts
       (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
       iosevka-ss09
+      iosevka-term-ss09
+      iosevka-aile
 
       ## Personal config deps
       lsb-release
