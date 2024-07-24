@@ -1,5 +1,8 @@
-{ lib, stdenvNoCC, fetchzip }:
-
+{
+  lib,
+  stdenvNoCC,
+  fetchzip,
+}:
 stdenvNoCC.mkDerivation rec {
   pname = "iosevka-ss09";
   version = "30.3.3";
