@@ -8,9 +8,9 @@ stdenvNoCC.mkDerivation rec {
   version = "30.3.3";
 
   src = fetchzip {
-    url = "https://github.com/be5invis/Iosevka/releases/download/v${version}/PkgTTF-Aile-${version}.zip";
+    url = "https://github.com/be5invis/Iosevka/releases/download/v${version}/PkgTTF-IosevkaTermSS09-${version}.zip";
     stripRoot = false;
-    hash = "sha256-DtwxzFYTQV0raoBLAUzxPwjeInkzMgZJCHRLUCvG5WU=";
+    hash = "sha256-gW4EnFKnItmPYyn+L/6/7NX9ChGWdfCHloOSdlzOeqA=";
   };
 
   installPhase = ''
