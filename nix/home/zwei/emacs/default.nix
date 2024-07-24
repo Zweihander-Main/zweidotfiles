@@ -11,12 +11,12 @@ with lib; let
 in {
   programs.emacs = mkIf (! config.hostAttr.preinstalled.emacs) {
     enable = true;
-    package = pkgs.emacs;
+    package = pkgs.emacs-gtk;
   };
 
   services.emacs = {
     enable = true;
-    package = mkIf (! config.hostAttr.preinstalled.emacs) pkgs.emacs;
+    package = mkIf (! config.hostAttr.preinstalled.emacs) pkgs.emacs-gtk;
   };
 
   systemd.user.services.emacs = {
