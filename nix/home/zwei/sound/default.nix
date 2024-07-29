@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     pavucontrol
     pa-notify
+    playerctl
   ];
 
   xdg.configFile."systemd/user/pipewire-pulse.service.d/override.conf".source = ./override.conf;
