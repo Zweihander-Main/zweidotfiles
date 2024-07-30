@@ -4,6 +4,7 @@
       monitor = {
         ddcci = true;
         nightTemp = 1000;
+        pixelRatio = 2;
       };
       preinstalled = {
         systemd = true;

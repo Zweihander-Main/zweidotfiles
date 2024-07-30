@@ -20,6 +20,11 @@ in {
         default = 1200;
         description = "Color temp to use at night, between`1000` and `25000` K.";
       };
+      pixelRatio = mkOption {
+        type = types.int;
+        default = 1;
+        description = "Multiple for DPI adjustments.";
+      };
     };
     preinstalled = {
       systemd = mkOption {
