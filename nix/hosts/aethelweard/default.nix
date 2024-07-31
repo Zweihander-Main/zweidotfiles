@@ -180,6 +180,7 @@
   services.xserver = {
     enable = true;
     dpi = 196;
+    upscaleDefaultCursor = true;
     xkb.layout = "us";
     displayManager.startx.enable = true;
     monitorSection = ''
