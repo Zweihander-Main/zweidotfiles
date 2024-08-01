@@ -74,6 +74,8 @@ in {
       nodePackages.js-beautify
       # :lang zsh
       beautysh
+      # :lang nix
+      nixfmt-classic
       # :checkers spell
       (aspellWithDicts (ds: with ds; [en en-computers en-science]))
       # :tools lookup & :lang org +roam
