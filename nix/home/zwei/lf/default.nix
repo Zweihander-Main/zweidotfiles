@@ -1,12 +1,4 @@
-{
-  pkgs,
-  config,
-  lib,
-  secrets,
-  ...
-}: let
-  homeDir = config.home.homeDirectory;
-in {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     lf
     # for ctpv in lf
@@ -19,6 +11,8 @@ in {
     chafa
     jq
     glow
+    # mentioned in config
+    rsync
   ];
 
   xdg.configFile."lf/lfrc".source = ./lfrc;
