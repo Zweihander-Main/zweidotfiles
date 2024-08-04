@@ -5,6 +5,11 @@ let
   doomRepoUrl = "https://github.com/doomemacs/doomemacs";
   configRepoUrl = "https://github.com/Zweihander-Main/zweidoom";
 in {
+  imports = [
+    # :checkers spell
+    ../aspell
+  ];
+
   programs.emacs = mkIf (!config.hostAttr.preinstalled.emacs) {
     enable = true;
     package = pkgs.emacs;
@@ -72,8 +77,6 @@ in {
       # :lang nix
       nixfmt-classic
       nil
-      # :checkers spell
-      (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
       # :tools lookup & :lang org +roam
       sqlite
       # :tools ansible
