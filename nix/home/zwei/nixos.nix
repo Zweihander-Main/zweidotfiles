@@ -1,12 +1,4 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  outputs,
-  secrets,
-  ...
-}: {
+{ inputs, lib, config, pkgs, outputs, secrets, ... }: {
   imports = [
     ./default.nix
     ./alacritty
@@ -42,5 +34,6 @@
     firefox
     xdg-ninja
     zathura
+    sweethome3d.application
   ];
 }
