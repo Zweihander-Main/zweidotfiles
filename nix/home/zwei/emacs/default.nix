@@ -103,6 +103,7 @@ in {
         ${pkgs.git}/bin/git remote add origin "${configRepoUrl}"
         ${pkgs.git}/bin/git fetch
         ${pkgs.git}/bin/git checkout origin/master -ft
+        mkdir -p "$XDG_CONFIG_HOME/doom/snippets"
         PATH="$XDG_STATE_HOME/nix/profile/bin:$PATH"
         cd "$XDG_CONFIG_HOME"/emacs/bin/
         ./doom install
