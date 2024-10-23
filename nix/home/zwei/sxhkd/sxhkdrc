@@ -10,7 +10,13 @@ super + alt + l
 XF86AudioLowerVolume
     pactl set-sink-volume @DEFAULT_SINK@ -5%
 
+super + KP_Subtract
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
 XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+super + KP_Add
     pactl set-sink-volume @DEFAULT_SINK@ +5%
 
 XF86AudioMute
@@ -58,6 +64,8 @@ shift + Print
 ctrl + Print
     flameshot full -c
 
+super + Print
+    flameshot gui -r | xclip -selection clipboard -t image/png
 
 # User programs
 ctrl + alt + shift + c
