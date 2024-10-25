@@ -84,13 +84,19 @@
         extraSpecialArgs = {inherit inputs outputs secrets lib;};
         modules = [./hosts/server-alpine/lib.nix ./home/zwei/server.nix];
       };
-      "zwei@desktop" = home-manager.lib.homeManagerConfiguration {
+      # TODO: combine work and play desktop configs more
+      "zwei@work" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets lib;};
-        modules = [./hosts/desktop/lib.nix ./home/zwei/desktop.nix];
+        modules = [./hosts/work/lib.nix ./home/zwei/work.nix];
       };
-      "zwei@ptah" = outputs.homeConfigurations."zwei@desktop";
-      "zwei@horus" = outputs.homeConfigurations."zwei@desktop";
+      "zwei@play" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs secrets lib;};
+        modules = [./hosts/play/lib.nix ./home/zwei/play.nix];
+      };
+      "zwei@ptah" = outputs.homeConfigurations."zwei@work";
+      "zwei@horus" = outputs.homeConfigurations."zwei@play";
       "zwei@aethelweard" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs secrets lib;};

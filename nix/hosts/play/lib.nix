@@ -1,6 +1,7 @@
 {config, ...}: {
   config = {
     hostAttr = {
+      type = "play";
       monitor = {
         ddcci = false;
         nightTemp = 1200;

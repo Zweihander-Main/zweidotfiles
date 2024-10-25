@@ -9,6 +9,11 @@ with lib; let
   cfg = config.hostAttr;
 in {
   options.hostAttr = {
+    type = mkOption {
+      type = types.str;
+      default = "work";
+      description = "Type of host, either `work` or `play`.";
+    };
     monitor = {
       ddcci = mkOption {
         type = types.bool;
