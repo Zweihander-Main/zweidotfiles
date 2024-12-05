@@ -1,39 +1,39 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}:
-with lib; let
+{ pkgs, config, lib, ... }:
+with lib;
+let
   homeDir = config.home.homeDirectory;
   doomRepoUrl = "https://github.com/doomemacs/doomemacs";
   configRepoUrl = "https://github.com/Zweihander-Main/zweidoom";
 in {
-  programs.emacs = mkIf (! config.hostAttr.preinstalled.emacs) {
+  imports = [
+    # :checkers spell
+    ../aspell
+  ];
+
+  programs.emacs = mkIf (!config.hostAttr.preinstalled.emacs) {
     enable = true;
     package = pkgs.emacs;
   };
 
   services.emacs = {
     enable = true;
-    package = mkIf (! config.hostAttr.preinstalled.emacs) pkgs.emacs;
+    package = mkIf (!config.hostAttr.preinstalled.emacs) pkgs.emacs;
   };
 
   systemd.user.services.emacs = {
-    Install = mkForce {
-      WantedBy = ["wm.target"];
-    };
+    Install = mkForce { WantedBy = [ "wm.target" ]; };
   };
 
-  xdg.configFile."systemd/user/emacs.service.d/override.conf".source = ./override.conf;
+  xdg.configFile."systemd/user/emacs.service.d/override.conf".source =
+    ./override.conf;
 
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs;
-    mkIf (! config.hostAttr.preinstalled.emacs) [
+    mkIf (!config.hostAttr.preinstalled.emacs) [
       ## Doom dependencies
       git
-      (ripgrep.override {withPCRE2 = true;})
+      (ripgrep.override { withPCRE2 = true; })
       nodejs-slim
 
       ## Optional dependencies
@@ -42,67 +42,10 @@ in {
 
       ## Fonts
       emacs-all-the-icons-fonts
-      (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
-      # iosevka
-      (iosevka.override {
-        set = "SS09Extended";
-        privateBuildPlan = ''
-          [buildPlans.IosevkaSS09Extended]
-          family = "IosevkaSS09Extended"
-          spacing = "normal"
-          serifs = "sans"
-          noCvSs = true
-          exportGlyphNames = false
-
-            [buildPlans.IosevkaSS09Extended.variants]
-            inherits = "ss09"
-
-          [buildPlans.IosevkaSS09Extended.widths.Condensed]
-          shape = 500
-          menu = 3
-          css = "condensed"
-
-          [buildPlans.IosevkaSS09Extended.widths.Normal]
-          shape = 600
-          menu = 5
-          css = "normal"
-        '';
-      })
-      # (iosevka.override {
-      #   set = "IosevkaSS09TermExtended";
-      #   privateBuildPlan = ''
-      #     [buildPlans.IosevkaSs09TermExtended]
-      #     family = "IosevkaSS09TermExtended"
-      #     spacing = "term"
-      #     serifs = "sans"
-      #     noCvSs = true
-      #     exportGlyphNames = false
-
-      #       [buildPlans.IosevkaSs09TermExtended.variants]
-      #       inherits = "ss09"
-
-      #     [buildPlans.IosevkaSs09TermExtended.widths.Condensed]
-      #     shape = 500
-      #     menu = 3
-      #     css = "condensed"
-
-      #     [buildPlans.IosevkaSs09TermExtended.widths.Normal]
-      #     shape = 600
-      #     menu = 5
-      #     css = "normal"
-      #   '';
-      # })
-      # (iosevka.override {
-      #   set = "IosevkaAile";
-      #   privateBuildPlan = ''
-      #     [buildPlans.IosevkaAile]
-      #     family = "IosevkaAile"
-      #     spacing = "quasi-proportional"
-      #     serifs = "sans"
-      #     noCvSs = true
-      #     exportGlyphNames = false
-      #   '';
-      # })
+      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      iosevka-ss09
+      iosevka-term-ss09
+      iosevka-aile
 
       ## Personal config deps
       lsb-release
@@ -131,8 +74,9 @@ in {
       nodePackages.js-beautify
       # :lang zsh
       beautysh
-      # :checkers spell
-      (aspellWithDicts (ds: with ds; [en en-computers en-science]))
+      # :lang nix
+      nixfmt-classic
+      nil
       # :tools lookup & :lang org +roam
       sqlite
       # :tools ansible
@@ -145,7 +89,7 @@ in {
       nodePackages.npm
     ];
 
-  home.sessionPath = ["$XDG_CONFIG_HOME/emacs/bin"];
+  home.sessionPath = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
   home.activation = {
     installDoomEmacs = ''
@@ -159,6 +103,7 @@ in {
         ${pkgs.git}/bin/git remote add origin "${configRepoUrl}"
         ${pkgs.git}/bin/git fetch
         ${pkgs.git}/bin/git checkout origin/master -ft
+        mkdir -p "$XDG_CONFIG_HOME/doom/snippets"
         PATH="$XDG_STATE_HOME/nix/profile/bin:$PATH"
         cd "$XDG_CONFIG_HOME"/emacs/bin/
         ./doom install

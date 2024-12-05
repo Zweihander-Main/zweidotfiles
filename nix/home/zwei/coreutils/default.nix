@@ -1,17 +1,11 @@
-{
-  pkgs,
-  config,
-  lib,
-  secrets,
-  ...
-}:
-with lib; let
-  homeDir = config.home.homeDirectory;
+{ pkgs, config, lib, secrets, ... }:
+with lib;
+let homeDir = config.home.homeDirectory;
 in {
   imports = [
     ../lf # file manager
     ../bat # cat++
-    ../navi # cheat sheets
+    ../help # cheat sheets
     ../fetch # rice
     ../viddy # watch replacement
   ];
@@ -30,6 +24,5 @@ in {
     sd # sed replacement
     (mkIf config.hostAttr.preinstalled.systemd sysz) # systemd assistant
     thefuck # correct prev command
-    tldr # man pages
   ];
 }

@@ -11,7 +11,9 @@ in {
     stalonetray
   ];
 
-  xdg.configFile."stalonetray/stalonetrayrc".source = ./stalonetrayrc;
+  xdg.configFile."stalonetray/stalonetrayrc".source = lib.mine.mkTemplate ./stalonetrayrc.j2 {
+    iconSize = 16 * config.hostAttr.monitor.pixelRatio;
+  };
 
   systemd.user.services.tray = {
     Unit = {
