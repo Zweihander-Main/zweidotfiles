@@ -7,6 +7,12 @@ super + alt + l
     loginctl lock-session
 
 # Audio
+super + KP_Subtract
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+super + KP_Add
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
 XF86AudioLowerVolume
     wpctl set-volume @DEFAULT_SINK@ 5%-
 
