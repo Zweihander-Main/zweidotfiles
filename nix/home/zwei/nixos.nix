@@ -1,15 +1,8 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  outputs,
-  secrets,
-  ...
-}: {
+{ inputs, lib, config, pkgs, outputs, secrets, ... }: {
   imports = [
     ./default.nix
     ./alacritty
+    ./anki
     ./chezmoi
     ./chromium
     ./copyq
@@ -21,8 +14,11 @@
     ./flameshot
     ./lf
     ./mouseless
+    ./pcmanfm
+    ./pipe-viewer
     ./redshift
     ./shellscripts
+    ./sound
     ./stalonetray
     ./sxhkd
     ./syncthing
@@ -36,6 +32,8 @@
   home.packages = with pkgs; [
     # user programs
     firefox
+    xdg-ninja
     zathura
+    sweethome3d.application
   ];
 }

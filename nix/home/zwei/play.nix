@@ -6,20 +6,24 @@
   outputs,
   secrets,
   ...
-}: {
+}: with lib; {
   imports = [
     ./default.nix
     ./alacritty
     ./coreutils
     ./copyq
     ./dunst
-    #./emacs
+    ./emacs
     ./flameshot
     ./mouseless
+    ./pcmanfm
+    ./pipe-viewer
     ./redshift
+    ./sound
     ./stalonetray
     ./sxhkd
     ./tmux
+    ./time
     ./udiskie
     ./vim
   ];

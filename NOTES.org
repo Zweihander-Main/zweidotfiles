@@ -86,11 +86,8 @@ zsh
 sudo apt -y install \
     bzip2 \
     diffutils \
-    emacs \
     gnupg \
-    graphviz \
     hostname \
-    isync \
     libsqlite3-0 \
     man-db \
     openssh-client \
@@ -101,7 +98,6 @@ sudo apt -y install \
     wget \
     xz-utils \
     zip
-pip3 install thefuck --user
 git clone https://github.com/rkitover/vimpager /tmp/vimpager
 cd /tmp/vimpager
 sudo make install-deb
@@ -119,7 +115,6 @@ sudo pacman --noconfirm -Sy \
     man-db \
     openssh \
     sqlite \
-    thefuck
     unzip \
     vimpager \
     wget \
@@ -131,15 +126,12 @@ sudo pacman --noconfirm -Sy \
 doas apk --update add \
     bzip2 \
     diffutils \
-    emacs \
     gnupg \
-    graphviz \
     isync \
     man-db \
     net-tools \
     openssh \
     sqlite \
-    thefuck
     unzip \
     wget \
     xz \
@@ -147,25 +139,6 @@ doas apk --update add \
 git clone https://github.com/rkitover/vimpager /tmp/vimpager
 cd /tmp/vimpager
 sudo make install
-#+end_src
-** Nix
-#+begin_src nix
-bzip2
-emacs
-file
-gnupg
-graphviz
-hostname
-isync
-man
-openssh
-sqlite
-thefuck
-unzip
-vimpager
-wget
-xz
-zip
 #+end_src
 * Nix setup
 ** Debian
@@ -184,8 +157,8 @@ max-jobs = auto
 #+begin_src shell
 sudo systemctl enable --now nix-daemon.service
 sudo usermod -aG nix-users zwei
-nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
 nix-channel --update
 export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
 nix-shell '<home-manager>' -A install
@@ -210,8 +183,8 @@ max-jobs = auto
 #+begin_src shell
 sudo systemctl enable --now nix-daemon.service
 sudo usermod -aG nix-users zwei
-nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
 nix-channel --update
 export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
 nix-shell '<home-manager>' -A install
@@ -235,8 +208,8 @@ max-jobs = auto
 #+begin_src shell
 doas /etc/init.d/nix-daemon start
 doas rc-update add nix-daemon
-nix-channel --add https://nixos.org/channels/nixos-23.11 nixpkgs
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
 nix-channel --update
 export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
 nix-shell '<home-manager>' -A install
@@ -244,3 +217,5 @@ rm -r ~/.config/home-manager
 ln -s ~/.local/share/chezmoi/nix ~/.config/home-manager
 home-manager switch --flake .#zwei@linux
 #+end_src
+** Ansible
+- TODO

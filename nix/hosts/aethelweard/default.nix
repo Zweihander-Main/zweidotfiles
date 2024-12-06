@@ -124,6 +124,7 @@
     lm_sensors
     lynx
     mlocate
+    unstable.pcsclite # https://github.com/NixOS/nixpkgs/issues/290926
     pinentry-gtk2
     procps
     unzip
@@ -131,6 +132,7 @@
     vim
     w3m
     wget
+    xorg.xev
     zsh
   ];
 
@@ -139,7 +141,10 @@
     source-code-pro
   ];
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    histFile = "$XDG_DATA_HOME/shell/history";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -148,9 +153,8 @@
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry-gtk2;
   };
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = [pkgs.yubikey-personalization];
   services.pcscd.enable = true;
-
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -175,12 +179,27 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
+    dpi = 196;
+    upscaleDefaultCursor = true;
     xkb.layout = "us";
     displayManager.startx.enable = true;
+    monitorSection = ''
+      DisplaySize 254 169
+    '';
   };
 
   # Enable touchpad
   services.libinput.enable = true;
+
+  # Enable sound
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    #jack.enable = true;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

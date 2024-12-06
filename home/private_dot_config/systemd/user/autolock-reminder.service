@@ -1,7 +1,0 @@
-[Unit]
-Description=Notify about upcoming autolock
-ConditionFileIsExecutable=/usr/bin/dunstify
-
-[Service]
-Type=simple
-ExecStart=dunstify -a "autolock" -i appointment-soon "Autolock coming up"

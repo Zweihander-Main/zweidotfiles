@@ -11,7 +11,9 @@ in {
     stalonetray
   ];
 
-  xdg.configFile."stalonetray/stalonetrayrc".source = ./stalonetrayrc;
+  xdg.configFile."stalonetray/stalonetrayrc".source = lib.mine.mkTemplate ./stalonetrayrc.j2 {
+    iconSize = 16 * config.hostAttr.monitor.pixelRatio;
+  };
 
   systemd.user.services.tray = {
     Unit = {
@@ -29,6 +31,12 @@ in {
       ExecStartPost = "${pkgs.runtimeShell} -c 'exec sleep 1'";
     };
 
-    Install = {WantedBy = ["wm.target"];};
+    Install = {WantedBy = ["wm.target" "tray.target"];};
+  };
+
+  systemd.user.targets.tray = {
+    Unit = {
+      Description = "Tray target";
+    };
   };
 }

@@ -1,6 +1,7 @@
-import = ["/home/zwei/.config/alacritty/colors.toml"]
+[general]
 live_config_reload = true
 working_directory = "None"
+import = ["/home/zwei/.config/alacritty/colors.toml"]
 
 [bell]
 animation = "EaseOutExpo"

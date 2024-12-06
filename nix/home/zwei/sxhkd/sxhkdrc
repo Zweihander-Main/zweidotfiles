@@ -8,13 +8,19 @@ super + alt + l
 
 # Audio
 XF86AudioLowerVolume
+    wpctl set-volume @DEFAULT_SINK@ 5%-
+
+super + KP_Subtract
     pactl set-sink-volume @DEFAULT_SINK@ -5%
 
 XF86AudioRaiseVolume
+    wpctl set-volume @DEFAULT_SINK@ 5%+
+
+super + KP_Add
     pactl set-sink-volume @DEFAULT_SINK@ +5%
 
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    wpctl set-mute @DEFAULT_SINK@ toggle
 
 XF86AudioPlay
     playerctl play-pause
@@ -58,6 +64,8 @@ shift + Print
 ctrl + Print
     flameshot full -c
 
+super + Print
+    flameshot gui -r | xclip -selection clipboard -t image/png
 
 # User programs
 ctrl + alt + shift + c
