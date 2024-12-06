@@ -1,0 +1,12 @@
+
+###+++--- GPGConf ---+++###
+reader-port Yubico Yubikey 4 OTP+U2F+CCID 0
+card-timeout 1
+###+++--- GPGConf ---+++### 02/19/19 02:37:10 Eastern Standard Time
+# GPGConf edited this configuration file.
+# It will disable options before this marked block, but it will
+# never change anything below these lines.
+{{ if ne .osid "linux-nixos" -}}
+pcsc-driver /usr/lib/libpcsclite.so
+{{ end -}}
+disable-ccid

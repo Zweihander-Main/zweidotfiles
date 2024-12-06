@@ -1,0 +1,12 @@
+debug-pinentry
+debug ipc 
+verbose
+
+enable-putty-support
+enable-ssh-support
+
+{{ if eq .osid "linux-nixos" -}}
+pinentry-program /run/current-system/sw/bin/pinentry
+{{- else }}
+pinentry-program /usr/bin/pinentry-qt
+{{ end -}}
