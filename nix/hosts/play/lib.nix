@@ -7,10 +7,11 @@
         nightTemp = 1200;
       };
       preinstalled = {
-        systemd = true;
-        udiskie = true;
         alacritty = true;
         emacs = true;
+        pipeViewer = true;
+        systemd = true;
+        udiskie = true;
         vim = true;
       };
       programs = {

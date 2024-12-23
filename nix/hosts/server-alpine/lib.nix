@@ -2,10 +2,11 @@
   config = {
     hostAttr = {
       preinstalled = {
-        systemd = false;
-        udiskie = false;
         alacritty = false;
         emacs = false;
+        pipeViewer = false;
+        systemd = false;
+        udiskie = false;
         vim = false;
       };
     };

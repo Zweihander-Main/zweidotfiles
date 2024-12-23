@@ -1,7 +1,13 @@
 { pkgs, config, lib, ... }:
+with lib;
 let homeDir = config.home.homeDirectory;
 in {
-  home.packages = with pkgs; [ pipe-viewer mplayer ];
+
+  home.packages = with pkgs; [
+    (mkIf (!config.hostAttr.preinstalled.pipeViewer) pipeViewer)
+    (mkIf (!config.hostAttr.preinstalled.pipeViewer) mplayer)
+  ];
+
 
   systemd.user.tmpfiles.rules = [ "d ${homeDir}/vids/towatch" ];
 

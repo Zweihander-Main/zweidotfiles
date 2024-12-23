@@ -32,16 +32,6 @@ in {
       };
     };
     preinstalled = {
-      systemd = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Is systemd available on the host?";
-      };
-      udiskie = mkOption {
-        type = types.bool;
-        default = false;
-        description = "Is udiskie available on the host?";
-      };
       alacritty = mkOption {
         type = types.bool;
         default = false;
@@ -52,11 +42,27 @@ in {
         default = false;
         description = "Is emacs available on the host?";
       };
+      pipeViewer = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Is pipe-viewer available on the host?";
+      };
+      systemd = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Is systemd available on the host?";
+      };
+      udiskie = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Is udiskie available on the host?";
+      };
       vim = mkOption {
         type = types.bool;
         default = false;
         description = "Is vim available on the host?";
       };
+
     };
     programs = {
       pipeViewer = {
