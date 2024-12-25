@@ -1,6 +1,12 @@
-{ pkgs, config, lib, secrets, ... }:
-with lib;
-let homeDir = config.home.homeDirectory;
+{
+  pkgs,
+  config,
+  lib,
+  secrets,
+  ...
+}:
+with lib; let
+  homeDir = config.home.homeDirectory;
 in {
   imports = [
     ../lf # file manager

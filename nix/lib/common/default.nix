@@ -62,7 +62,6 @@ in {
         default = false;
         description = "Is vim available on the host?";
       };
-
     };
     programs = {
       pipeViewer = {

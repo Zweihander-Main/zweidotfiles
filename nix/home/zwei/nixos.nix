@@ -1,4 +1,12 @@
-{ inputs, lib, config, pkgs, outputs, secrets, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  outputs,
+  secrets,
+  ...
+}: {
   imports = [
     ./default.nix
     ./alacritty

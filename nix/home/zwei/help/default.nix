@@ -1,5 +1,9 @@
-{ pkgs, config, ... }:
-let homeDir = config.home.homeDirectory;
+{
+  pkgs,
+  config,
+  ...
+}: let
+  homeDir = config.home.homeDirectory;
 in {
   home.packages = with pkgs; [
     navi # cheat sheets
@@ -9,5 +13,5 @@ in {
   xdg.configFile."navi/config.yaml".source = ./config.yaml;
   xdg.dataFile."navi/cheats".source = ./cheats;
 
-  systemd.user.tmpfiles.rules = [ "d ${homeDir}/.cache/tldr" ];
+  systemd.user.tmpfiles.rules = ["d ${homeDir}/.cache/tldr"];
 }

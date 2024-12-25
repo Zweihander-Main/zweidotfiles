@@ -1,6 +1,10 @@
-{ pkgs, config, lib, ... }:
-with lib;
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+with lib; let
   homeDir = config.home.homeDirectory;
   doomRepoUrl = "https://github.com/doomemacs/doomemacs";
   configRepoUrl = "https://github.com/Zweihander-Main/zweidoom";
@@ -21,7 +25,7 @@ in {
   };
 
   systemd.user.services.emacs = {
-    Install = mkForce { WantedBy = [ "wm.target" ]; };
+    Install = mkForce {WantedBy = ["wm.target"];};
   };
 
   xdg.configFile."systemd/user/emacs.service.d/override.conf".source =
@@ -33,7 +37,7 @@ in {
     mkIf (!config.hostAttr.preinstalled.emacs) [
       ## Doom dependencies
       git
-      (ripgrep.override { withPCRE2 = true; })
+      (ripgrep.override {withPCRE2 = true;})
       nodejs-slim
 
       ## Optional dependencies
@@ -42,7 +46,7 @@ in {
 
       ## Fonts
       emacs-all-the-icons-fonts
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
       iosevka-ss09
       iosevka-term-ss09
       iosevka-aile
@@ -89,7 +93,7 @@ in {
       nodePackages.npm
     ];
 
-  home.sessionPath = [ "$XDG_CONFIG_HOME/emacs/bin" ];
+  home.sessionPath = ["$XDG_CONFIG_HOME/emacs/bin"];
 
   home.activation = {
     installDoomEmacs = ''

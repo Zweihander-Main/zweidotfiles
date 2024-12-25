@@ -6,7 +6,8 @@
   outputs,
   secrets,
   ...
-}: with lib; {
+}:
+with lib; {
   imports = [
     ./default.nix
     ./alacritty
@@ -30,5 +31,5 @@
   home.packages = with pkgs; [
   ];
 }
-
 ## TODO: DRY, possibly get rid of 'type'
+

@@ -6,7 +6,8 @@
   outputs,
   secrets,
   ...
-}: with lib; {
+}:
+with lib; {
   imports = [
     ./default.nix
     ./alacritty
