@@ -1,20 +1,31 @@
-{ inputs, lib, config, pkgs, secrets, outputs, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  secrets,
+  outputs,
+  ...
+}: {
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
     ];
-    config = { allowUnfree = true; };
+    config = {allowUnfree = true;};
   };
 
-  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; }))
+  nix.registry =
+    (lib.mapAttrs (_: flake: {inherit flake;}))
     ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = [ "/etc/nix/path" ];
-  environment.etc = lib.mapAttrs' (name: value: {
-    name = "nix/path/${name}";
-    value.source = value.flake;
-  }) config.nix.registry;
+  nix.nixPath = ["/etc/nix/path"];
+  environment.etc =
+    lib.mapAttrs' (name: value: {
+      name = "nix/path/${name}";
+      value.source = value.flake;
+    })
+    config.nix.registry;
 
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -26,35 +37,35 @@
     # Nix
     home-manager
     # Basic packages
-    bzip2
+    # bzip2
     chezmoi
-    curl
-    diffutils
-    file
+    # curl
+    # diffutils
+    # file
     findutils
-    gawk
+    # gawk
     git
     git-crypt
-    gnugrep
-    gnupg
-    gnused
-    gnutar
-    gzip
-    hostname
+    # gnugrep
+    # gnupg
+    # gnused
+    # gnutar
+    # gzip
+    # hostname
     killall
-    lsb-release
-    man
-    openssh
+    # lsb-release
+    # man
+    # openssh
     procps
-    tzdata
+    # tzdata
     unzip
-    utillinux
+    # utillinux
     vim
-    vimpager
+    # vimpager
     wget
-    which
-    xz
-    zip
+    # which
+    # xz
+    # zip
     zsh
   ];
 
