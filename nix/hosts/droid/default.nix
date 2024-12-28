@@ -1,32 +1,20 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  secrets,
-  outputs,
-  ...
-}: {
+{ inputs, lib, config, pkgs, secrets, outputs, ... }: {
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
     ];
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
 
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; }))
+    ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc = lib.mapAttrs' (name: value: {
+    name = "nix/path/${name}";
+    value.source = value.flake;
+  }) config.nix.registry;
 
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -38,36 +26,36 @@
     # Nix
     home-manager
     # Basic packages
-    vim
+    bzip2
     chezmoi
+    curl
     diffutils
+    file
     findutils
-    utillinux
-    tzdata
-    hostname
-    man
+    gawk
+    git
+    git-crypt
     gnugrep
     gnupg
     gnused
     gnutar
-    bzip2
     gzip
-    xz
-    zip
-    unzip
+    hostname
+    killall
+    lsb-release
+    man
     openssh
-    git
-    git-crypt
-    zsh
-    which
+    procps
+    tzdata
+    unzip
+    utillinux
+    vim
     vimpager
     wget
-    curl
-    file
-    gawk
-    lsb-release
-    procps
-    killall
+    which
+    xz
+    zip
+    zsh
   ];
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc

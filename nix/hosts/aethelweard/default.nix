@@ -1,12 +1,4 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  secrets,
-  outputs,
-  ...
-}: {
+{ inputs, lib, config, pkgs, secrets, outputs, ... }: {
   imports = [
     inputs.hardware.nixosModules.microsoft-surface-pro-3
     ./hardware-configuration.nix
@@ -19,25 +11,21 @@
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
     ];
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
 
   # This will add each flake input as a registry
   # To make nix3 commands consistent with your flake
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; }))
+    ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
   # This will additionally add your inputs to the system's legacy channels
   # Making legacy nix commands consistent as well, awesome!
-  nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc = lib.mapAttrs' (name: value: {
+    name = "nix/path/${name}";
+    value.source = value.flake;
+  }) config.nix.registry;
 
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -58,8 +46,8 @@
     };
     # Allows syncthing
     firewall = {
-      allowedTCPPorts = [22000];
-      allowedUDPPorts = [22000 21027];
+      allowedTCPPorts = [ 22000 ];
+      allowedUDPPorts = [ 22000 21027 ];
     };
   };
 
@@ -69,10 +57,10 @@
   # Use the systemd-boot EFI  boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = ["hid-microsoft"];
+  boot.kernelModules = [ "hid-microsoft" ];
 
   # Disable faulty soldered SSD
-  boot.kernelParams = ["libata.force=1.00:disable"];
+  boot.kernelParams = [ "libata.force=1.00:disable" ];
 
   # Reduce writes on SD card
   services.journald.storage = "volatile";
@@ -86,31 +74,27 @@
     zwei = {
       initialPassword = "changeme";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = ["${secrets.ssh.authorized_key}"];
+      openssh.authorizedKeys.keys = [ "${secrets.ssh.authorized_key}" ];
       shell = pkgs.zsh;
-      extraGroups = ["wheel"];
+      extraGroups = [ "wheel" ];
     };
     karlmagnus = {
       initialPassword = "changeme";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = ["${secrets.ssh.authorized_key}"];
+      openssh.authorizedKeys.keys = [ "${secrets.ssh.authorized_key}" ];
       shell = pkgs.zsh;
     };
   };
 
   security.sudo = {
     enable = true;
-    extraRules = [
-      {
-        commands = [
-          {
-            command = "/run/current-system/sw/bin/xbacklight";
-            options = ["NOPASSWD"];
-          }
-        ];
-        groups = ["wheel"];
-      }
-    ];
+    extraRules = [{
+      commands = [{
+        command = "/run/current-system/sw/bin/xbacklight";
+        options = [ "NOPASSWD" ];
+      }];
+      groups = [ "wheel" ];
+    }];
   };
 
   environment.systemPackages = with pkgs; [
@@ -124,9 +108,9 @@
     lm_sensors
     lynx
     mlocate
-    unstable.pcsclite # https://github.com/NixOS/nixpkgs/issues/290926
     pinentry-gtk2
     procps
+    unstable.pcsclite # https://github.com/NixOS/nixpkgs/issues/290926
     unzip
     upower
     vim
@@ -136,10 +120,7 @@
     zsh
   ];
 
-  fonts.packages = with pkgs; [
-    noto-fonts
-    source-code-pro
-  ];
+  fonts.packages = with pkgs; [ noto-fonts source-code-pro ];
 
   programs.zsh = {
     enable = true;
@@ -153,7 +134,7 @@
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry-gtk2;
   };
-  services.udev.packages = [pkgs.yubikey-personalization];
+  services.udev.packages = [ pkgs.yubikey-personalization ];
   services.pcscd.enable = true;
 
   # Enable the OpenSSH daemon.
