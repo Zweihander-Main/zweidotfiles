@@ -157,8 +157,8 @@ max-jobs = auto
 #+begin_src shell
 sudo systemctl enable --now nix-daemon.service
 sudo usermod -aG nix-users zwei
-nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-24.11 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz home-manager
 nix-channel --update
 export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
 nix-shell '<home-manager>' -A install
@@ -183,8 +183,8 @@ max-jobs = auto
 #+begin_src shell
 sudo systemctl enable --now nix-daemon.service
 sudo usermod -aG nix-users zwei
-nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-24.11 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz home-manager
 nix-channel --update
 export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
 nix-shell '<home-manager>' -A install
@@ -208,8 +208,8 @@ max-jobs = auto
 #+begin_src shell
 doas /etc/init.d/nix-daemon start
 doas rc-update add nix-daemon
-nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-24.11 nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz home-manager
 nix-channel --update
 export NIX_PATH="${XDG_STATE_HOME}/nix/defexpr/channels"
 nix-shell '<home-manager>' -A install
