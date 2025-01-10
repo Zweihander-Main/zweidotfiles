@@ -42,8 +42,8 @@ in {
 
     Timer = {
       OnCalendar = [
-        "Mon,Tue,Thu,Fri,Sat *-*-* 16:15,25" # 16:15, 16:25 except on Wed/Sun
-        "Wed *-*-* 17:00,10" # 17:00, 17:10 on Wed
+        "Mon,Tue,Thu,Fri,Sat *-*-* 16:25,35" # 16:25, 16:35 except on Wed/Sun
+        "Wed *-*-* 17:10,20" # 17:10, 17:20 on Wed
         "Sun *-*-* 16:00,10" # 16:00, 16:10 on Sun
       ];
     };
@@ -68,8 +68,8 @@ in {
 
     Timer = {
       OnCalendar = [
-        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 16:30..45:0,15,30,45" # 16:30-45, every 15 secs except on Wed/Sun
-        "Wed *-*-* 17:15..30:0,15,30,45" # 17:15-30, every 15 secs on Wed
+        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 16:40..55:0,15,30,45" # 16:45-55, every 15 secs except on Wed/Sun
+        "Wed *-*-* 17:25..30:0,15,30,45" # 17:25-30, every 15 secs on Wed
         "Sun *-*-* 16:15..30:0,15,30,45" # 16:15-30, every 15 secs on Sun
       ];
       AccuracySec = "5s";
