@@ -440,6 +440,10 @@
     body = ".*Disconnected from IRC.*"
     skip_display = true
 
+[ignore-irssi-unreachable]
+    body = ".*Cannot connect to IRC \(Network unreachable\).*"
+    skip_display = true
+
 [log-all-notifications]
     summary = ".*"
     script = ~/.local/bin/log_dunst
