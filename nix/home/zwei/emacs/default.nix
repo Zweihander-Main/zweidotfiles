@@ -19,12 +19,12 @@ in {
     package = pkgs.emacs;
   };
 
-  services.emacs = {
+  services.emacs = mkIf (!config.hostAttr.preinstalled.emacs) {
     enable = true;
-    package = mkIf (!config.hostAttr.preinstalled.emacs) pkgs.emacs;
+    package = pkgs.emacs;
   };
 
-  systemd.user.services.emacs = {
+  systemd.user.services.emacs = mkIf (!config.hostAttr.preinstalled.emacs) {
     Install = mkForce {WantedBy = ["wm.target"];};
   };
 
