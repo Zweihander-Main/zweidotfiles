@@ -8,4 +8,10 @@
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" = "1" ]; then
     exec startx "${XDG_CONFIG_HOME}/x11/xinitrc" -- -keeptty &> "${XDG_DATA_HOME}/xorg/xorg.tty.log" # exec forces it back out when x session dies
 fi
+
 {{ end -}} # End non-WSL
+
+
+
+# Data dirs updates
+# [ -d "${XDG_STATE_HOME}/nix/profile/share" ] && XDG_DATA_DIRS="${XDG_STATE_HOME}/nix/profile/share:${XDG_DATA_DIRS}"
