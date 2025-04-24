@@ -52,7 +52,7 @@ done &
 
 # screen locking
 xset s on
-xset s 120 # second timeout
+xset s 300 # second timeout
 
 # start user programs
 xss-lock -- start_i3lock +resetsaver & # locking manager
