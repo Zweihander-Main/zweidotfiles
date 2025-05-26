@@ -9,7 +9,7 @@ ConditionFileIsExecutable=/usr/bin/xdotool
 Type=exec
 Restart=always
 RestartSec=20s
-ExecStart=element-desktop --hidden --disable-gpu-sandbox
+ExecStart=element-desktop --hidden --disable-gpu-sandbox --password-store="gnome-libsecret"
 ExecStartPost=timeout 60s xdotool search --sync --onlyvisible --name "KeepassXC -  Access Request" windowfocus keydown Enter keyup --window 0 Enter
 ExecStartPost=timeout 60s xdotool search --sync --onlyvisible --name "KeepassXC -  Access Request" windowfocus keydown Enter keyup --window 0 Enter
 
