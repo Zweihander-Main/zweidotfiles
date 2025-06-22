@@ -42,7 +42,7 @@ cmd open ${{
     case $(mimeo -m $f | tail -n1 | tr -d "[:blank:]") in
         text/*) $EDITOR $fx;;
         audio/midi) timidity $fx;;
-        audio/*) mplayer $fx;;
+        audio/*) mpv --save-position-on-quit $fx;;
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
 }}
