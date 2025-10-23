@@ -84,6 +84,11 @@ cmd mkdir %{{
 }}
 map gm mkdir
 
+cmd yank_contents ${{
+    xclip -selection clipboard $f
+}}
+map gy yank_contents
+
 # extract the current file with the right command
 cmd extract ${{
     set -f
@@ -182,6 +187,7 @@ cmd fzf_alt_c ${{
     lf -remote "send $id $cmd \"$res\""
 }}
 map <a-c> :fzf_alt_c
+
 
 # Previews
 set preview true
