@@ -36,6 +36,10 @@ set shell zsh
 # map o &mimeopen $f
 # map O $mimeopen --ask $f
 
+# Custom edit commands
+map e $vim "$f"
+map ge $emacsclient -nc "$f"
+
 # define a custom 'open' command
 cmd open ${{
     test -L $f && f=$(readlink -f $f)
@@ -102,7 +106,7 @@ cmd extract ${{
     esac
 }}
 
-map ge extract
+map gx extract
 
 # compress current file or selected files with tar and gunzip
 cmd tar ${{
