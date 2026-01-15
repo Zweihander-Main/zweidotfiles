@@ -4,10 +4,9 @@ working_directory = "None"
 import = ["/home/zwei/.config/alacritty/colors.toml"]
 
 [bell]
-animation = "EaseOutExpo"
-color = "#ffffff"
-command = "None"
-duration = 0
+# animation = "EaseOutExpo"
+# color = "#ffffff"
+command = { program = "paplay", args = ["--volume=65536", "/usr/share/sounds/freedesktop/stereo/dialog-information.oga"] }
 
 [cursor]
 blink_interval = 450
