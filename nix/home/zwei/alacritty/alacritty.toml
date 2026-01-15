@@ -105,3 +105,9 @@ y = 0
 [window.position]
 x = 0
 y = 0
+
+# For claude code
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
