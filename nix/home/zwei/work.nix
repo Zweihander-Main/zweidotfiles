@@ -7,7 +7,8 @@
   secrets,
   ...
 }:
-with lib; {
+with lib;
+{
   imports = [
     ./default.nix
     ./alacritty
@@ -19,6 +20,7 @@ with lib; {
     ./mouseless
     ./pcmanfm
     ./redshift
+    ./shellscripts
     ./sound
     ./stalonetray
     ./sxhkd
@@ -32,4 +34,3 @@ with lib; {
   ];
 }
 ## TODO: DRY, possibly get rid of 'type'
-

@@ -34,6 +34,7 @@ in {
   home.file.".local/bin/start_gpg".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dev/sys/shell_scripts/start_gpg/start_gpg.sh";
   home.file.".local/bin/start_i3lock".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dev/sys/shell_scripts/start_i3lock/start_i3lock.sh";
   home.file.".local/bin/start_keepassxc".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dev/sys/shell_scripts/start_keepassxc/start_keepassxc.sh";
+  home.file.".local/bin/start_waydroid".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dev/sys/shell_scripts/start_waydroid/start_waydroid.sh";
   home.file.".local/bin/toggle_sink".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dev/sys/shell_scripts/toggle_sink/toggle_sink.sh";
   home.file.".local/bin/wait-for-keepassxc-requirements".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dev/sys/shell_scripts/start_keepassxc/wait-for-keepassxc-requirements.sh";
 }
