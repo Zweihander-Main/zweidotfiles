@@ -10,6 +10,7 @@
   imports = [
     inputs.hardware.nixosModules.microsoft-surface-pro-3
     ./hardware-configuration.nix
+    ./distributed-builds.nix
     # ./lib.nix
   ];
 
@@ -164,7 +165,6 @@
   services.locate = {
     enable = true;
     package = pkgs.mlocate;
-    localuser = null;
   };
 
   services.upower = {
