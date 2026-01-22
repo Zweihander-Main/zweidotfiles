@@ -35,7 +35,7 @@ in {
   };
 
   systemd.user.targets.tray = {
-    Unit = {
+    Unit = lib.mkForce {
       Description = "Tray target";
     };
   };

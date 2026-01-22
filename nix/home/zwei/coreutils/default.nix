@@ -1,12 +1,6 @@
-{
-  pkgs,
-  config,
-  lib,
-  secrets,
-  ...
-}:
-with lib; let
-  homeDir = config.home.homeDirectory;
+{ pkgs, config, lib, secrets, ... }:
+with lib;
+let homeDir = config.home.homeDirectory;
 in {
   imports = [
     ../lf # file manager
@@ -25,10 +19,9 @@ in {
     lsd # ls replacement
     mcfly # history enhancement
     mcfly-fzf # mcfly fzf integration
-    moar # pager replacement
+    moor # pager replacement
     ripgrep # grep replacement
     sd # sed replacement
     (mkIf config.hostAttr.preinstalled.systemd sysz) # systemd assistant
-    thefuck # correct prev command
   ];
 }
