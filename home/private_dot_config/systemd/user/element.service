@@ -1,17 +1,14 @@
 [Unit]
 Description=Element Matrix Client
 Requires=keepassxc.service
-After=keepassxc.service tray.service
+After=tray.service
 ConditionFileIsExecutable=/usr/bin/element-desktop
-ConditionFileIsExecutable=/usr/bin/xdotool
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=20s
 ExecStart=element-desktop --hidden --disable-gpu-sandbox --password-store="gnome-libsecret"
-ExecStartPost=timeout 60s xdotool search --sync --onlyvisible --name "KeepassXC -  Access Request" windowfocus keydown Enter keyup --window 0 Enter
-ExecStartPost=timeout 60s xdotool search --sync --onlyvisible --name "KeepassXC -  Access Request" windowfocus keydown Enter keyup --window 0 Enter
 
 [Install]
 WantedBy=wm.target
