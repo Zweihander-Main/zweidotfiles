@@ -8,10 +8,11 @@ ConditionFileIsExecutable=/usr/bin/gomuks
 ConditionFileIsExecutable=/usr/bin/timeout
 
 [Service]
-Type=forking
-TimeoutSec=5
+Type=oneshot
+RemainAfterExit=yes
+TimeoutStartSec=30
 WorkingDirectory=~
-ExecStart=tmux -L gomuks -2 new-session -A -d -s gomuks gomuks 
+ExecStart=tmux -L gomuks -2 new-session -d -s gomuks gomuks
 ExecStop=timeout 3 tmux -L gomuks kill-session -t gomuks 
 
 [Install]
