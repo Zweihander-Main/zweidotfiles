@@ -5,16 +5,13 @@ Wants=tray.service
 After=sound.service tray.service wait-for-dns.service
 ConditionFileIsExecutable=/usr/bin/sleep
 ConditionFileIsExecutable=/usr/bin/mumble
-ConditionFileIsExecutable=/usr/bin/xdotool
 
 [Service]
 Type=exec
 Restart=always
 RestartSec=10s
 ExecStartPre=sleep 3
-ExecStart=mumble
-ExecStartPost=sleep 3
-ExecStartPost=xdotool search --sync --class mumble windowactivate windowfocus key --delay 150 --clearmodifiers --repeat 3 alt+e+h
+ExecStart=mumble --skip-settings-backup-prompt --hidden
 
 [Install]
 WantedBy=wm.target
