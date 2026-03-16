@@ -12,6 +12,9 @@ Restart=always
 RestartSec=10s
 ExecStartPre=sleep 3
 ExecStart=mumble --skip-settings-backup-prompt --hidden
+ExecStartPost=sleep 3
+ExecStopPost=/bin/sh -c 'rm -f ~/.config/Mumble/Mumble/mumble_settings.json.back'
+TimeoutStopSec=3
 
 [Install]
 WantedBy=wm.target
