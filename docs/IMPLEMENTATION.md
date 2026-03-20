@@ -222,7 +222,7 @@ _zinit_load_if_present mcfly load-script-mcfly 'eval "$(mcfly init zsh)"'
 
 Document the ownership in a comment at the top of each config.
 
-### [ ] 12. `_JAVA_AWT_WM_NONREPARENTING` is dwm-specific
+### [X] 12. `_JAVA_AWT_WM_NONREPARENTING` is dwm-specific
 
 **File:** `home/private_dot_config/shell/env.tmpl:139`
 
