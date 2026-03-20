@@ -161,7 +161,7 @@ programs.zsh = {
 ```
 This lets `home-manager switch` produce a fully working server shell without chezmoi. Desktop environments can continue using chezmoi for the richer config.
 
-### [ ] 9. Update `youtube-dl` aliases to `yt-dlp`
+### [X] 9. Update `youtube-dl` aliases to `yt-dlp`
 
 **File:** `home/private_dot_config/shell/aliases.tmpl:6-7`
 
