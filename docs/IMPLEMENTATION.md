@@ -112,7 +112,7 @@ Add `hostAttr` options for each optional module group (e.g., `hostAttr.modules.d
 
 ## P2 — Medium (Quality of Life)
 
-### [ ] 6. Remove `thefuck`
+### [X] 6. Remove `thefuck`
 
 **File:** `home/private_dot_config/shell/shellrc.tmpl:168-174`
 
