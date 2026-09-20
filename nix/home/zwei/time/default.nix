@@ -68,7 +68,7 @@ in {
 
     Timer = {
       OnCalendar = [
-        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 17.00..15:0,15,30,45" # 17:00-15, every 15 secs except on Wed/Sun
+        "Mon,Tue,Thu,Fri,Sat,Sun *-*-* 17:00..15:0,15,30,45" # 17:00-15, every 15 secs except on Wed/Sun
         "Wed *-*-* 17:40..45:0,15,30,45" # 17:40-45, every 15 secs on Wed
         "Sun *-*-* 16:40..50:0,15,30,45" # 16:40-50, every 15 secs on Sun
       ];
